@@ -35,7 +35,7 @@ function setup(width,height){
 
 }
 
-d3.json("data/world-topo-min.json", function(error, world) {
+d3.json("data/world-topo-min2.json", function(error, world) {
 
     var countries = topojson.feature(world, world.objects.countries).features;
 
@@ -68,8 +68,8 @@ function draw(topo) {
         .style("fill", function(d, i) { return d.properties.color; });
 
     //offsets for tooltips
-    var offsetL = document.getElementById('MapContainer').offsetLeft+20;
-    var offsetT = document.getElementById('MapContainer').offsetTop+10;
+    var offsetL = document.getElementById('MapContainer').offsetLeft + 20;
+    var offsetT = document.getElementById('MapContainer').offsetTop + 10;
 
     //tooltips
     country
