@@ -26,6 +26,7 @@ function setup(width,height){
     svg = d3.select("#MapContainer").append("svg")
         .attr("width", width)
         .attr("height", height)
+        .style("border", "5px solid #040406")
         .call(zoom)
         .on("click", click)
 //        .append("g");
