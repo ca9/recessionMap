@@ -11,7 +11,7 @@
 	<script src="js/ui/modernizr.custom.js"></script>
   </head>
 
-  <body>
+  <body ng-controller="dataController">
 	<div class="menu-area">
 			<div id="dl-menu" class="dl-menuwrapper">
 						<button class="dl-trigger">Open Menu</button>
@@ -81,8 +81,8 @@
 			  <div class="row">
 				  <div class="col-md-offset-2 col-md-8">
 					<div class="section-heading">
-                         <h2>Details</h2>
-                         <p>Economic Data for {{ country.name }}</p>
+                         <h2> Details </h2>
+                         <p> Economic Data for {{ allData["2000.AL"]["Country.Code2"] }} </p>
 					</div>
 				  </div>
 			  </div>

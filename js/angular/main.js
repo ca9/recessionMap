@@ -31,22 +31,21 @@ recMap.service("yearService", function() {
     }
 });
 
-recMap.service("dataService", function() {
-    var allData = {};
-    $get.http('data/final_data.json')
-        .success(function(data) {
-            allData = data;
-        })
-        .error(function(data, status, headers, config) {
-            allData.data = data;
-            allData.status = status;
-            allData.headers = headers;
-            allData.config = config;
-        })
+recMap.service("dataService", function($http, $q) {
+    var allData = null;
+    this.async = function() {
+        return $http.get('data/final_data.json')
+            .then(function(response) {
+                allData = response['data'];
+                console.log(allData);
+                return allData;
+            })
+    };
+
 });
 
 recMap.controller('timeController', function($scope, yearService) {
-//      static inits
+//      Static inits
         $scope.years = yearService.getYears();
 //      Year Binding
         $scope.curyear = yearService.curyear;
@@ -56,5 +55,13 @@ recMap.controller('timeController', function($scope, yearService) {
 );
 
 recMap.controller('dataController', function($scope, dataService) {
-    $scope.data = dataService.allData;
+    $scope.allData = {};
+    if (dataService.allData == null) {
+        dataService.async().then(function(inData) {
+            $scope.allData = inData;
+            console.log($scope.allData);
+        });
+    } else {
+        $scope.allData = dataService.allData;
+    }
 })
