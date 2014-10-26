@@ -24,11 +24,15 @@
 							<li><a href="#services">Services</a></li>
 							<li><a href="#works">Works</a></li>
 							<li><a href="#contact">Contact</a></li>
-							<li>
+							<li ng-controller="timeController">
 								<a href="#">Year</a>
 								<ul class="dl-submenu">
-									<li><a href="#">Sub menu</a></li>
-									<li><a href="#">Sub menu</a></li>
+									<li ng-repeat="ayear in years">
+                                        <a ng-click="setYear(ayear)"
+                                           ng-class="{selected: checkYear(ayear)}">
+                                            {{ ayear }} {{ curyear }}
+                                        </a>
+                                    </li>
 								</ul>
 							</li>
 						</ul>

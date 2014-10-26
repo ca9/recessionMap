@@ -80,12 +80,15 @@ function draw(topo) {
 //                .attr("style", "left:"+(mouse[0]+offsetL)+"px;top:"+(mouse[1]+offsetT)+"px")
 //                .html(d.properties.name);
 //
-            tooltip.html(d.properties.name);
+//            tooltip.html(d.properties.name);
 
         })
         .on("mouseout",  function(d,i) {
 //            tooltip.classed("hidden", true);
-            tooltip.html("None");
+//            tooltip.html("None");
+        })
+        .on("click", function(d,i) {
+            tooltip.html(d.properties.name);
         });
 
 

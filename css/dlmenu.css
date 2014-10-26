@@ -1041,3 +1041,15 @@ All this is done for any sub-level being entered.
 .demo-5 .dl-menuwrapper ul {
 	background: #643771;
 }
+
+
+/*Some Edits*/
+.dl-menu li .selected {
+    background: #529abb;
+}
+
+/*.dl-menuwrapper button:hover,*/
+/*.dl-menuwrapper button.dl-active,*/
+/*.dl-menuwrapper ul {*/
+    /*background: #555;*/
+/*}*/
