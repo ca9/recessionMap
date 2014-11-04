@@ -165,313 +165,184 @@
             "International Monetary Fund, International Financial Statistics and data files."
         ]
     }, 
-    "names": [
-        {
-            "NV.IND.MANF.ZS": [
-                "GDP", 
-                "Manufacturing", 
-                "Economic Structure"
-            ]
-        }, 
-        {
-            "NV.IND.MANF.KD.ZG": [
-                "GDP", 
-                "Manufacturing"
-            ]
-        }, 
-        {
-            "DT.DOD.PVLX.EX.ZS": [
-                "Banking", 
-                "Net Exports"
-            ]
-        }, 
-        {
-            "NE.IMP.GNFS.ZS": [
-                "Net Exports"
-            ]
-        }, 
-        {
-            "NE.IMP.GNFS.KD.ZG": [
-                "Net Exports"
-            ]
-        }, 
-        {
-            "NE.EXP.GNFS.KD.ZG": [
-                "Net Exports"
-            ]
-        }, 
-        {
-            "NE.EXP.GNFS.ZS": [
-                "Net Exports"
-            ]
-        }, 
-        {
-            "SL.SRV.EMPL.ZS": [
-                "Economic Structure"
-            ]
-        }, 
-        {
-            "TX.VAL.AGRI.ZS.UN": [
-                "Net Exports"
-            ]
-        }, 
-        {
-            "NE.EXP.GNFS.CD": [
-                "Net Exports"
-            ]
-        }, 
-        {
-            "TX.VAL.FUEL.ZS.UN": [
-                "Net Exports"
-            ]
-        }, 
-        {
-            "TX.VAL.TECH.MF.ZS": [
-                "Net Exports"
-            ]
-        }, 
-        {
-            "TX.VAL.INSF.ZS.WT": [
-                "Banking", 
-                "Net Exports"
-            ]
-        }, 
-        {
-            "BX.GSR.INSF.ZS": [
-                "Banking", 
-                "Net Exports"
-            ]
-        }, 
-        {
-            "GC.TAX.EXPT.ZS": [
-                "Net Exports"
-            ]
-        }, 
-        {
-            "NY.GDP.MKTP.KD.ZG": [
-                "GDP"
-            ]
-        }, 
-        {
-            "NY.GDP.PCAP.KD.ZG": [
-                "GDP"
-            ]
-        }, 
-        {
-            "NY.GDP.PCAP.CD": [
-                "GDP"
-            ]
-        }, 
-        {
-            "FI.RES.TOTL.DT.ZS": [
-                "Central Government", 
-                "Net Exports"
-            ]
-        }, 
-        {
-            "FI.RES.TOTL.MO": [
-                "Central Government", 
-                "Net Exports"
-            ]
-        }, 
-        {
-            "TX.VAL.MRCH.HI.ZS": [
-                "Net Exports"
-            ]
-        }, 
-        {
-            "TM.VAL.MRCH.HI.ZS": [
-                "Net Exports"
-            ]
-        }, 
-        {
-            "NE.CON.PRVT.KD.ZG": [
-                "GDP", 
-                "Economic Structure"
-            ]
-        }, 
-        {
-            "NE.CON.TETC.KD.ZG": [
-                "GDP", 
-                "Economic Structure"
-            ]
-        }, 
-        {
-            "NY.GDS.TOTL.ZS": [
-                "Banking", 
-                "Economic Structure"
-            ]
-        }, 
-        {
-            "FS.AST.DOMS.GD.ZS": [
-                "Banking"
-            ]
-        }, 
-        {
-            "BX.GSR.CMCP.ZS": [
-                "Net Exports"
-            ]
-        }, 
-        {
-            "TX.VAL.MANF.ZS.UN": [
-                "Net Exports", 
-                "Manufacturing"
-            ]
-        }, 
-        {
-            "TX.VAL.MRCH.R1.ZS": [
-                "Net Exports"
-            ]
-        }, 
-        {
-            "TX.VAL.MRCH.R2.ZS": [
-                "Net Exports"
-            ]
-        }, 
-        {
-            "TX.VAL.MRCH.R3.ZS": [
-                "Net Exports"
-            ]
-        }, 
-        {
-            "TX.VAL.MRCH.R4.ZS": [
-                "Net Exports"
-            ]
-        }, 
-        {
-            "TX.VAL.MRCH.R5.ZS": [
-                "Net Exports"
-            ]
-        }, 
-        {
-            "TX.VAL.MRCH.R6.ZS": [
-                "Net Exports"
-            ]
-        }, 
-        {
-            "TX.VAL.MRCH.OR.ZS": [
-                "Net Exports"
-            ]
-        }, 
-        {
-            "TX.VAL.MRCH.WR.ZS": [
-                "Net Exports"
-            ]
-        }, 
-        {
-            "TX.VAL.MRCH.AL.ZS": [
-                "Net Exports"
-            ]
-        }, 
-        {
-            "TX.VAL.MRCH.HI.ZS": [
-                "Net Exports"
-            ]
-        }, 
-        {
-            "NV.AGR.TOTL.ZS": [
-                "GDP", 
-                "Economic Structure"
-            ]
-        }, 
-        {
-            "TX.VAL.INSF.ZS.WT": [
-                "Banking", 
-                "Net Exports"
-            ]
-        }, 
-        {
-            "TM.VAL.INSF.ZS.WT": [
-                "Banking", 
-                "Net Exports"
-            ]
-        }, 
-        {
-            "FD.RES.LIQU.AS.ZS": [
-                "Banking"
-            ]
-        }, 
-        {
-            "FB.BNK.CAPA.ZS": [
-                "Banking"
-            ]
-        }, 
-        {
-            "FD.AST.PRVT.GD.ZS": [
-                "Banking"
-            ]
-        }, 
-        {
-            "NE.CON.TETC.ZS": [
-                "Economic Structure"
-            ]
-        }, 
-        {
-            "NE.CON.TETC.KD.ZG": [
-                "Economic Structure"
-            ]
-        }, 
-        {
-            "NE.CON.GOVT.ZS": [
-                "Central Government"
-            ]
-        }, 
-        {
-            "NE.CON.PRVT.KD.ZG": [
-                "Economic Structure"
-            ]
-        }, 
-        {
-            "GC.BAL.CASH.GD.ZS": [
-                "Central Government", 
-                "Banking"
-            ]
-        }, 
-        {
-            "GC.DOD.TOTL.GD.ZS": [
-                "Central Government"
-            ]
-        }, 
-        {
-            "GC.XPN.TOTL.GD.ZS": [
-                "Economic Structure"
-            ]
-        }, 
-        {
-            "GC.XPN.INTP.RV.ZS": [
-                "Banking"
-            ]
-        }, 
-        {
-            "GC.TAX.TOTL.GD.ZS": [
-                "Central Government"
-            ]
-        }, 
-        {
-            "FR.INR.LEND": [
-                "Central Government", 
-                "Banking"
-            ]
-        }, 
-        {
-            "FR.INR.DPST": [
-                "Central Government", 
-                "Banking"
-            ]
-        }, 
-        {
-            "FR.INR.RINR": [
-                "Central Government", 
-                "Banking"
-            ]
-        }, 
-        {
-            "Drop.SD": [
-                "GDP", 
-                "Economic Structure"
-            ]
-        }
-    ], 
+    "names": {
+        "DT.DOD.PVLX.EX.ZS": [
+            "Banking", 
+            "Net Exports"
+        ], 
+        "TX.VAL.MRCH.R4.ZS": [
+            "Net Exports"
+        ], 
+        "FB.BNK.CAPA.ZS": [
+            "Banking"
+        ], 
+        "NE.IMP.GNFS.KD.ZG": [
+            "Net Exports"
+        ], 
+        "Drop.SD": [
+            "GDP", 
+            "Economic Structure"
+        ], 
+        "TX.VAL.MRCH.OR.ZS": [
+            "Net Exports"
+        ], 
+        "TX.VAL.MANF.ZS.UN": [
+            "Net Exports", 
+            "Manufacturing"
+        ], 
+        "NY.GDP.MKTP.KD.ZG": [
+            "GDP"
+        ], 
+        "TX.VAL.MRCH.WR.ZS": [
+            "Net Exports"
+        ], 
+        "NE.CON.TETC.KD.ZG": [
+            "Economic Structure"
+        ], 
+        "NE.CON.GOVT.ZS": [
+            "Central Government"
+        ], 
+        "NY.GDP.PCAP.KD.ZG": [
+            "GDP"
+        ], 
+        "TX.VAL.FUEL.ZS.UN": [
+            "Net Exports"
+        ], 
+        "FR.INR.DPST": [
+            "Central Government", 
+            "Banking"
+        ], 
+        "TX.VAL.MRCH.HI.ZS": [
+            "Net Exports"
+        ], 
+        "TX.VAL.MRCH.R5.ZS": [
+            "Net Exports"
+        ], 
+        "GC.XPN.TOTL.GD.ZS": [
+            "Economic Structure"
+        ], 
+        "TM.VAL.MRCH.HI.ZS": [
+            "Net Exports"
+        ], 
+        "FR.INR.LEND": [
+            "Central Government", 
+            "Banking"
+        ], 
+        "TX.VAL.MRCH.AL.ZS": [
+            "Net Exports"
+        ], 
+        "TX.VAL.INSF.ZS.WT": [
+            "Banking", 
+            "Net Exports"
+        ], 
+        "TX.VAL.MRCH.R2.ZS": [
+            "Net Exports"
+        ], 
+        "TX.VAL.TECH.MF.ZS": [
+            "Net Exports"
+        ], 
+        "GC.XPN.INTP.RV.ZS": [
+            "Banking"
+        ], 
+        "NY.GDS.TOTL.ZS": [
+            "Banking", 
+            "Economic Structure"
+        ], 
+        "TX.VAL.MRCH.R6.ZS": [
+            "Net Exports"
+        ], 
+        "GC.TAX.TOTL.GD.ZS": [
+            "Central Government"
+        ], 
+        "NE.EXP.GNFS.CD": [
+            "Net Exports"
+        ], 
+        "NV.AGR.TOTL.ZS": [
+            "GDP", 
+            "Economic Structure"
+        ], 
+        "TX.VAL.AGRI.ZS.UN": [
+            "Net Exports"
+        ], 
+        "GC.BAL.CASH.GD.ZS": [
+            "Central Government", 
+            "Banking"
+        ], 
+        "NV.IND.MANF.ZS": [
+            "GDP", 
+            "Manufacturing", 
+            "Economic Structure"
+        ], 
+        "FR.INR.RINR": [
+            "Central Government", 
+            "Banking"
+        ], 
+        "NE.IMP.GNFS.ZS": [
+            "Net Exports"
+        ], 
+        "TM.VAL.INSF.ZS.WT": [
+            "Banking", 
+            "Net Exports"
+        ], 
+        "NV.IND.MANF.KD.ZG": [
+            "GDP", 
+            "Manufacturing"
+        ], 
+        "NE.EXP.GNFS.ZS": [
+            "Net Exports"
+        ], 
+        "NY.GDP.PCAP.CD": [
+            "GDP"
+        ], 
+        "FI.RES.TOTL.MO": [
+            "Central Government", 
+            "Net Exports"
+        ], 
+        "SL.SRV.EMPL.ZS": [
+            "Economic Structure"
+        ], 
+        "FD.RES.LIQU.AS.ZS": [
+            "Banking"
+        ], 
+        "BX.GSR.CMCP.ZS": [
+            "Net Exports"
+        ], 
+        "BX.GSR.INSF.ZS": [
+            "Banking", 
+            "Net Exports"
+        ], 
+        "TX.VAL.MRCH.R1.ZS": [
+            "Net Exports"
+        ], 
+        "NE.EXP.GNFS.KD.ZG": [
+            "Net Exports"
+        ], 
+        "GC.TAX.EXPT.ZS": [
+            "Net Exports"
+        ], 
+        "NE.CON.TETC.ZS": [
+            "Economic Structure"
+        ], 
+        "FD.AST.PRVT.GD.ZS": [
+            "Banking"
+        ], 
+        "NE.CON.PRVT.KD.ZG": [
+            "Economic Structure"
+        ], 
+        "FS.AST.DOMS.GD.ZS": [
+            "Banking"
+        ], 
+        "FI.RES.TOTL.DT.ZS": [
+            "Central Government", 
+            "Net Exports"
+        ], 
+        "GC.DOD.TOTL.GD.ZS": [
+            "Central Government"
+        ], 
+        "TX.VAL.MRCH.R3.ZS": [
+            "Net Exports"
+        ]
+    }, 
     "Economic Structure": {
         "SL.SRV.EMPL.ZS": [
             "Employment in services (% of total employment)", 
