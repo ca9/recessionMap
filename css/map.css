@@ -39,3 +39,21 @@ div.tooltip {
     stroke: #ccc;
     stroke-width: 1px;
 }
+
+/* mapTooltip */
+div.mapTooltip {
+    position: absolute;
+    text-align: center;
+    width: 150px;
+    height: 25px;
+    padding: 2px;
+    font-size: 10px;
+    background: #FFFFE0;
+    border: 1px;
+    border-radius: 8px;
+    pointer-events: none;
+}
+
+.legend {
+    font-size: 12px;
+}

@@ -136,7 +136,7 @@ recMap.controller('dataController', function($scope, dataService, propService, y
     $scope.curProp = propService.getCurProp;
 
 //    For Testing:
-//    setInterval(function() { console.log($scope.groupNames)}, 2000 );
+    setInterval(function() { console.log($scope.curCountry(), $scope.curyear(), $scope.curProp())}, 5000 );
 })
 
 

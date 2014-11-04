@@ -4,15 +4,13 @@ var zoom = d3.behavior.zoom()
     .scaleExtent([1, 9])
     .on("zoom", move);
 
-
 var width = document.getElementById('MapContainer').offsetWidth;
 var height = width / 2;
-
+var centered;
 var topo, projection, path, svg, g;
-
 var graticule = d3.geo.graticule();
-
-var tooltip = $('#chosenCountry'); //d3.select("#MapContainer").append("div").attr("class", "tooltip hidden");
+var tooltip = $('#chosenCountry');
+//var mapTooltip = d3.select("#MapContainer").append("div").attr("class", "tooltip hidden");
 
 setup(width,height);
 
@@ -29,7 +27,6 @@ function setup(width,height){
         .style("border", "5px solid #040406")
         .call(zoom)
         .on("click", click)
-//        .append("g");
 
     g = svg.append("g");
 
@@ -38,7 +35,6 @@ function setup(width,height){
 d3.json("data/world-topo-min2.json", function(error, world) {
 
     var countries = topojson.feature(world, world.objects.countries).features;
-
     topo = countries;
     draw(topo);
 
@@ -67,29 +63,28 @@ function draw(topo) {
         .attr("title", function(d,i) { return d.properties.name; })
         .style("fill", function(d, i) { return d.properties.color; });
 
-    //offsets for tooltips
-    var offsetL = document.getElementById('MapContainer').offsetLeft + 20;
-    var offsetT = document.getElementById('MapContainer').offsetTop + 10;
+//    //offsets for tooltips
+//    var offsetL = document.getElementById('MapContainer').offsetLeft + 20;
+//    var offsetT = document.getElementById('MapContainer').offsetTop + 10;
 
     //tooltips
     country
         .on("mousemove", function(d,i) {
             var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
 
-//            tooltip.classed("hidden", false)
+//            mapTooltip.classed("hidden", false)
 //                .attr("style", "left:"+(mouse[0]+offsetL)+"px;top:"+(mouse[1]+offsetT)+"px")
 //                .html(d.properties.name);
-//
-//            tooltip.html(d.properties.name);
+//            mapTooltip.html(d.properties.name);
 
         })
         .on("mouseout",  function(d,i) {
-//            tooltip.classed("hidden", true);
-//            tooltip.html("None");
         })
-        .on("click", function(d,i) {
-            tooltip.html(d.properties.name);
-        });
+        .on('click', clicked);
+//        .on("click", function(d,i) {
+//            tooltip.html(d.properties.name);
+//            console.log(i);
+//        });
 
 
     //EXAMPLE: adding some capitals from external CSV file
@@ -178,4 +173,30 @@ function addpoint(lat,lon,text) {
             .text(text);
     }
 
+}
+
+function clicked(d, i) {
+    tooltip.html(d.properties.name);
+    var x, y, k;
+
+    if (d && centered !== d) {
+        var centroid = path.centroid(d);
+        x = centroid[0];
+        y = centroid[1];
+        k = 4;
+        centered = d;
+    } else {
+        x = width / 2;
+        y = height / 2;
+        k = 1;
+        centered = null;
+    }
+
+    g.selectAll("path")
+        .classed("active", centered && function(d) { return d === centered; });
+
+    g.transition()
+        .duration(750)
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+        .style("stroke-width", 1.5 / k + "px");
 }
