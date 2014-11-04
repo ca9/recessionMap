@@ -46,6 +46,7 @@ recMap.service("yearService", function() {
 
 recMap.factory("dataService", function($http) {
    var allData = {}, dataAsService = {}, url = "data/final_data.json";
+   var curCountry = "";
 
    dataAsService.queryData = function() {
        $http.get(url)
@@ -64,6 +65,10 @@ recMap.factory("dataService", function($http) {
        if (isEmptyObject(allData))
             this.queryData();
        return allData;
+   }
+
+   dataAsService.getCurCountry = function () {
+       return curCountry;
    }
 
    return dataAsService;
@@ -114,17 +119,22 @@ recMap.controller('timeController', function($scope, yearService) {
 //      Static inits
         $scope.years = yearService.getYears();
 //      Year Binding
-        $scope.curyear = yearService.curyear;
+        $scope.curyear = yearService.getCurYear;
         $scope.setYear = yearService.setYear;
         $scope.checkYear = yearService.checkYear;
     }
 );
 
-recMap.controller('dataController', function($scope, dataService, propService) {
+recMap.controller('dataController', function($scope, dataService, propService, yearService) {
     $scope.allData = dataService.getAllData();
     $scope.eprops = propService.getPropData();
     $scope.groupNames = propService.getGroups;
     $scope.getPropsForGroup = propService.getPropsForGroup;
+
+    $scope.curCountry = dataService.getCurCountry;
+    $scope.curyear = yearService.getCurYear;
+    $scope.curProp = propService.getCurProp;
+
 //    For Testing:
 //    setInterval(function() { console.log($scope.groupNames)}, 2000 );
 })
