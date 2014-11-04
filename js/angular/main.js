@@ -59,7 +59,6 @@ recMap.controller('dataController', function($scope, dataService) {
     if (dataService.allData == null) {
         dataService.async().then(function(inData) {
             $scope.allData = inData;
-            console.log($scope.allData);
         });
     } else {
         $scope.allData = dataService.allData;

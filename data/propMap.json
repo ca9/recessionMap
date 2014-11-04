@@ -1,0 +1,681 @@
+{
+    "GDP": {
+        "NV.AGR.TOTL.ZS": [
+            "Agriculture, value added (% of GDP)", 
+            "Agriculture corresponds to ISIC divisions 1-5 and includes forestry, hunting, and fishing, as well as cultivation of crops and livestock production. Value added is the net output of a sector after adding up all outputs and subtracting intermediate inputs. It is calculated without making deductions for depreciation of fabricated assets or depletion and degradation of natural resources. The origin of value added is determined by the International Standard Industrial Classification (ISIC), revision 3. Note: For VAB countries, gross value added at factor cost is used as the denominator.", 
+            "World Bank national accounts data, and OECD National Accounts data files."
+        ], 
+        "NY.GDP.PCAP.CD": [
+            "GDP per capita (current US$)", 
+            "GDP per capita is gross domestic product divided by midyear population. GDP is the sum of gross value added by all resident producers in the economy plus any product taxes and minus any subsidies not included in the value of the products. It is calculated without making deductions for depreciation of fabricated assets or for depletion and degradation of natural resources. Data are in current U.S. dollars.", 
+            "World Bank national accounts data, and OECD National Accounts data files."
+        ], 
+        "NV.IND.MANF.ZS": [
+            "Manufacturing, value added (% of GDP)", 
+            "Manufacturing refers to industries belonging to ISIC divisions 15-37. Value added is the net output of a sector after adding up all outputs and subtracting intermediate inputs. It is calculated without making deductions for depreciation of fabricated assets or depletion and degradation of natural resources. The origin of value added is determined by the International Standard Industrial Classification (ISIC), revision 3. Note: For VAB countries, gross value added at factor cost is used as the denominator.", 
+            "World Bank national accounts data, and OECD National Accounts data files."
+        ], 
+        "Drop.SD": [
+            "Drop in Growth Rate (in Standard Deviations) | Recession Impact", 
+            "This refers to the average drop in Growth Rate measured in Standard Deviations of Growth Rate for concerned country, over 2007 to 2010. We use this as a result variable to estimate \"Impact of Recession\".", 
+            "Susanne"
+        ], 
+        "NE.CON.PRVT.KD.ZG": [
+            "Household final consumption expenditure (annual % growth)", 
+            "Annual percentage growth of household final consumption expenditure based on constant local currency. Aggregates are based on constant 2005 U.S. dollars. Household final consumption expenditure (formerly private consumption) is the market value of all goods and services, including durable products (such as cars, washing machines, and home computers), purchased by households. It excludes purchases of dwellings but includes imputed rent for owner-occupied dwellings. It also includes payments and fees to governments to obtain permits and licenses. Here, household consumption expenditure includes the expenditures of nonprofit institutions serving households, even when reported separately by the country.", 
+            "World Bank national accounts data, and OECD National Accounts data files."
+        ], 
+        "NY.GDP.MKTP.KD.ZG": [
+            "GDP growth (annual %)", 
+            "Annual percentage growth rate of GDP at market prices based on constant local currency. Aggregates are based on constant 2005 U.S. dollars. GDP is the sum of gross value added by all resident producers in the economy plus any product taxes and minus any subsidies not included in the value of the products. It is calculated without making deductions for depreciation of fabricated assets or for depletion and degradation of natural resources.", 
+            "World Bank national accounts data, and OECD National Accounts data files."
+        ], 
+        "NE.CON.TETC.KD.ZG": [
+            "Final consumption expenditure, etc. (annual % growth)", 
+            "Average annual growth of final consumption expenditure based on constant local currency. Aggregates are based on constant 2005 U.S. dollars. Final consumption expenditure (formerly total consumption) is the sum of household final consumption expenditure (formerly private consumption) and general government final consumption expenditure (formerly general government consumption). This estimate includes any statistical discrepancy in the use of resources relative to the supply of resources.", 
+            "World Bank national accounts data, and OECD National Accounts data files."
+        ], 
+        "NY.GDP.PCAP.KD.ZG": [
+            "GDP per capita growth (annual %)", 
+            "Annual percentage growth rate of GDP per capita based on constant local currency. Aggregates are based on constant 2005 U.S. dollars. GDP per capita is gross domestic product divided by midyear population. GDP at purchaser's prices is the sum of gross value added by all resident producers in the economy plus any product taxes and minus any subsidies not included in the value of the products. It is calculated without making deductions for depreciation of fabricated assets or for depletion and degradation of natural resources.", 
+            "World Bank national accounts data, and OECD National Accounts data files."
+        ], 
+        "NV.IND.MANF.KD.ZG": [
+            "Manufacturing, value added (annual % growth)", 
+            "Annual growth rate for manufacturing value added based on constant local currency. Aggregates are based on constant 2005 U.S. dollars. Manufacturing refers to industries belonging to ISIC divisions 15-37. Value added is the net output of a sector after adding up all outputs and subtracting intermediate inputs. It is calculated without making deductions for depreciation of fabricated assets or depletion and degradation of natural resources. The origin of value added is determined by the International Standard Industrial Classification (ISIC), revision 3.", 
+            "World Bank national accounts data, and OECD National Accounts data files."
+        ]
+    }, 
+    "Central Government": {
+        "FI.RES.TOTL.MO": [
+            "Total reserves in months of imports", 
+            "Total reserves comprise holdings of monetary gold, special drawing rights, reserves of IMF members held by the IMF, and holdings of foreign exchange under the control of monetary authorities. The gold component of these reserves is valued at year-end (December 31) London prices. This item shows reserves expressed in terms of the number of months of imports of goods and services they could pay for [Reserves/(Imports/12)].", 
+            "International Monetary Fund, International Financial Statistics and data files."
+        ], 
+        "GC.DOD.TOTL.GD.ZS": [
+            "Central government debt, total (% of GDP)", 
+            "Debt is the entire stock of direct government fixed-term contractual obligations to others outstanding on a particular date. It includes domestic and foreign liabilities such as currency and money deposits, securities other than shares, and loans. It is the gross amount of government liabilities reduced by the amount of equity and financial derivatives held by the government. Because debt is a stock rather than a flow, it is measured as of a given date, usually the last day of the fiscal year.", 
+            "International Monetary Fund, Government Finance Statistics Yearbook and data files, and World Bank and OECD GDP estimates."
+        ], 
+        "GC.TAX.TOTL.GD.ZS": [
+            "Tax revenue (% of GDP)", 
+            "Tax revenue refers to compulsory transfers to the central government for public purposes. Certain compulsory transfers such as fines, penalties, and most social security contributions are excluded. Refunds and corrections of erroneously collected tax revenue are treated as negative revenue.", 
+            "International Monetary Fund, Government Finance Statistics Yearbook and data files, and World Bank and OECD GDP estimates."
+        ], 
+        "FR.INR.DPST": [
+            "Deposit interest rate (%)", 
+            "Deposit interest rate is the rate paid by commercial or similar banks for demand, time, or savings deposits. The terms and conditions attached to these rates differ by country, however, limiting their comparability.", 
+            "International Monetary Fund, International Financial Statistics and data files."
+        ], 
+        "GC.BAL.CASH.GD.ZS": [
+            "Cash surplus/deficit (% of GDP)", 
+            "Cash surplus or deficit is revenue (including grants) minus expense, minus net acquisition of nonfinancial assets. In the 1986 GFS manual nonfinancial assets were included under revenue and expenditure in gross terms. This cash surplus or deficit is closest to the earlier overall budget balance (still missing is lending minus repayments, which are now a financing item under net acquisition of financial assets).", 
+            "International Monetary Fund, Government Finance Statistics Yearbook and data files, and World Bank and OECD GDP estimates."
+        ], 
+        "FR.INR.LEND": [
+            "Lending interest rate (%)", 
+            "Lending rate is the bank rate that usually meets the short- and medium-term financing needs of the private sector. This rate is normally differentiated according to creditworthiness of borrowers and objectives of financing. The terms and conditions attached to these rates differ by country, however, limiting their comparability.", 
+            "International Monetary Fund, International Financial Statistics and data files."
+        ], 
+        "FR.INR.RINR": [
+            "Real interest rate (%)", 
+            "Real interest rate is the lending interest rate adjusted for inflation as measured by the GDP deflator. The terms and conditions attached to lending rates differ by country, however, limiting their comparability.", 
+            "International Monetary Fund, International Financial Statistics and data files using World Bank data on the GDP deflator."
+        ], 
+        "FI.RES.TOTL.DT.ZS": [
+            "Total reserves (% of total external debt)", 
+            "International reserves to total external debt stocks.", 
+            "World Bank, International Debt Statistics."
+        ], 
+        "NE.CON.GOVT.ZS": [
+            "General government final consumption expenditure (% of GDP)", 
+            "General government final consumption expenditure (formerly general government consumption) includes all government current expenditures for purchases of goods and services (including compensation of employees). It also includes most expenditures on national defense and security, but excludes government military expenditures that are part of government capital formation.", 
+            "World Bank national accounts data, and OECD National Accounts data files."
+        ]
+    }, 
+    "Banking": {
+        "FB.BNK.CAPA.ZS": [
+            "Bank capital to assets ratio (%)", 
+            "Bank capital to assets is the ratio of bank capital and reserves to total assets. Capital and reserves include funds contributed by owners, retained earnings, general and special reserves, provisions, and valuation adjustments. Capital includes tier 1 capital (paid-up shares and common stock), which is a common feature in all countries' banking systems, and total regulatory capital, which includes several specified types of subordinated debt instruments that need not be repaid if the funds are required to maintain minimum capital levels (these comprise tier 2 and tier 3 capital). Total assets include all nonfinancial and financial assets.", 
+            "International Monetary Fund, Global Financial Stability Report."
+        ], 
+        "FD.RES.LIQU.AS.ZS": [
+            "Bank liquid reserves to bank assets ratio (%)", 
+            "Ratio of bank liquid reserves to bank assets is the ratio of domestic currency holdings and deposits with the monetary authorities to claims on other governments, nonfinancial public enterprises, the private sector, and other banking institutions.", 
+            "International Monetary Fund, International Financial Statistics and data files."
+        ], 
+        "DT.DOD.PVLX.EX.ZS": [
+            "Present value of external debt (% of exports of goods, services and primary income)", 
+            "Present value of debt is the sum of short-term external debt plus the discounted sum of total debt service payments due on public, publicly guaranteed, and private nonguaranteed long-term external debt over the life of existing loans. The exports denominator is a three-year average.", 
+            "World Bank, International Debt Statistics."
+        ], 
+        "BX.GSR.INSF.ZS": [
+            "Insurance and financial services (% of service exports, BoP)", 
+            "Insurance and financial services cover various types of insurance provided to nonresidents by resident insurance enterprises and vice versa, and financial intermediary and auxiliary services (except those of insurance enterprises and pension funds) exchanged between residents and nonresidents.", 
+            "International Monetary Fund, Balance of Payments Statistics Yearbook and data files."
+        ], 
+        "GC.BAL.CASH.GD.ZS": [
+            "Cash surplus/deficit (% of GDP)", 
+            "Cash surplus or deficit is revenue (including grants) minus expense, minus net acquisition of nonfinancial assets. In the 1986 GFS manual nonfinancial assets were included under revenue and expenditure in gross terms. This cash surplus or deficit is closest to the earlier overall budget balance (still missing is lending minus repayments, which are now a financing item under net acquisition of financial assets).", 
+            "International Monetary Fund, Government Finance Statistics Yearbook and data files, and World Bank and OECD GDP estimates."
+        ], 
+        "FR.INR.LEND": [
+            "Lending interest rate (%)", 
+            "Lending rate is the bank rate that usually meets the short- and medium-term financing needs of the private sector. This rate is normally differentiated according to creditworthiness of borrowers and objectives of financing. The terms and conditions attached to these rates differ by country, however, limiting their comparability.", 
+            "International Monetary Fund, International Financial Statistics and data files."
+        ], 
+        "FD.AST.PRVT.GD.ZS": [
+            "Domestic credit to private sector by banks (% of GDP)", 
+            "Domestic credit to private sector by banks refers to financial resources provided to the private sector by other depository corporations (deposit taking corporations except central banks), such as through loans, purchases of nonequity securities, and trade credits and other accounts receivable, that establish a claim for repayment. For some countries these claims include credit to public enterprises.", 
+            "International Monetary Fund, International Financial Statistics and data files, and World Bank and OECD GDP estimates."
+        ], 
+        "FR.INR.RINR": [
+            "Real interest rate (%)", 
+            "Real interest rate is the lending interest rate adjusted for inflation as measured by the GDP deflator. The terms and conditions attached to lending rates differ by country, however, limiting their comparability.", 
+            "International Monetary Fund, International Financial Statistics and data files using World Bank data on the GDP deflator."
+        ], 
+        "TX.VAL.INSF.ZS.WT": [
+            "Insurance and financial services (% of commercial service exports)", 
+            "Insurance and financial services cover freight insurance on goods exported and other direct insurance such as life insurance; financial intermediation services such as commissions, foreign exchange transactions, and brokerage services; and auxiliary services such as financial market operational and regulatory services.", 
+            "International Monetary Fund, Balance of Payments Statistics Yearbook and data files."
+        ], 
+        "FS.AST.DOMS.GD.ZS": [
+            "Domestic credit provided by financial sector (% of GDP)", 
+            "Domestic credit provided by the financial sector includes all credit to various sectors on a gross basis, with the exception of credit to the central government, which is net. The financial sector includes monetary authorities and deposit money banks, as well as other financial corporations where data are available (including corporations that do not accept transferable deposits but do incur such liabilities as time and savings deposits). Examples of other financial corporations are finance and leasing companies, money lenders, insurance corporations, pension funds, and foreign exchange companies.", 
+            "International Monetary Fund, International Financial Statistics and data files, and World Bank and OECD GDP estimates."
+        ], 
+        "GC.XPN.INTP.RV.ZS": [
+            "Interest payments (% of revenue)", 
+            "Interest payments include interest payments on government debt--including long-term bonds, long-term loans, and other debt instruments--to domestic and foreign residents.", 
+            "International Monetary Fund, Government Finance Statistics Yearbook and data files."
+        ], 
+        "TM.VAL.INSF.ZS.WT": [
+            "Insurance and financial services (% of commercial service imports)", 
+            "Insurance and financial services cover freight insurance on goods imported and other direct insurance such as life insurance; financial intermediation services such as commissions, foreign exchange transactions, and brokerage services; and auxiliary services such as financial market operational and regulatory services.", 
+            "International Monetary Fund, Balance of Payments Statistics Yearbook and data files."
+        ], 
+        "NY.GDS.TOTL.ZS": [
+            "Gross domestic savings (% of GDP)", 
+            "Gross domestic savings are calculated as GDP less final consumption expenditure (total consumption).", 
+            "World Bank national accounts data, and OECD National Accounts data files."
+        ], 
+        "FR.INR.DPST": [
+            "Deposit interest rate (%)", 
+            "Deposit interest rate is the rate paid by commercial or similar banks for demand, time, or savings deposits. The terms and conditions attached to these rates differ by country, however, limiting their comparability.", 
+            "International Monetary Fund, International Financial Statistics and data files."
+        ]
+    }, 
+    "names": [
+        {
+            "NV.IND.MANF.ZS": [
+                "GDP", 
+                "Manufacturing", 
+                "Economic Structure"
+            ]
+        }, 
+        {
+            "NV.IND.MANF.KD.ZG": [
+                "GDP", 
+                "Manufacturing"
+            ]
+        }, 
+        {
+            "DT.DOD.PVLX.EX.ZS": [
+                "Banking", 
+                "Net Exports"
+            ]
+        }, 
+        {
+            "NE.IMP.GNFS.ZS": [
+                "Net Exports"
+            ]
+        }, 
+        {
+            "NE.IMP.GNFS.KD.ZG": [
+                "Net Exports"
+            ]
+        }, 
+        {
+            "NE.EXP.GNFS.KD.ZG": [
+                "Net Exports"
+            ]
+        }, 
+        {
+            "NE.EXP.GNFS.ZS": [
+                "Net Exports"
+            ]
+        }, 
+        {
+            "SL.SRV.EMPL.ZS": [
+                "Economic Structure"
+            ]
+        }, 
+        {
+            "TX.VAL.AGRI.ZS.UN": [
+                "Net Exports"
+            ]
+        }, 
+        {
+            "NE.EXP.GNFS.CD": [
+                "Net Exports"
+            ]
+        }, 
+        {
+            "TX.VAL.FUEL.ZS.UN": [
+                "Net Exports"
+            ]
+        }, 
+        {
+            "TX.VAL.TECH.MF.ZS": [
+                "Net Exports"
+            ]
+        }, 
+        {
+            "TX.VAL.INSF.ZS.WT": [
+                "Banking", 
+                "Net Exports"
+            ]
+        }, 
+        {
+            "BX.GSR.INSF.ZS": [
+                "Banking", 
+                "Net Exports"
+            ]
+        }, 
+        {
+            "GC.TAX.EXPT.ZS": [
+                "Net Exports"
+            ]
+        }, 
+        {
+            "NY.GDP.MKTP.KD.ZG": [
+                "GDP"
+            ]
+        }, 
+        {
+            "NY.GDP.PCAP.KD.ZG": [
+                "GDP"
+            ]
+        }, 
+        {
+            "NY.GDP.PCAP.CD": [
+                "GDP"
+            ]
+        }, 
+        {
+            "FI.RES.TOTL.DT.ZS": [
+                "Central Government", 
+                "Net Exports"
+            ]
+        }, 
+        {
+            "FI.RES.TOTL.MO": [
+                "Central Government", 
+                "Net Exports"
+            ]
+        }, 
+        {
+            "TX.VAL.MRCH.HI.ZS": [
+                "Net Exports"
+            ]
+        }, 
+        {
+            "TM.VAL.MRCH.HI.ZS": [
+                "Net Exports"
+            ]
+        }, 
+        {
+            "NE.CON.PRVT.KD.ZG": [
+                "GDP", 
+                "Economic Structure"
+            ]
+        }, 
+        {
+            "NE.CON.TETC.KD.ZG": [
+                "GDP", 
+                "Economic Structure"
+            ]
+        }, 
+        {
+            "NY.GDS.TOTL.ZS": [
+                "Banking", 
+                "Economic Structure"
+            ]
+        }, 
+        {
+            "FS.AST.DOMS.GD.ZS": [
+                "Banking"
+            ]
+        }, 
+        {
+            "BX.GSR.CMCP.ZS": [
+                "Net Exports"
+            ]
+        }, 
+        {
+            "TX.VAL.MANF.ZS.UN": [
+                "Net Exports", 
+                "Manufacturing"
+            ]
+        }, 
+        {
+            "TX.VAL.MRCH.R1.ZS": [
+                "Net Exports"
+            ]
+        }, 
+        {
+            "TX.VAL.MRCH.R2.ZS": [
+                "Net Exports"
+            ]
+        }, 
+        {
+            "TX.VAL.MRCH.R3.ZS": [
+                "Net Exports"
+            ]
+        }, 
+        {
+            "TX.VAL.MRCH.R4.ZS": [
+                "Net Exports"
+            ]
+        }, 
+        {
+            "TX.VAL.MRCH.R5.ZS": [
+                "Net Exports"
+            ]
+        }, 
+        {
+            "TX.VAL.MRCH.R6.ZS": [
+                "Net Exports"
+            ]
+        }, 
+        {
+            "TX.VAL.MRCH.OR.ZS": [
+                "Net Exports"
+            ]
+        }, 
+        {
+            "TX.VAL.MRCH.WR.ZS": [
+                "Net Exports"
+            ]
+        }, 
+        {
+            "TX.VAL.MRCH.AL.ZS": [
+                "Net Exports"
+            ]
+        }, 
+        {
+            "TX.VAL.MRCH.HI.ZS": [
+                "Net Exports"
+            ]
+        }, 
+        {
+            "NV.AGR.TOTL.ZS": [
+                "GDP", 
+                "Economic Structure"
+            ]
+        }, 
+        {
+            "TX.VAL.INSF.ZS.WT": [
+                "Banking", 
+                "Net Exports"
+            ]
+        }, 
+        {
+            "TM.VAL.INSF.ZS.WT": [
+                "Banking", 
+                "Net Exports"
+            ]
+        }, 
+        {
+            "FD.RES.LIQU.AS.ZS": [
+                "Banking"
+            ]
+        }, 
+        {
+            "FB.BNK.CAPA.ZS": [
+                "Banking"
+            ]
+        }, 
+        {
+            "FD.AST.PRVT.GD.ZS": [
+                "Banking"
+            ]
+        }, 
+        {
+            "NE.CON.TETC.ZS": [
+                "Economic Structure"
+            ]
+        }, 
+        {
+            "NE.CON.TETC.KD.ZG": [
+                "Economic Structure"
+            ]
+        }, 
+        {
+            "NE.CON.GOVT.ZS": [
+                "Central Government"
+            ]
+        }, 
+        {
+            "NE.CON.PRVT.KD.ZG": [
+                "Economic Structure"
+            ]
+        }, 
+        {
+            "GC.BAL.CASH.GD.ZS": [
+                "Central Government", 
+                "Banking"
+            ]
+        }, 
+        {
+            "GC.DOD.TOTL.GD.ZS": [
+                "Central Government"
+            ]
+        }, 
+        {
+            "GC.XPN.TOTL.GD.ZS": [
+                "Economic Structure"
+            ]
+        }, 
+        {
+            "GC.XPN.INTP.RV.ZS": [
+                "Banking"
+            ]
+        }, 
+        {
+            "GC.TAX.TOTL.GD.ZS": [
+                "Central Government"
+            ]
+        }, 
+        {
+            "FR.INR.LEND": [
+                "Central Government", 
+                "Banking"
+            ]
+        }, 
+        {
+            "FR.INR.DPST": [
+                "Central Government", 
+                "Banking"
+            ]
+        }, 
+        {
+            "FR.INR.RINR": [
+                "Central Government", 
+                "Banking"
+            ]
+        }, 
+        {
+            "Drop.SD": [
+                "GDP", 
+                "Economic Structure"
+            ]
+        }
+    ], 
+    "Economic Structure": {
+        "SL.SRV.EMPL.ZS": [
+            "Employment in services (% of total employment)", 
+            "Employees are people who work for a public or private employer and receive remuneration in wages, salary, commission, tips, piece rates, or pay in kind. Services correspond to divisions 6-9 (ISIC revision 2) or tabulation categories G-P (ISIC revision 3) and include wholesale and retail trade and restaurants and hotels; transport, storage, and communications; financing, insurance, real estate, and business services; and community, social, and personal services.", 
+            "International Labour Organization, Key Indicators of the Labour Market database."
+        ], 
+        "NV.AGR.TOTL.ZS": [
+            "Agriculture, value added (% of GDP)", 
+            "Agriculture corresponds to ISIC divisions 1-5 and includes forestry, hunting, and fishing, as well as cultivation of crops and livestock production. Value added is the net output of a sector after adding up all outputs and subtracting intermediate inputs. It is calculated without making deductions for depreciation of fabricated assets or depletion and degradation of natural resources. The origin of value added is determined by the International Standard Industrial Classification (ISIC), revision 3. Note: For VAB countries, gross value added at factor cost is used as the denominator.", 
+            "World Bank national accounts data, and OECD National Accounts data files."
+        ], 
+        "GC.XPN.TOTL.GD.ZS": [
+            "Expense (% of GDP)", 
+            "Expense is cash payments for operating activities of the government in providing goods and services. It includes compensation of employees (such as wages and salaries), interest and subsidies, grants, social benefits, and other expenses such as rent and dividends.", 
+            "International Monetary Fund, Government Finance Statistics Yearbook and data files, and World Bank and OECD GDP estimates."
+        ], 
+        "NV.IND.MANF.ZS": [
+            "Manufacturing, value added (% of GDP)", 
+            "Manufacturing refers to industries belonging to ISIC divisions 15-37. Value added is the net output of a sector after adding up all outputs and subtracting intermediate inputs. It is calculated without making deductions for depreciation of fabricated assets or depletion and degradation of natural resources. The origin of value added is determined by the International Standard Industrial Classification (ISIC), revision 3. Note: For VAB countries, gross value added at factor cost is used as the denominator.", 
+            "World Bank national accounts data, and OECD National Accounts data files."
+        ], 
+        "NE.CON.TETC.ZS": [
+            "Final consumption expenditure, etc. (% of GDP)", 
+            "Final consumption expenditure (formerly total consumption) is the sum of household final consumption expenditure (private consumption) and general government final consumption expenditure (general government consumption). This estimate includes any statistical discrepancy in the use of resources relative to the supply of resources.", 
+            "World Bank national accounts data, and OECD National Accounts data files."
+        ], 
+        "Drop.SD": [
+            "Drop in Growth Rate (in Standard Deviations) | Recession Impact", 
+            "This refers to the average drop in Growth Rate measured in Standard Deviations of Growth Rate for concerned country, over 2007 to 2010. We use this as a result variable to estimate \"Impact of Recession\".", 
+            "Susanne"
+        ], 
+        "NE.CON.PRVT.KD.ZG": [
+            "Household final consumption expenditure (annual % growth)", 
+            "Annual percentage growth of household final consumption expenditure based on constant local currency. Aggregates are based on constant 2005 U.S. dollars. Household final consumption expenditure (formerly private consumption) is the market value of all goods and services, including durable products (such as cars, washing machines, and home computers), purchased by households. It excludes purchases of dwellings but includes imputed rent for owner-occupied dwellings. It also includes payments and fees to governments to obtain permits and licenses. Here, household consumption expenditure includes the expenditures of nonprofit institutions serving households, even when reported separately by the country.", 
+            "World Bank national accounts data, and OECD National Accounts data files."
+        ], 
+        "NE.CON.TETC.KD.ZG": [
+            "Final consumption expenditure, etc. (annual % growth)", 
+            "Average annual growth of final consumption expenditure based on constant local currency. Aggregates are based on constant 2005 U.S. dollars. Final consumption expenditure (formerly total consumption) is the sum of household final consumption expenditure (formerly private consumption) and general government final consumption expenditure (formerly general government consumption). This estimate includes any statistical discrepancy in the use of resources relative to the supply of resources.", 
+            "World Bank national accounts data, and OECD National Accounts data files."
+        ], 
+        "NY.GDS.TOTL.ZS": [
+            "Gross domestic savings (% of GDP)", 
+            "Gross domestic savings are calculated as GDP less final consumption expenditure (total consumption).", 
+            "World Bank national accounts data, and OECD National Accounts data files."
+        ]
+    }, 
+    "Manufacturing": {
+        "NV.IND.MANF.ZS": [
+            "Manufacturing, value added (% of GDP)", 
+            "Manufacturing refers to industries belonging to ISIC divisions 15-37. Value added is the net output of a sector after adding up all outputs and subtracting intermediate inputs. It is calculated without making deductions for depreciation of fabricated assets or depletion and degradation of natural resources. The origin of value added is determined by the International Standard Industrial Classification (ISIC), revision 3. Note: For VAB countries, gross value added at factor cost is used as the denominator.", 
+            "World Bank national accounts data, and OECD National Accounts data files."
+        ], 
+        "TX.VAL.MANF.ZS.UN": [
+            "Manufactures exports (% of merchandise exports)", 
+            "Manufactures comprise commodities in SITC sections 5 (chemicals), 6 (basic manufactures), 7 (machinery and transport equipment), and 8 (miscellaneous manufactured goods), excluding division 68 (non-ferrous metals).", 
+            "World Bank staff estimates from the Comtrade database maintained by the United Nations Statistics Division."
+        ], 
+        "NV.IND.MANF.KD.ZG": [
+            "Manufacturing, value added (annual % growth)", 
+            "Annual growth rate for manufacturing value added based on constant local currency. Aggregates are based on constant 2005 U.S. dollars. Manufacturing refers to industries belonging to ISIC divisions 15-37. Value added is the net output of a sector after adding up all outputs and subtracting intermediate inputs. It is calculated without making deductions for depreciation of fabricated assets or depletion and degradation of natural resources. The origin of value added is determined by the International Standard Industrial Classification (ISIC), revision 3.", 
+            "World Bank national accounts data, and OECD National Accounts data files."
+        ]
+    }, 
+    "Net Exports": {
+        "DT.DOD.PVLX.EX.ZS": [
+            "Present value of external debt (% of exports of goods, services and primary income)", 
+            "Present value of debt is the sum of short-term external debt plus the discounted sum of total debt service payments due on public, publicly guaranteed, and private nonguaranteed long-term external debt over the life of existing loans. The exports denominator is a three-year average.", 
+            "World Bank, International Debt Statistics."
+        ], 
+        "TX.VAL.MRCH.R4.ZS": [
+            "Merchandise exports to developing economies in Middle East & North Africa (% of total merchandise exports)", 
+            "Merchandise exports to developing economies in Middle East and North Africa are the sum of merchandise exports from the reporting economy to developing economies in the Middle East and North Africa region according to World Bank classification of economies. Data are as a percentage of total merchandise exports by the economy. Data are computed only if at least half of the economies in the partner country group had non-missing data.", 
+            "World Bank staff estimates based data from International Monetary Fund's Direction of Trade database."
+        ], 
+        "NE.IMP.GNFS.KD.ZG": [
+            "Imports of goods and services (annual % growth)", 
+            "Annual growth rate of imports of goods and services based on constant local currency. Aggregates are based on constant 2005 U.S. dollars. Imports of goods and services represent the value of all goods and other market services received from the rest of the world. They include the value of merchandise, freight, insurance, transport, travel, royalties, license fees, and other services, such as communication, construction, financial, information, business, personal, and government services. They exclude compensation of employees and investment income (formerly called factor services) and transfer payments.", 
+            "World Bank national accounts data, and OECD National Accounts data files."
+        ], 
+        "TX.VAL.MRCH.OR.ZS": [
+            "Merchandise exports to developing economies outside region (% of total merchandise exports)", 
+            "Merchandise exports to developing economies outside region are the sum of merchandise exports from the reporting economy to other developing economies in other World Bank regions according to the World Bank classification of economies. Data are expressed as a percentage of total merchandise exports by the economy. Data are computed only if at least half of the economies in the partner country group had non-missing data.", 
+            "World Bank staff estimates based data from International Monetary Fund's Direction of Trade database."
+        ], 
+        "TX.VAL.MANF.ZS.UN": [
+            "Manufactures exports (% of merchandise exports)", 
+            "Manufactures comprise commodities in SITC sections 5 (chemicals), 6 (basic manufactures), 7 (machinery and transport equipment), and 8 (miscellaneous manufactured goods), excluding division 68 (non-ferrous metals).", 
+            "World Bank staff estimates from the Comtrade database maintained by the United Nations Statistics Division."
+        ], 
+        "TX.VAL.MRCH.WR.ZS": [
+            "Merchandise exports to developing economies within region (% of total merchandise exports)", 
+            "Merchandise exports to developing economies within region are the sum of merchandise exports from the reporting economy to other developing economies in the same World Bank region as a percentage of total merchandise exports by the economy. Data are computed only if at least half of the economies in the partner country group had non-missing data. No figures are shown for high-income economies, because they are a separate category in the World Bank classification of economies.", 
+            "World Bank staff estimates based data from International Monetary Fund's Direction of Trade database."
+        ], 
+        "TX.VAL.FUEL.ZS.UN": [
+            "Fuel exports (% of merchandise exports)", 
+            "Fuels comprise SITC section 3 (mineral fuels).", 
+            "World Bank staff estimates from the Comtrade database maintained by the United Nations Statistics Division."
+        ], 
+        "TX.VAL.MRCH.HI.ZS": [
+            "Merchandise exports to high-income economies (% of total merchandise exports)", 
+            "Merchandise exports to high-income economies are the sum of merchandise exports from the reporting economy to high-income economies according to the World Bank classification of economies. Data are expressed as a percentage of total merchandise exports by the economy. Data are computed only if at least half of the economies in the partner country group had non-missing data.", 
+            "World Bank staff estimates based data from International Monetary Fund's Direction of Trade database."
+        ], 
+        "TX.VAL.MRCH.R5.ZS": [
+            "Merchandise exports to developing economies in South Asia (% of total merchandise exports)", 
+            "Merchandise exports to developing economies in South Asia are the sum of merchandise exports from the reporting economy to developing economies in the South Asia region according to World Bank classification of economies. Data are as a percentage of total merchandise exports by the economy. Data are computed only if at least half of the economies in the partner country group had non-missing data.", 
+            "World Bank staff estimates based data from International Monetary Fund's Direction of Trade database."
+        ], 
+        "TM.VAL.MRCH.HI.ZS": [
+            "Merchandise imports from high-income economies (% of total merchandise imports)", 
+            "Merchandise imports from high-income economies are the sum of merchandise imports by the reporting economy from high-income economies according to the World Bank classification of economies. Data are expressed as a percentage of total merchandise imports by the economy. Data are computed only if at least half of the economies in the partner country group had non-missing data.", 
+            "World Bank staff estimates based data from International Monetary Fund's Direction of Trade database."
+        ], 
+        "TX.VAL.MRCH.AL.ZS": [
+            "Merchandise exports to economies in the Arab World (% of total merchandise exports)", 
+            "Merchandise exports to economies in the Arab World are the sum of merchandise exports by the reporting economy to economies in the Arab World. Data are expressed as a percentage of total merchandise exports by the economy. Data are computed only if at least half of the economies in the partner country group had non-missing data.", 
+            "World Bank staff estimates based data from International Monetary Fund's Direction of Trade database."
+        ], 
+        "TX.VAL.INSF.ZS.WT": [
+            "Insurance and financial services (% of commercial service exports)", 
+            "Insurance and financial services cover freight insurance on goods exported and other direct insurance such as life insurance; financial intermediation services such as commissions, foreign exchange transactions, and brokerage services; and auxiliary services such as financial market operational and regulatory services.", 
+            "International Monetary Fund, Balance of Payments Statistics Yearbook and data files."
+        ], 
+        "TX.VAL.MRCH.R2.ZS": [
+            "Merchandise exports to developing economies in Europe & Central Asia (% of total merchandise exports)", 
+            "Merchandise exports to developing economies in Europe and Central Asia are the sum of merchandise exports from the reporting economy to developing economies in the Europe and Central Asia region according to World Bank classification of economies. Data are as a percentage of total merchandise exports by the economy. Data are computed only if at least half of the economies in the partner country group had non-missing data.", 
+            "World Bank staff estimates based data from International Monetary Fund's Direction of Trade database."
+        ], 
+        "TX.VAL.TECH.MF.ZS": [
+            "High-technology exports (% of manufactured exports)", 
+            "High-technology exports are products with high R&D intensity, such as in aerospace, computers, pharmaceuticals, scientific instruments, and electrical machinery.", 
+            "United Nations, Comtrade database."
+        ], 
+        "TX.VAL.MRCH.R6.ZS": [
+            "Merchandise exports to developing economies in Sub-Saharan Africa (% of total merchandise exports)", 
+            "Merchandise exports to developing economies in Sub-Saharan Africa are the sum of merchandise exports from the reporting economy to developing economies in the Sub-Saharan Africa region according to World Bank classification of economies. Data are as a percentage of total merchandise exports by the economy. Data are computed only if at least half of the economies in the partner country group had non-missing data.", 
+            "World Bank staff estimates based data from International Monetary Fund's Direction of Trade database."
+        ], 
+        "NE.EXP.GNFS.CD": [
+            "Exports of goods and services (current US$)", 
+            "Exports of goods and services represent the value of all goods and other market services provided to the rest of the world. They include the value of merchandise, freight, insurance, transport, travel, royalties, license fees, and other services, such as communication, construction, financial, information, business, personal, and government services. They exclude compensation of employees and investment income (formerly called factor services) and transfer payments. Data are in current U.S. dollars.", 
+            "World Bank national accounts data, and OECD National Accounts data files."
+        ], 
+        "TX.VAL.AGRI.ZS.UN": [
+            "Agricultural raw materials exports (% of merchandise exports)", 
+            "Agricultural raw materials comprise SITC section 2 (crude materials except fuels) excluding divisions 22, 27 (crude fertilizers and minerals excluding coal, petroleum, and precious stones), and 28 (metalliferous ores and scrap).", 
+            "World Bank staff estimates from the Comtrade database maintained by the United Nations Statistics Division."
+        ], 
+        "NE.IMP.GNFS.ZS": [
+            "Imports of goods and services (% of GDP)", 
+            "Imports of goods and services represent the value of all goods and other market services received from the rest of the world. They include the value of merchandise, freight, insurance, transport, travel, royalties, license fees, and other services, such as communication, construction, financial, information, business, personal, and government services. They exclude compensation of employees and investment income (formerly called factor services) and transfer payments.", 
+            "World Bank national accounts data, and OECD National Accounts data files."
+        ], 
+        "TM.VAL.INSF.ZS.WT": [
+            "Insurance and financial services (% of commercial service imports)", 
+            "Insurance and financial services cover freight insurance on goods imported and other direct insurance such as life insurance; financial intermediation services such as commissions, foreign exchange transactions, and brokerage services; and auxiliary services such as financial market operational and regulatory services.", 
+            "International Monetary Fund, Balance of Payments Statistics Yearbook and data files."
+        ], 
+        "NE.EXP.GNFS.ZS": [
+            "Exports of goods and services (% of GDP)", 
+            "Exports of goods and services represent the value of all goods and other market services provided to the rest of the world. They include the value of merchandise, freight, insurance, transport, travel, royalties, license fees, and other services, such as communication, construction, financial, information, business, personal, and government services. They exclude compensation of employees and investment income (formerly called factor services) and transfer payments.", 
+            "World Bank national accounts data, and OECD National Accounts data files."
+        ], 
+        "FI.RES.TOTL.MO": [
+            "Total reserves in months of imports", 
+            "Total reserves comprise holdings of monetary gold, special drawing rights, reserves of IMF members held by the IMF, and holdings of foreign exchange under the control of monetary authorities. The gold component of these reserves is valued at year-end (December 31) London prices. This item shows reserves expressed in terms of the number of months of imports of goods and services they could pay for [Reserves/(Imports/12)].", 
+            "International Monetary Fund, International Financial Statistics and data files."
+        ], 
+        "BX.GSR.CMCP.ZS": [
+            "Communications, computer, etc. (% of service exports, BoP)", 
+            "Communications, computer, information, and other services cover international telecommunications; computer data; news-related service transactions between residents and nonresidents; construction services; royalties and license fees; miscellaneous business, professional, and technical services; personal, cultural, and recreational services; manufacturing services on physical inputs owned by others; and maintenance and repair services and government services not included elsewhere.", 
+            "International Monetary Fund, Balance of Payments Statistics Yearbook and data files."
+        ], 
+        "BX.GSR.INSF.ZS": [
+            "Insurance and financial services (% of service exports, BoP)", 
+            "Insurance and financial services cover various types of insurance provided to nonresidents by resident insurance enterprises and vice versa, and financial intermediary and auxiliary services (except those of insurance enterprises and pension funds) exchanged between residents and nonresidents.", 
+            "International Monetary Fund, Balance of Payments Statistics Yearbook and data files."
+        ], 
+        "TX.VAL.MRCH.R1.ZS": [
+            "Merchandise exports to developing economies in East Asia & Pacific (% of total merchandise exports)", 
+            "Merchandise exports to developing economies in East Asia and Pacific are the sum of merchandise exports from the reporting economy to developing economies in the East Asia and Pacific region according to World Bank classification of economies. Data are as a percentage of total merchandise exports by the economy. Data are computed only if at least half of the economies in the partner country group had non-missing data.", 
+            "World Bank staff estimates based data from International Monetary Fund's Direction of Trade database."
+        ], 
+        "NE.EXP.GNFS.KD.ZG": [
+            "Exports of goods and services (annual % growth)", 
+            "Annual growth rate of exports of goods and services based on constant local currency. Aggregates are based on constant 2005 U.S. dollars. Exports of goods and services represent the value of all goods and other market services provided to the rest of the world. They include the value of merchandise, freight, insurance, transport, travel, royalties, license fees, and other services, such as communication, construction, financial, information, business, personal, and government services. They exclude compensation of employees and investment income (formerly called factor services) and transfer payments.", 
+            "World Bank national accounts data, and OECD National Accounts data files."
+        ], 
+        "GC.TAX.EXPT.ZS": [
+            "Taxes on exports (% of tax revenue)", 
+            "Taxes on exports are all levies on goods being transported out of the country or services being delivered to nonresidents by residents. Rebates on exported goods that are repayments of previously paid general consumption taxes, excise taxes, or import duties are deducted from the gross amounts receivable from these taxes, not from amounts receivable from export taxes.", 
+            "International Monetary Fund, Government Finance Statistics Yearbook and data files."
+        ], 
+        "FI.RES.TOTL.DT.ZS": [
+            "Total reserves (% of total external debt)", 
+            "International reserves to total external debt stocks.", 
+            "World Bank, International Debt Statistics."
+        ], 
+        "TX.VAL.MRCH.R3.ZS": [
+            "Merchandise exports to developing economies in Latin America & the Caribbean (% of total merchandise exports)", 
+            "Merchandise exports to developing economies in Latin America and the Caribbean are the sum of merchandise exports from the reporting economy to developing economies in the Latin America and the Caribbean region according to World Bank classification of economies. Data are as a percentage of total merchandise exports by the economy. Data are computed only if at least half of the economies in the partner country group had non-missing data.", 
+            "World Bank staff estimates based data from International Monetary Fund's Direction of Trade database."
+        ]
+    }
+}
