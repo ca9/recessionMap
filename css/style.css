@@ -242,20 +242,20 @@ Details
 .box-team img {
     -webkit-filter: contrast(150%) brightness(-50%) sepia(100%);
     -webkit-filter: blur(2px);
-    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 3.5+ */
+    /*filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); *//* Firefox 3.5+ */
     opacity: 0.6;
 }
 
 .box-team .text {
     position: absolute;
-    background-color: rgba(255,255,255,0.2);
+    background-color: rgba(255,255,255,0.6);
     top: 15px;
     left: 10%;
     width: 80%;
 }
 
 .box-team .text:hover {
-    background-color: rgba(255,255,255,0.8);
+    background-color: rgba(255,255,255,1);
 }
 
 .box-team .wow .bounceInDown {

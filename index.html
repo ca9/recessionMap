@@ -90,10 +90,9 @@
                 <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" ng-repeat="agroup in groupNames()">
 					<div class="box-team wow bounceInDown" data-wow-delay="0.5s">
                     <img ng-src="images/details/{{ agroup | lowercase }}.jpg" alt="" class="img-responsive" />
-                    <!--<img src="images/team/1.jpx" alt="" class="img-responsive" />-->
                     <div class="text">
                         <h4> {{ agroup }} </h4>
-                        <!--<p>Art Director</p>-->
+                        <div ng-repeat="aprop in getPropsForGroup(agroup, true)"> {{ aprop }} </div>
                     </div>
                     <!--<h4>Kurt coleman</h4>-->
                     <!--<p>Art Director</p>-->

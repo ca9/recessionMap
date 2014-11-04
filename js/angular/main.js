@@ -97,6 +97,16 @@ recMap.factory('propService', function($http) {
 //    Important: This is how we access/bind a string on the frontend.
     propAsService.getCurProp = function () { return curProp; }
     propAsService.getGroups = function () {return egroups; }
+    propAsService.getPropsForGroup = function (agroup, max) {
+        max = typeof max !== 'undefined' ? max :false;
+        var retlist = [];
+        for (var avar in eprops[agroup]) {
+            retlist.push(avar);
+        }
+        if (max) //Opened in details, cant show more.
+            retlist = retlist.slice(0,7);
+        return retlist;
+    }
     return propAsService;
 });
 
@@ -114,6 +124,7 @@ recMap.controller('dataController', function($scope, dataService, propService) {
     $scope.allData = dataService.getAllData();
     $scope.eprops = propService.getPropData();
     $scope.groupNames = propService.getGroups;
+    $scope.getPropsForGroup = propService.getPropsForGroup;
 //    For Testing:
 //    setInterval(function() { console.log($scope.groupNames)}, 2000 );
 })
