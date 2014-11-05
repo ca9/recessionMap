@@ -1,11 +1,4 @@
 (function($){
-    // var trace = function(msg){
-    //   if (typeof(window)=='undefined' || !window.console) return
-    //   var len = arguments.length, args = [];
-    //   for (var i=0; i<len; i++) args.push("arguments["+i+"]")
-    //   eval("console.log("+args.join(",")+")")
-    // }
-
     var Renderer = function(elt) {
         var dom = $(elt)
         var canvas = dom.get(0)
@@ -126,14 +119,12 @@
                 })
             },
 
-
             _initMouseHandling:function(){
                 // no-nonsense drag and drop (thanks springy.js)
                 selected = null;
                 nearest = null;
                 var dragged = null;
                 var oldmass = 1
-
                 var _section = null
 
                 var handler = {
@@ -154,7 +145,7 @@
                                 dom.removeClass('linkable')
                                 window.status = ''
                             }
-                        }else if ($.inArray(nearest.node.name, ['arbor.js','code','docs','demos']) >=0 ){
+                        } else if ($.inArray(nearest.node.name, ['arbor.js','code','docs','demos']) >=0 ){
                             if (nearest.node.name!=_section){
                                 _section = nearest.node.name
                                 that.switchSection(_section)
@@ -165,6 +156,7 @@
 
                         return false
                     },
+
                     clicked:function(e){
                         var pos = $(canvas).offset();
                         _mouseP = arbor.Point(e.pageX-pos.left, e.pageY-pos.top)
@@ -181,13 +173,11 @@
 //                            return false
                         }
 
-
                         if (dragged && dragged.node !== null) dragged.node.fixed = true
-
+                        
                         $(canvas).unbind('mousemove', handler.moved);
                         $(canvas).bind('mousemove', handler.dragged)
                         $(window).bind('mouseup', handler.dropped)
-
                         return false
                     },
 
@@ -217,29 +207,26 @@
                         _mouseP = null
                         return false
                     }
-
-
                 }
-
                 $(canvas).mousedown(handler.clicked);
                 $(canvas).mousemove(handler.moved);
 
             }
         }
-
         return that
     }
 
     $(document).ready(function() {
         var final_data, neighbour_data;
+        $.ajaxSetup({beforeSend: function(xhr){
+            if (xhr.overrideMimeType)
+                xhr.overrideMimeType("application/json");
+            }
+        });
         $.when(
-            $.getJSON("data/final_data.json", function(data) {
+            $.getJSON("data/SPARTA.json", function(data) {
                 final_data = data;
                 console.log(final_data);
-            }),
-            $.getJSON("data/neighbourMap.json", function(data) {
-                neighbour_data = data;
-                console.log(neighbour_data);
             })
         ).then(function() {
                 //Real Code starts here
@@ -287,7 +274,6 @@
                         }
                     }
                 }
-
 
                 var sys = arbor.ParticleSystem()
                 sys.parameters({stiffness:900, repulsion:2000, gravity:true, dt:0.015})
