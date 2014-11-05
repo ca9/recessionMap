@@ -1,10 +1,10 @@
-recMap.directive("my-map", function($window, $parse) {
+recMap.directive("myMap", function($window) {
     return {
-        restrict: "EA",
+        restrict: "AE",
         link: function(scope, elem, attrs) {
             var theData = attrs.mapData;
+            console.log(theData);
             var d3 = $window.d3;
-            
             d3.select(window).on("resize", throttle);
 
             var zoom = d3.behavior.zoom()
@@ -14,10 +14,12 @@ recMap.directive("my-map", function($window, $parse) {
             var width = document.getElementById('MapContainer').offsetWidth;
             var height = width / 2;
             var centered;
+
             var topo, projection, path, svg, g;
             var graticule = d3.geo.graticule();
+
             var tooltip = $('#chosenCountry');
-//var mapTooltip = d3.select("#MapContainer").append("div").attr("class", "tooltip hidden");
+            //var mapTooltip = d3.select("#MapContainer").append("div").attr("class", "tooltip hidden");
 
             setup(width,height);
 
@@ -36,15 +38,12 @@ recMap.directive("my-map", function($window, $parse) {
                     .on("click", click)
 
                 g = svg.append("g");
-
             }
 
             d3.json("data/world-topo-min2.json", function(error, world) {
-
                 var countries = topojson.feature(world, world.objects.countries).features;
                 topo = countries;
                 draw(topo);
-
             });
 
             function draw(topo) {
@@ -68,43 +67,28 @@ recMap.directive("my-map", function($window, $parse) {
                     .attr("d", path)
                     .attr("id", function(d,i) { return d.id; })
                     .attr("title", function(d,i) { return d.properties.name; })
-                    .style("fill", function(d, i) { return d.properties.color; });
-
-//    //offsets for tooltips
-//    var offsetL = document.getElementById('MapContainer').offsetLeft + 20;
-//    var offsetT = document.getElementById('MapContainer').offsetTop + 10;
+                    .style("fill", function(d, i) {
+                        console.log(d, d.properties, d.properties.color);
+                        return d.properties.color;
+                    });
 
                 //tooltips
                 country
                     .on("mousemove", function(d,i) {
                         var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
-
-//            mapTooltip.classed("hidden", false)
-//                .attr("style", "left:"+(mouse[0]+offsetL)+"px;top:"+(mouse[1]+offsetT)+"px")
-//                .html(d.properties.name);
-//            mapTooltip.html(d.properties.name);
-
                     })
                     .on("mouseout",  function(d,i) {
                     })
                     .on('click', clicked);
-//        .on("click", function(d,i) {
-//            tooltip.html(d.properties.name);
-//            console.log(i);
-//        });
-
 
                 //EXAMPLE: adding some capitals from external CSV file
                 d3.csv("data/country-capitals.csv", function(err, capitals) {
-
                     capitals.forEach(function(i){
                         addpoint(i.CapitalLongitude, i.CapitalLatitude, i.CapitalName );
                     });
-
                 });
 
             }
-
 
             function redraw() {
                 width = document.getElementById('MapContainer').offsetWidth;
@@ -114,9 +98,7 @@ recMap.directive("my-map", function($window, $parse) {
                 draw(topo);
             }
 
-
             function move() {
-
                 var t = d3.event.translate;
                 var s = d3.event.scale;
                 zscale = s;
@@ -137,9 +119,7 @@ recMap.directive("my-map", function($window, $parse) {
 
                 //adjust the country hover stroke width based on zoom level
                 d3.selectAll(".country").style("stroke-width", 1.5 / s);
-
             }
-
 
             var throttleTimer;
             function throttle() {
@@ -149,15 +129,13 @@ recMap.directive("my-map", function($window, $parse) {
                 }, 200);
             }
 
-
-//geo translation on mouse click in map
+            //geo translation on mouse click in map
             function click() {
                 var latlon = projection.invert(d3.mouse(this));
                 console.log(latlon);
             }
 
-
-//function to add points and text to the map (used in plotting capitals)
+            //function to add points and text to the map (used in plotting capitals)
             function addpoint(lat,lon,text) {
 
                 var gpoint = g.append("g").attr("class", "gpoint");
@@ -207,7 +185,6 @@ recMap.directive("my-map", function($window, $parse) {
                     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
                     .style("stroke-width", 1.5 / k + "px");
             }
-
         }
     }
 })

@@ -1,17 +1,13 @@
 /*Map Related CSS [D3]*/
-.country:hover{
-    stroke: #fff;
-    stroke-width: 1.5px;
-}
+
 .text{
     font-size:10px;
     text-transform:capitalize;
 }
+
 #MapContainer {
-    margin:10px 10%;
-    border:2px solid #000;
-    border-radius: 5px;
     height:100%;
+    width:100%;
     overflow:hidden;
     background: #F0F8FF;
 }
@@ -19,6 +15,7 @@
 .hidden {
     display: none;
 }
+
 div.tooltip {
     color: #222;
     background: #fff;
@@ -29,15 +26,17 @@ div.tooltip {
     opacity: 0.9;
     position: absolute;
 }
+
 .graticule {
     fill: none;
     stroke: #bbb;
     stroke-width: .5px;
     stroke-opacity: .5;
 }
+
 .equator {
     stroke: #ccc;
-    stroke-width: 1px;
+    stroke-width: 3px;
 }
 
 /* mapTooltip */

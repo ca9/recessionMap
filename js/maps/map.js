@@ -1,3 +1,4 @@
+//Updates with a new redraw timer when window is resized.
 d3.select(window).on("resize", throttle);
 
 var zoom = d3.behavior.zoom()
@@ -10,11 +11,12 @@ var centered;
 var topo, projection, path, svg, g;
 var graticule = d3.geo.graticule();
 var tooltip = $('#chosenCountry');
-//var mapTooltip = d3.select("#MapContainer").append("div").attr("class", "tooltip hidden");
+
+var mapTooltip = d3.select("#MapContainer").append("div").attr("class", "Tooltip hidden");
 
 setup(width,height);
 
-function setup(width,height){
+function setup(width, height){
     projection = d3.geo.mercator()
         .translate([(width/2), (height/1.5)])
         .scale( width / 2 / Math.PI);
@@ -29,15 +31,12 @@ function setup(width,height){
         .on("click", click)
 
     g = svg.append("g");
-
 }
 
 d3.json("data/world-topo-min2.json", function(error, world) {
-
     var countries = topojson.feature(world, world.objects.countries).features;
     topo = countries;
     draw(topo);
-
 });
 
 function draw(topo) {
@@ -51,55 +50,53 @@ function draw(topo) {
     g.append("path")
         .datum({type: "LineString", coordinates: [[-180, 0], [-90, 0], [0, 0], [90, 0], [180, 0]]})
         .attr("class", "equator")
-        .attr("d", path);
-
+        .attr("d", path)
+        .style("fill", '#000000');
 
     var country = g.selectAll(".country").data(topo);
+    console.log(country);
 
     country.enter().insert("path")
         .attr("class", "country")
         .attr("d", path)
         .attr("id", function(d,i) { return d.id; })
         .attr("title", function(d,i) { return d.properties.name; })
-        .style("fill", function(d, i) { return d.properties.color; });
+        .style("fill", function(d, i) {
+            return d.properties.color;
+        })
+        .style("stroke", '#000000')
+        .style("stroke-width", "1");
 
-//    //offsets for tooltips
-//    var offsetL = document.getElementById('MapContainer').offsetLeft + 20;
-//    var offsetT = document.getElementById('MapContainer').offsetTop + 10;
+
+    //offsets for tooltips
+    var offsetL = document.getElementById('MapContainer').offsetLeft + 20;
+    var offsetT = document.getElementById('MapContainer').offsetTop + 10;
 
     //tooltips
     country
-        .on("mousemove", function(d,i) {
+        .on("mousemove", function(d, i) {
             var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
+            mapTooltip.classed("hidden", false)
+                .attr("style", "left:"+(mouse[0]+offsetL)+"px;top:"+(mouse[1]+offsetT)+"px")
+                .html("<b>" + d.properties.name + "</b>");
 
-//            mapTooltip.classed("hidden", false)
-//                .attr("style", "left:"+(mouse[0]+offsetL)+"px;top:"+(mouse[1]+offsetT)+"px")
-//                .html(d.properties.name);
-//            mapTooltip.html(d.properties.name);
-
+            d3.select(this)
+                .style("fill", "#FF0");
         })
-        .on("mouseout",  function(d,i) {
+        .on("mouseout",  function(d, i) {
+            mapTooltip.classed("hidden", true)
+            d3.select(this)
+                .style("fill", function(d, i) {
+                    return d.properties.color;
+                })
         })
         .on('click', clicked);
-//        .on("click", function(d,i) {
-//            tooltip.html(d.properties.name);
-//            console.log(i);
-//        });
-
-
-    //EXAMPLE: adding some capitals from external CSV file
-    d3.csv("data/country-capitals.csv", function(err, capitals) {
-
-        capitals.forEach(function(i){
-            addpoint(i.CapitalLongitude, i.CapitalLatitude, i.CapitalName );
-        });
-
-    });
 
 }
 
 
 function redraw() {
+    console.log("Redrawing.");
     width = document.getElementById('MapContainer').offsetWidth;
     height = width / 2;
     d3.select('svg').remove();
@@ -109,7 +106,6 @@ function redraw() {
 
 
 function move() {
-
     var t = d3.event.translate;
     var s = d3.event.scale;
     zscale = s;
@@ -129,12 +125,13 @@ function move() {
     g.attr("transform", "translate(" + t + ")scale(" + s + ")");
 
     //adjust the country hover stroke width based on zoom level
-    d3.selectAll(".country").style("stroke-width", 1.5 / s);
-
+    d3.selectAll(".country").style("stroke", "#000000");
+    d3.selectAll(".country").style("stroke-width", 1 / s);
 }
 
 
 var throttleTimer;
+// Just invokes redraw 200ms after the window is resized.
 function throttle() {
     window.clearTimeout(throttleTimer);
     throttleTimer = window.setTimeout(function() {
