@@ -12,7 +12,7 @@ var topo, projection, path, svg, g;
 var graticule = d3.geo.graticule();
 var tooltip = $('#chosenCountry');
 
-var mapTooltip = d3.select("#MapContainer").append("div").attr("class", "Tooltip hidden");
+var mapTooltip = d3.select("#MapContainer").append("div").attr("class", "tooltip hidden");
 
 setup(width,height);
 
