@@ -91,3 +91,14 @@ if __name__ == "__main__":
 		json.dump(final_data, fp, indent=4, separators=(',', ':'))
 		# use this to make a lighter, single-line json
 		# json.dump(final_data, fp)
+
+	continents = {}
+	for k, v in final_data.iteritems():
+		if v["continent"] not in continents:
+			continents[v["continent"]] = []
+		continents[v["continent"]].append(k)
+
+	with open('continents.json', 'wb') as fp:
+		# json.dump(final_data, fp, indent=4, separators=(',', ':'))
+		# use this to make a lighter, single-line json
+		json.dump(continents, fp)
