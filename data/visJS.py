@@ -102,3 +102,13 @@ if __name__ == "__main__":
 		# json.dump(final_data, fp, indent=4, separators=(',', ':'))
 		# use this to make a lighter, single-line json
 		json.dump(continents, fp)
+
+	d3 = {"name": "World", "children": []}
+	for continent, countries in continents.iteritems():
+		con_dict = {"name": continent, "children": []}
+		for country in countries:
+			con_dict["children"].append({"name": country, "size":4500})
+		d3["children"].append(con_dict)
+	
+	with open('graph2.json', 'wb') as fp:
+		json.dump(d3, fp, indent=4, separators=(',', ':'))
