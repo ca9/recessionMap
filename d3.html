@@ -45,7 +45,15 @@ var link = svg.selectAll(".link"),
 
 d3.json("data/graph2.json", function(error, json) {
   root = json;
-  console.log(error);
+  
+  function toggleAll(d) {
+    if (d.children) {
+      d.children.forEach(toggleAll);
+      toggle(d);
+    }
+  }
+  
+  root.children.forEach(toggleAll);
   update();
 });
 
@@ -105,6 +113,7 @@ function color(d) {
 
 // Toggle children on click.
 function click(d) {
+  console.log(d);
   if (d3.event.defaultPrevented) return; // ignore drag
   if (d.children) {
     d._children = d.children;
@@ -129,5 +138,17 @@ function flatten(root) {
   recurse(root);
   return nodes;
 }
+
+// Toggle children.
+function toggle(d) {
+  if (d.children) {
+    d._children = d.children;
+    d.children = null;
+  } else {
+    d.children = d._children;
+    d._children = null;
+  }
+}
+
 
 </script>
