@@ -4,7 +4,7 @@
 
 recMap.controller('searchController', function($scope, dataService, propService, yearService) {
 
-    $scope.ContToC = dataService.getContToC;
+    $scope.ContToC = dataService.getContToC();
 
     // constructs the suggestion engine
     var CountriesSearch = new Bloodhound({
@@ -13,8 +13,11 @@ recMap.controller('searchController', function($scope, dataService, propService,
     // `states` is an array of state names defined in "The Basics"
         local: function() {
             var conts = [];
-            for (cont in $scope.ContToC()) {
-                conts.push({value: cont});
+            for (cont in $scope.ContToC) {
+                conts.push( {
+                    value: cont,
+                    code: $scope.ContToC[cont]
+                });
             }
             return conts;
         }//$.map($scope.ContToC, function(state) { return { value: state }; })
@@ -23,7 +26,7 @@ recMap.controller('searchController', function($scope, dataService, propService,
     // Watches the ContToC output, waits for it to load. Once loaded, it initializes the search.
     $scope.$watch(
         function () {
-            return isEmptyObject($scope.ContToC());
+            return isEmptyObject($scope.ContToC);
         },
         function(newValue, oldValue, scope) {
         CountriesSearch.initialize(true);
@@ -40,7 +43,11 @@ recMap.controller('searchController', function($scope, dataService, propService,
             displayKey: 'value',
             source: CountriesSearch.ttAdapter(),
             templates: {
-                header: '<h3 class="type-name">Countries</h3>'
+                header: '<h5 class="type-name">Countries</h5>',
+                suggestion: function(country) {
+//                    console.log(country);
+                    return '<b><span>' + country.value + '</span></b><span style="float: right">' + country.code + '</span>'
+                }
             }
         }
 //    ,{
