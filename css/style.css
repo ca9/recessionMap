@@ -239,28 +239,28 @@ Details
 }
 
 /* Additions */
-.box-team img {
+/*.box-team img {*/
     /*-webkit-filter: contrast(150%) brightness(-50%) sepia(100%);*/
     /*-webkit-filter: blur(2px);*/
-    /*filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); *//* Firefox 3.5+ */
+    /*filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); *//**//* Firefox 3.5+ */
     /*opacity: 0.6;*/
-}
+/*}*/
 
-.box-team .text {
-    position: absolute;
-    background-color: rgba(255,255,255,0.6);
-    top: 15px;
-    left: 5%;
-    width: 80%;
-}
+/*.box-team .text {*/
+    /*position: absolute;*/
+    /*background-color: rgba(255,255,255,0.6);*/
+    /*top: 15px;*/
+    /*left: 5%;*/
+    /*width: 80%;*/
+/*}*/
 
-.box-team .text:hover {
-    background-color: rgba(255,255,255,1);
-}
+/*.box-team .text:hover {*/
+    /*background-color: rgba(255,255,255,1);*/
+/*}*/
 
-.box-team .wow .bounceInDown {
-    position: relative;
-}
+/*.box-team .wow .bounceInDown {*/
+    /*position: relative;*/
+/*}*/
 
 /* ================================
 Services
@@ -599,4 +599,62 @@ more media queries
 	#intro{
 		background-image: none;
 	}
+}
+
+
+
+/* ===============================
+   Search
+=============================== */
+#typeahead-search .title {
+    margin: 0 20px 5px 20px;
+    padding: 3px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.typeahead, .tt-query, .tt-hint {
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 24px;
+    height: 50px;
+    line-height: 30px;
+    outline: medium none;
+    padding: 8px 12px;
+    width: 396px;
+}
+.typeahead {
+    background-color: #fff;
+}
+.typeahead:focus {
+    border: 2px solid #0097cf;
+}
+.tt-query {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+.tt-hint {
+    color: #999;
+}
+.tt-dropdown-menu {
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 12px;
+    padding: 8px 0;
+    width: 422px;
+}
+.tt-suggestion {
+    font-size: 18px;
+    line-height: 24px;
+    padding: 3px 20px;
+}
+.tt-suggestion.tt-cursor {
+    background-color: #0097cf;
+    color: #fff;
+}
+.tt-suggestion p {
+    margin: 0;
+}
+.gist {
+    font-size: 14px;
 }

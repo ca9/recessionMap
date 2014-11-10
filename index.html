@@ -31,7 +31,7 @@
 									<li ng-repeat="ayear in years">
                                         <a ng-click="setYear(ayear)"
                                            ng-class="{selected: checkYear(ayear)}">
-                                            {{ ayear }} {{ curyear }}
+                                            {{ ayear }} {{ curYear }}
                                         </a>
                                     </li>
 								</ul>
@@ -59,15 +59,18 @@
 			
 	 </div>
 
-
     <!-- Map -->
     <section id="map" class="home-section bg-white">
         <div class="container">
             <div class="row">
                 <div class="col-md-offset-2 col-md-8">
                     <div class="section-heading">
-                        <h2>{{ view }} Map</h2>
-                        <p> Country chosen: <span id="chosenCountry"></span></p>
+                        <h2 id="chosenCountry">
+                            {{ curProp() }}, {{ curCountry() }}, {{ curYear() }}
+                        </h2>
+                        <div id="typeahead-search">
+                            <input class="typeahead" type="text" placeholder="Country, Year, or Variable.">
+                        </div>
                     </div>
                 </div>
                 <div id="MapContainer"></div>
@@ -83,24 +86,43 @@
 			  <div class="row">
 				  <div class="col-md-offset-2 col-md-8">
 					<div class="section-heading">
-                         <h2> Details </h2>
-                         <p> Economic Data for {{ allData["2000.AL"]["Country.Code2"] }} </p>
+                         <h2> Property: {{ curProp() }} </h2>
+                         <p> {{ getPropExpanded(curProp())["Name"] }} </p>
 					</div>
 				  </div>
 			  </div>
 			  <div class="row">
-                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" ng-repeat="agroup in groupNames()">
-					<div class="box-team wow bounceInDown" data-wow-delay="0.5s">
-                    <img ng-src="images/details/{{ agroup | lowercase }}.jpg" alt="" class="img-responsive" />
-                    <div class="text">
-                        <h4> {{ agroup }} </h4>
-                        <div ng-repeat="aprop in getPropsForGroup(agroup, true)"> {{ aprop }} </div>
-                    </div>
+                  <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                      <div class="box-team wow bounceInDown" data-wow-delay="0.5s">
+                          <img ng-src="images/details/{{ getPropExpanded(curProp())['EconClasses'][0] | lowercase }}.jpg" alt="" class="img-responsive" />
+                          <div class="text">
+                          </div>
+                      </div>
+                  </div>
+                  <p>
+                  <h5>Meaning:</h5>
+                  {{ getPropExpanded(curProp())["Meaning"] }}
+                  <h5>Source:</h5>
+                  {{ getPropExpanded(curProp())["Source"] }}
+                  <h5>Other Details:</h5>
+                  <b> Mean: </b> {{ getPropExpanded(curProp())["Mean"] }} |
+                  <b> Low Cutoff: </b> {{ getPropExpanded(curProp())["LowCutoff"] }} |
+                  <b> High Cutoff: </b> {{ getPropExpanded(curProp())["HighCutoff"] }}
+                  </p>
+
+
+                  <!--<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" ng-repeat="agroup in groupNames()">-->
+					<!--<div class="box-team wow bounceInDown" data-wow-delay="0.5s">-->
+                    <!--<img ng-src="images/details/{{ agroup | lowercase }}.jpg" alt="" class="img-responsive" />-->
+                    <!--<div class="text">-->
+                        <!--<h4> {{ agroup }} </h4>-->
+                        <!--<div ng-repeat="aprop in getPropsForGroup(agroup, true)"> {{ aprop }} </div>-->
+                    <!--</div>-->
                     <!--<h4>Kurt coleman</h4>-->
                     <!--<p>Art Director</p>-->
-					</div>
-                </div>
-			  </div>			  
+					<!--</div>-->
+                <!--</div>-->
+			  </div>
 		  </div>	  
 	  </section>
 	  
@@ -415,6 +437,7 @@
 		</div>	
 	</footer>
   </body>
+
   <!-- js -->
   <script src="js/jquery/jquery.js"></script>
   <script src="js/ui/bootstrap.min.js"></script>
@@ -422,10 +445,13 @@
   <script src="js/jquery/jquery.dlmenu.js"></script>
   <script src="js/ui/wow.min.js"></script>
   <script src="js/ui/custom.js"></script>
+  <script src="js/typeahead/typeahead.bundle.js"></script>
+
 
   <!--angular-->
   <script src="js/angular/angular.min.js"></script>
   <script src="js/angular/main.js"></script>
+  <script src="js/typeahead/typeahead.setup.js"></script>
 
   <!--maps-->
   <script src="js/maps/d3.min.js"></script>

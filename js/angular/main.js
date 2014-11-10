@@ -9,6 +9,10 @@ function isEmptyObject( obj ) {
     }
     return true;
 }
+function trim(s){
+    return ( s || '' ).replace( /^\s+|\s+$/g, '' );
+}
+
 
 var recMap = angular.module('recMap', []);
 
@@ -46,7 +50,7 @@ recMap.service("yearService", function() {
 
 recMap.factory("dataService", function($http) {
    var allData = {}, dataAsService = {}, url = "data/final_data.json";
-   var curCountry = "";
+   var curCountry = "World";
 
    dataAsService.queryData = function() {
        $http.get(url)
@@ -75,7 +79,14 @@ recMap.factory("dataService", function($http) {
 });
 
 recMap.factory('propService', function($http) {
-    var eprops = {}, egroups = [], curProp = null, url = 'data/propMap.json', propAsService = {};
+    var eprops = {}, egroups = {
+        "Banking": [],
+        "Central Government": [],
+        "Economic Structure": [],
+        "GDP": [],
+        "Manufacturing": [],
+        "Net Exports": []
+    }, curProp = null, url = 'data/propertiesFlourish.json', propAsService = {};
 
     propAsService.getPropData = function() {
         if (isEmptyObject(eprops)) {
@@ -89,19 +100,24 @@ recMap.factory('propService', function($http) {
             .then(function(response) {
                 eprops = response['data'];
                 curProp = "Drop.SD";
-                console.log(eprops);
                 for (var key in eprops) {
-                    if (key != "names") {
-                        egroups.push(key);
+                    var myGroups = [];
+                    for (agroup in eprops[key].EconClasses.split(",")) {
+                        var agroup = trim(eprops[key].EconClasses.split(",")[agroup]);
+                        if (agroup in egroups)
+                            egroups[agroup].push(key);
+                            myGroups.push(agroup);
                     }
+                    eprops[key].EconClasses = myGroups;
                 }
+                console.log(egroups);
                 return eprops;
             })
     }
 
 //    Important: This is how we access/bind a string on the frontend.
     propAsService.getCurProp = function () { return curProp; }
-    propAsService.getGroups = function () {return egroups; }
+    propAsService.getGroups = function () { return Object.keys(egroups); }
     propAsService.getPropsForGroup = function (agroup, max) {
         max = typeof max !== 'undefined' ? max :false;
         var retlist = [];
@@ -112,6 +128,13 @@ recMap.factory('propService', function($http) {
             retlist = retlist.slice(0,7);
         return retlist;
     }
+    propAsService.getPropExpanded = function(aVar) {
+        if (isEmptyObject(eprops)) {
+            return { "Name":"Loading", "Meaning":"Loading.", "Source":"Loading.", "EconClasses":"GDP", "Impact on Susceptibility":"Increased", "Impact Rating":"HIGH", "LowCutoff":0, "HighCutoff":10, "Mean":5, "SD":2.5, "Comments":"Loading...", "Index Reg. (Unused)":3, "Impact Rank (Unused)":0.975, "Index Stats (Unused)":30};
+        } else {
+            return eprops[aVar];
+        }
+    }
     return propAsService;
 });
 
@@ -119,7 +142,7 @@ recMap.controller('timeController', function($scope, yearService) {
 //      Static inits
         $scope.years = yearService.getYears();
 //      Year Binding
-        $scope.curyear = yearService.getCurYear;
+        $scope.curYear = yearService.getCurYear;
         $scope.setYear = yearService.setYear;
         $scope.checkYear = yearService.checkYear;
     }
@@ -127,16 +150,20 @@ recMap.controller('timeController', function($scope, yearService) {
 
 recMap.controller('dataController', function($scope, dataService, propService, yearService) {
     $scope.allData = dataService.getAllData();
+
+    $scope.propService = propService;
     $scope.eprops = propService.getPropData();
-    $scope.groupNames = propService.getGroups;
-    $scope.getPropsForGroup = propService.getPropsForGroup;
+    $scope.getPropExpanded = propService.getPropExpanded;
+//    Not needed, pulled directly from the service # Yolo.
+//    $scope.groupNames = propService.getGroups;
+//    $scope.getPropsForGroup = propService.getPropsForGroup;
 
     $scope.curCountry = dataService.getCurCountry;
-    $scope.curyear = yearService.getCurYear;
+    $scope.curYear = yearService.getCurYear;
     $scope.curProp = propService.getCurProp;
 
 //    For Testing:
-    setInterval(function() { console.log($scope.curCountry(), $scope.curyear(), $scope.curProp())}, 5000 );
+    setInterval(function() { console.log($scope.curCountry(), $scope.curYear(), $scope.curProp())}, 5000 );
 //    setInterval(function() { console.log($scope.allData)}, 5000 );
 })
 
