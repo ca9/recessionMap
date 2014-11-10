@@ -50,6 +50,7 @@ recMap.service("yearService", function() {
 
 recMap.factory("dataService", function($http) {
    var allData = {}, dataAsService = {}, url = "data/final_data.json";
+   var cToCode = {}, codeToC = {};
    var curCountry = "World";
 
    dataAsService.queryData = function() {
@@ -57,10 +58,18 @@ recMap.factory("dataService", function($http) {
            .then(function (response) {
                inData = response['data'];
                for (someItem in inData) {
+
                    // This is crucial. The object must remain the same.
                    allData[someItem] = inData[someItem];
+                   var code = inData[someItem]["Country.Code2"];
+                   var cont  = inData[someItem]["Country.Name"];
+                   if (!(cont in cToCode)) {
+                       cToCode[cont] = code;
+                       codeToC[code] = cont;
+                   }
                }
-               console.log(allData)
+               console.log(allData);
+               console.log("CtoCode:", cToCode);
                return allData;
            })
    }
@@ -73,6 +82,10 @@ recMap.factory("dataService", function($http) {
 
    dataAsService.getCurCountry = function () {
        return curCountry;
+   }
+
+   dataAsService.getContToC = function () {
+       return cToCode;
    }
 
    return dataAsService;

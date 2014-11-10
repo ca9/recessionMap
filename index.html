@@ -68,7 +68,7 @@
                         <h2 id="chosenCountry">
                             {{ curProp() }}, {{ curCountry() }}, {{ curYear() }}
                         </h2>
-                        <div id="typeahead-search">
+                        <div id="typeahead-search" ng-controller="searchController">
                             <input class="typeahead" type="text" placeholder="Country, Year, or Variable.">
                         </div>
                     </div>
@@ -451,11 +451,11 @@
   <!--angular-->
   <script src="js/angular/angular.min.js"></script>
   <script src="js/angular/main.js"></script>
-  <script src="js/typeahead/typeahead.setup.js"></script>
 
   <!--maps-->
   <script src="js/maps/d3.min.js"></script>
   <script src="js/maps/topojson.v1.min.js"></script>
   <script src="js/maps/map.js"></script>
   <script src="js/maps/map_angular.js"></script>
+  <script src="js/typeahead/typeahead.setup.js"></script>
 </html>

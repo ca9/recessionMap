@@ -2,45 +2,47 @@
  * Created by aditya on 10/11/14.
  */
 
-var states1 = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-    'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-    'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-    'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-    'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-    'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-    'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-    'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-    'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-];
+recMap.controller('searchController', function($scope, dataService, propService, yearService) {
 
+    $scope.ContToC = dataService.getContToC;
 
+    // constructs the suggestion engine
+    var CountriesSearch = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+    // `states` is an array of state names defined in "The Basics"
+        local: function() {
+            var conts = [];
+            for (cont in $scope.ContToC()) {
+                conts.push({value: cont});
+            }
+            return conts;
+        }//$.map($scope.ContToC, function(state) { return { value: state }; })
+    });
 
-// constructs the suggestion engine
-var states = new Bloodhound({
-    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-// `states` is an array of state names defined in "The Basics"
-    local: $.map(states1, function(state) { return { value: state }; })
-});
+    // Watches the ContToC output, waits for it to load. Once loaded, it initializes the search.
+    $scope.$watch(
+        function () {
+            return isEmptyObject($scope.ContToC());
+        },
+        function(newValue, oldValue, scope) {
+        CountriesSearch.initialize(true);
+    });
 
-// kicks off the loading/processing of `local` and `prefetch`
-states.initialize();
+    //nbaTeams.initialize();
+    //nhlTeams.initialize();
 
-
-//nbaTeams.initialize();
-//nhlTeams.initialize();
-
-$('#typeahead-search .typeahead').typeahead({
-        highlight: true
-    },
-    {
-        name: 'nba-teams',
-        displayKey: 'team',
-        source: states.ttAdapter(),
-        templates: {
-            header: '<h3 class="league-name">NBA Teams</h3>'
+    $('#typeahead-search .typeahead').typeahead({
+            highlight: true
+        },
+        {
+            name: 'search-countries',
+            displayKey: 'value',
+            source: CountriesSearch.ttAdapter(),
+            templates: {
+                header: '<h3 class="type-name">Countries</h3>'
+            }
         }
-    }
 //    ,{
 //        name: 'nhl-teams',
 //        displayKey: 'team',
@@ -49,4 +51,8 @@ $('#typeahead-search .typeahead').typeahead({
 //            header: '<h3 class="league-name">NHL Teams</h3>'
 //        }
 //    }
-);
+    );
+//    For Testing:
+//    setInterval(function() { console.log($scope.allData)}, 5000 );
+})
+
