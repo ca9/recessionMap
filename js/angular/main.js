@@ -31,6 +31,7 @@ recMap.service("yearService", function() {
 
     this.setYear = function(inYear) {
         curyear = inYear;
+        console.log("Year Changed:", curyear);
     }
 
     this.getCurYear = function() {
@@ -88,6 +89,16 @@ recMap.factory("dataService", function($http) {
        return cToCode;
    }
 
+   dataAsService.setCountry = function(inCountry) {
+        if (inCountry in codeToC) {
+            // Check the Code and set the "Country Name"
+            curCountry = codeToC[inCountry];
+        } else if (inCountry in cToCode) {
+            curCountry = cToCode[inCountry];
+        }
+       console.log("Current Country Changed:", curCountry);
+   }
+
    return dataAsService;
 });
 
@@ -99,7 +110,7 @@ recMap.factory('propService', function($http) {
         "GDP": [],
         "Manufacturing": [],
         "Net Exports": []
-    }, curProp = null, url = 'data/propertiesFlourish.json', propAsService = {};
+    }, curProp = "Drop.SD", url = 'data/propertiesFlourish.json', propAsService = {};
 
     propAsService.getPropData = function() {
         if (isEmptyObject(eprops)) {
@@ -112,7 +123,6 @@ recMap.factory('propService', function($http) {
         $http.get(url)
             .then(function(response) {
                 eprops = response['data'];
-                curProp = "Drop.SD";
                 for (var key in eprops) {
                     var myGroups = [];
                     for (agroup in eprops[key].EconClasses.split(",")) {
@@ -171,12 +181,12 @@ recMap.controller('dataController', function($scope, dataService, propService, y
 //    $scope.groupNames = propService.getGroups;
 //    $scope.getPropsForGroup = propService.getPropsForGroup;
 
-    $scope.curCountry = dataService.getCurCountry;
+    $scope.getCurCountry = dataService.getCurCountry;
     $scope.curYear = yearService.getCurYear;
     $scope.curProp = propService.getCurProp;
 
 //    For Testing:
-    setInterval(function() { console.log($scope.curCountry(), $scope.curYear(), $scope.curProp())}, 5000 );
+    setInterval(function() { console.log($scope.getCurCountry(), $scope.curYear(), $scope.curProp())}, 5000 );
 //    setInterval(function() { console.log($scope.allData)}, 5000 );
 })
 

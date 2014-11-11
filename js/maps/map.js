@@ -173,7 +173,9 @@ function addpoint(lat,lon,text) {
 }
 
 function clicked(d, i) {
-    tooltip.html(d.properties.name);
+//    tooltip.html(d.properties.name);
+    console.log("Selected:", d.properties);
+
     var x, y, k;
 
     if (d && centered !== d) {
