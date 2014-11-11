@@ -112,11 +112,18 @@ recMap.factory('propService', function($http) {
         "Net Exports": []
     }, curProp = "Drop.SD", url = 'data/propertiesFlourish.json', propAsService = {};
 
-    propAsService.getPropData = function() {
-        if (isEmptyObject(eprops)) {
+    propAsService.getPropData = function(override) {
+        if (override) {
+            return eprops;
+        } else if (isEmptyObject(eprops)) {
             this.queryData();
         }
         return eprops;
+    }
+
+    propAsService.setProperty = function(newProp) {
+        curProp = newProp;
+        console.log("Property Changed:", newProp);
     }
 
     propAsService.queryData = function() {
@@ -175,7 +182,7 @@ recMap.controller('dataController', function($scope, dataService, propService, y
     $scope.allData = dataService.getAllData();
 
     $scope.propService = propService;
-    $scope.eprops = propService.getPropData();
+    $scope.eprops = propService.getPropData(false);
     $scope.getPropExpanded = propService.getPropExpanded;
 //    Not needed, pulled directly from the service # Yolo.
 //    $scope.groupNames = propService.getGroups;

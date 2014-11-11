@@ -2,22 +2,24 @@
  * Created by aditya on 10/11/14.
  */
 
+/**
+ * Even though no Angular Frontend/Template Expressions are used for the searchController (Angular
+ * bindings are fairly limited, we need to define a searchController (and force invoke it in the
+ * frontend by attaching it to a DOM element). We may as well bind it to the right place.
+ */
 recMap.controller('searchController', function($scope, dataService, propService, yearService) {
-
-    $scope.ContToC = dataService.getContToC();
-    $scope.setYear = yearService.setYear;
 
     // constructs the suggestion engine for Countries
     var CountriesSearch = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-    // `states` is an array of state names defined in "The Basics"
         local: function() {
             var conts = [];
             for (cont in $scope.ContToC) {
-                conts.push( {
-                    value: cont,
+                conts.push({
+                    value: cont + " " + $scope.ContToC[cont],
                     code: $scope.ContToC[cont],
+                    contName: cont,
                     type: "Country"
                 });
             }
@@ -25,8 +27,31 @@ recMap.controller('searchController', function($scope, dataService, propService,
         }
     });
 
+    // constructs the suggestion engine for Properties
+    var EconPropsSearch = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        local: function() {
+            var props = [];
+            for (econVar in $scope.EconProps) {
+                props.push({
+                    value: econVar +
+                        " " + $scope.EconProps[econVar].Name +
+                        " " + $scope.EconProps[econVar].Source +
+                        " " + $scope.EconProps[econVar]["Impact on Susceptibility"] +
+                        " " + $scope.EconProps[econVar]["Impact Rating"] +
+                        " " + $scope.EconProps[econVar]["EconClasses"].join(" "),
+                    code: econVar,
+                    Name: $scope.EconProps[econVar].Name,
+                    type: "Property"
+                })
+            }
+            return props;
+        }
+    });
+
     // Years
-    yearsArray = yearService.getYears(); //[2001, 2002, 2003, 2004, 2005, 2006, 2007, 2010, 2011, 2012, 2013];
+    var yearsArray = yearService.getYears();
     var searchYears = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -42,11 +67,27 @@ recMap.controller('searchController', function($scope, dataService, propService,
     // Watches the ContToC output, waits for it to load. Once loaded, it initializes the search.
     $scope.$watch(
         function () {
-            return isEmptyObject($scope.ContToC);
+            return isEmptyObject(dataService.getContToC());
         },
         function(newValue, oldValue, scope) {
-        CountriesSearch.initialize(true);
+            if (newValue == false) {
+                $scope.ContToC = dataService.getContToC();
+                CountriesSearch.initialize(true);
+            }
     });
+
+    // Watches the EconProps output, waits for it to load. Once loaded, it initializes the search.
+    $scope.$watch(
+        function () {
+            return isEmptyObject(propService.getPropData(true));
+        },
+        function(newValue, oldValue, scope) {
+            if (newValue == false) {
+                console.log("Props for Search:", !newValue, $scope.EconProps);
+                $scope.EconProps = propService.getPropData(true);
+                EconPropsSearch.initialize(true);
+            }
+        });
 
 
     $('#typeahead-search .typeahead').typeahead({
@@ -60,8 +101,7 @@ recMap.controller('searchController', function($scope, dataService, propService,
             templates: {
                 header: '<h5 class="type-name">Countries</h5>',
                 suggestion: function(country) {
-//                    console.log(country);
-                    return '<b><span>' + country.value + '</span></b>' +
+                    return '<b><span>' + country.contName + '</span></b>' +
                         '<span style="float: right">' + country.code + '</span>'
                 }
             }
@@ -73,19 +113,22 @@ recMap.controller('searchController', function($scope, dataService, propService,
             templates: {
                 header: '<h5 class="type-name">Years</h5>',
                 suggestion: function(year) {
-//                    console.log(country);
-                    return '<span ng-click="setYear(' + year.value + ')"><b>' + year.value + '</b></span>'
+                    return '<span><b>' + year.value + '</b></span>'
+                }
+            }
+        },
+        {
+            name: 'search-properties',
+            displayKey: 'value',
+            source: EconPropsSearch.ttAdapter(),
+            templates: {
+                header: '<h5 class="type-name">Properties</h5>',
+                suggestion: function(prop) {
+                    return  '<span>' + prop.Name + '</span>' +
+                        '<span style="float: right"><b>' + prop.code + ':</b></span>'
                 }
             }
         }
-//    ,{
-//        name: 'nhl-teams',
-//        displayKey: 'team',
-//        source: nhlTeams.ttAdapter(),
-//        templates: {
-//            header: '<h3 class="league-name">NHL Teams</h3>'
-//        }
-//    }
     );
 
     $('#typeahead-search').on('typeahead:selected', function (e, datum) {
@@ -94,6 +137,8 @@ recMap.controller('searchController', function($scope, dataService, propService,
             dataService.setCountry(datum.code);
         } else if (datum.type == "year") {
             yearService.setYear(parseInt(datum.value));
+        } else if (datum.type == "Property") {
+            propService.setProperty(datum.code);
         }
         $scope.$apply();
     });
