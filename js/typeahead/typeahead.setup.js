@@ -59,7 +59,8 @@ recMap.controller('searchController', function($scope, dataService, propService,
         local: $.map(yearsArray, function(year) { return {
             value: year.toString(),
             type: "year"
-        }; })
+        }; }),
+        limit: 15
     });
     searchYears.initialize();
 
