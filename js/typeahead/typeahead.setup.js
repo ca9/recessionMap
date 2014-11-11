@@ -17,14 +17,15 @@ recMap.controller('searchController', function($scope, dataService, propService,
             var conts = [];
             for (cont in $scope.ContToC) {
                 conts.push({
-                    value: cont + " " + $scope.ContToC[cont],
+                    value: "Country: " + cont + " " + $scope.ContToC[cont],
                     code: $scope.ContToC[cont],
                     contName: cont,
                     type: "Country"
                 });
             }
             return conts;
-        }
+        },
+        limit: 10
     });
 
     // constructs the suggestion engine for Properties
@@ -35,7 +36,7 @@ recMap.controller('searchController', function($scope, dataService, propService,
             var props = [];
             for (econVar in $scope.EconProps) {
                 props.push({
-                    value: econVar +
+                    value: "Property: " + econVar +
                         " " + $scope.EconProps[econVar].Name +
                         " " + $scope.EconProps[econVar].Source +
                         " " + $scope.EconProps[econVar]["Impact on Susceptibility"] +
@@ -47,7 +48,8 @@ recMap.controller('searchController', function($scope, dataService, propService,
                 })
             }
             return props;
-        }
+        },
+        limit: 30
     });
 
     // Years
