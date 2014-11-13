@@ -77,7 +77,7 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
                 console.log(scope.country);
                 // angular.element("div#MapContainer").scope().country
 
-                updateColorScales(propService.getCurProp());
+                updateColorScales(scope.curProp());
                 scope.country.enter().insert("path")
                     .attr("class", "country")
                     .attr("d", path)
@@ -85,7 +85,7 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
                     .attr("title", function(d, i) { return d.properties.name; })
                     .style("fill", function(d, i) {
 //                        return d.properties.color;
-                        return getColor(d, propService.getCurProp(), yearService.getCurYear());
+                        return getColor(d, scope.curProp(), scope.curYear());
                     })
                     .style("stroke", '#000000')
                     .style("stroke-width", "1");
@@ -100,11 +100,11 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
                         var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
                         mapTooltip.classed("hidden", false)
                             .attr("style", "left:"+(mouse[0] + offsetL)+"px;top:"+(mouse[1] + offsetT)+"px")
-                            .html("<b>" + d.properties.name + "</b>" +
-                                "<p><b>" + propService.getCurProp() + ": &nbsp;</b>" +
+                            .html("<p><h5>" + d.properties.name + "</h5></p>" +
+                                "<b>" + scope.curProp() + ": &nbsp;</b>" +
                                 dataService.getPropValFor(d.properties.code,
-                                    propService.getCurProp(),
-                                    yearService.getCurYear()) + "</p>");
+                                    scope.curProp(),
+                                    scope.curYear()) + "");
 
                         d3.select(this)
                             .style("fill", "#FF0");
