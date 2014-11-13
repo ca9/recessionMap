@@ -11,7 +11,7 @@ recMap.directive("myMap", function($window) {
         link: function (scope, elem, attrs) {
 //            Testing
 //            setInterval(function() { console.log(scope.mapData) }, 1000);
-            
+                        
         }
     }
 });

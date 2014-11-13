@@ -179,9 +179,13 @@ recMap.controller('timeController', function($scope, yearService) {
 );
 
 recMap.controller('dataController', function($scope, dataService, propService, yearService) {
+    // Expose Services to Directives
+    $scope.propService = propService;
+    $scope.dataService = dataService;
+    $scope.yearService = yearService;
+
     $scope.allData = dataService.getAllData();
 
-    $scope.propService = propService;
     $scope.eprops = propService.getPropData(false);
     $scope.getPropExpanded = propService.getPropExpanded;
 //    Not needed, pulled directly from the service # Yolo.
