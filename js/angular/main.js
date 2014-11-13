@@ -2,7 +2,7 @@
  * Created by aditya on 23/10/14.
  */
 
-//Helper Functions, to be on the safe side
+// Helper Functions, to be on the safe side
 function isEmptyObject( obj ) {
     for ( var name in obj ) {
         return false;
@@ -13,7 +13,7 @@ function trim(s){
     return ( s || '' ).replace( /^\s+|\s+$/g, '' );
 }
 
-
+// App
 var recMap = angular.module('recMap', []);
 
 recMap.service("yearService", function() {
@@ -145,7 +145,7 @@ recMap.factory('propService', function($http) {
             })
     }
 
-//    Important: This is how we access/bind a string on the frontend.
+//  Important: This is how we access/bind a string on the frontend.
     propAsService.getCurProp = function () { return curProp; }
     propAsService.getGroups = function () { return Object.keys(egroups); }
     propAsService.getPropsForGroup = function (agroup, max) {
@@ -167,6 +167,29 @@ recMap.factory('propService', function($http) {
     }
     return propAsService;
 });
+
+recMap.factory('mapService', function($http, propService, dataService) {
+    var mapJSON = {}, url = "data/world-topo-min2.json",
+        mapService = {}, called = false;
+
+    mapService.getMapJSON = function() {
+        if (!called) {
+            // Ensure the data is requested only once.
+            called = true;
+            $http.get(url)
+                .then(function(response) {
+                    var inData = response['data'];
+                    for (var key in inData) {
+                        mapJSON[key] = inData[key];
+                    }
+                    console.log("Got mapData:", mapJSON);
+                })
+        }
+        return mapJSON;
+    }
+
+    return mapService;
+})
 
 recMap.controller('timeController', function($scope, yearService) {
 //      Static inits
