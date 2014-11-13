@@ -1,9 +1,7 @@
-recMap.directive("myMap", function($window, mapService, dataService) {
+recMap.directive("myMap", function($window, mapService, dataService, propService, yearService) {
     return {
         restrict: "A",
         link: function (scope, elem, attrs) {
-            // Testing
-            // setInterval(function() { console.log(scope.mapData) }, 1000);
 
             // Updates with a new redraw timer when window is resized.
             d3.select(window).on("resize", throttle);
@@ -42,6 +40,7 @@ recMap.directive("myMap", function($window, mapService, dataService) {
             }
 
             // Watch if the mapData has arrived. When it does, make the map.
+            // Note that there is no year data.
             scope.$watch(
                 function () {
                     scope.mapJSON = mapService.getMapJSON();
@@ -78,13 +77,15 @@ recMap.directive("myMap", function($window, mapService, dataService) {
                 console.log(scope.country);
                 // angular.element("div#MapContainer").scope().country
 
+                updateColorScales(propService.getCurProp());
                 scope.country.enter().insert("path")
                     .attr("class", "country")
                     .attr("d", path)
                     .attr("id", function(d, i) { return d.id; })
                     .attr("title", function(d, i) { return d.properties.name; })
                     .style("fill", function(d, i) {
-                        return d.properties.color;
+//                        return d.properties.color;
+                        return getColor(d, propService.getCurProp(), yearService.getCurYear());
                     })
                     .style("stroke", '#000000')
                     .style("stroke-width", "1");
@@ -99,7 +100,11 @@ recMap.directive("myMap", function($window, mapService, dataService) {
                         var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
                         mapTooltip.classed("hidden", false)
                             .attr("style", "left:"+(mouse[0] + offsetL)+"px;top:"+(mouse[1] + offsetT)+"px")
-                            .html("<b>" + d.properties.name + "</b>");
+                            .html("<b>" + d.properties.name + "</b>" +
+                                "<p><b>" + propService.getCurProp() + ": &nbsp;</b>" +
+                                dataService.getPropValFor(d.properties.code,
+                                    propService.getCurProp(),
+                                    yearService.getCurYear()) + "</p>");
 
                         d3.select(this)
                             .style("fill", "#FF0");
@@ -108,7 +113,8 @@ recMap.directive("myMap", function($window, mapService, dataService) {
                         mapTooltip.classed("hidden", true)
                         d3.select(this)
                             .style("fill", function(d, i) {
-                                return d.properties.color;
+                                return getColor(d, propService.getCurProp(), yearService.getCurYear());
+//                                return d.properties.color;
                             })
                     })
                     // More D3 Beauty - multiple listeners for an event.
@@ -235,7 +241,6 @@ recMap.directive("myMap", function($window, mapService, dataService) {
                     scope.centered = null;
                 }
 //                console.log("centered updated to ", scope.centered);
-
 //                g.selectAll("path")
 //                    .classed("active", scope.centered && function(d) {
 //                        return d === scope.centered;
@@ -254,6 +259,54 @@ recMap.directive("myMap", function($window, mapService, dataService) {
                 dataService.setCountry(d.properties.code);
                 scope.$apply()
             }
+
+            // Get the right color scales based on curProp.
+            function updateColorScales(selectedProp) {
+                var selectedPropExpanded = propService.getPropExpanded(selectedProp);
+                if ((selectedPropExpanded.Name == "Loading") || isEmptyObject(scope.mapJSON))
+                    return;
+                // Higher values are worse.
+                var myDomain = dataService.getMinMax(selectedProp);
+                if (selectedPropExpanded["Impact on Susceptibility"] == "Increased") {
+                    myDomain = [ myDomain.maxVal, selectedPropExpanded.Mean , myDomain.minVal ];
+                } else {
+                    myDomain = [ myDomain.minVal, selectedPropExpanded.Mean , myDomain.maxVal ];
+                }
+                console.log("For: ", selectedProp, ", domain:", myDomain);
+                scope.colorScale = d3.scale.linear()
+                    .domain(myDomain)
+                    .range(["red", "yellow", "green"]);
+            }
+
+            // Get the right color based on curProp, if any.
+            function getColor(d, selectedProp, selectedYear) {
+                if (scope.colorScale) {
+                    var val = dataService.getPropValFor(d.properties.code, selectedProp, selectedYear);
+//                    console.log("Supplying color:", scope.colorScale(val));
+                    if (val != "NA")
+                        return scope.colorScale(val);
+                    return "black";
+                } else {
+                    return d.properties.color;
+                }
+            }
+
+            // Recolour if any property or year changes.
+            //TODO: Breaks the JS. Fix.
+//            scope.$watch(
+//                function() {
+//                    var curYear = yearService.getCurYear();
+//                    var curProp = propService.getCurProp();
+//                    scope.curState = curYear.toString() + curProp;
+//                    return scope.curState;
+//                },
+//                function (newValue, oldValue) {
+//                    if (scope.colorScale) {
+//                    // Defined if drawn once.
+//                        redraw();
+//                    }
+//                }
+//            )
         }
     }
 });

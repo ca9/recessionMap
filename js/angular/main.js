@@ -9,9 +9,24 @@ function isEmptyObject( obj ) {
     }
     return true;
 }
+
 function trim(s){
-    return ( s || '' ).replace( /^\s+|\s+$/g, '' );
+    return ( s || '' ).replace( /^\s+|\s+$/g, '' )
+        .replace(/\.+$/, ''); //Also remove trailing full stops.
 }
+
+String.prototype.hashCode = function() {
+    var hash = 0, i, chr, len;
+    if (this.length == 0) return hash;
+    for (i = 0, len = this.length; i < len; i++) {
+        chr   = this.charCodeAt(i);
+        hash  = ((hash << 5) - hash) + chr;
+        hash |= 0; // Convert to 32bit integer
+    }
+    return hash;
+};
+
+
 
 // App
 var recMap = angular.module('recMap', []);
@@ -57,16 +72,20 @@ recMap.factory("dataService", function($http) {
    dataAsService.queryData = function() {
        $http.get(url)
            .then(function (response) {
-               inData = response['data'];
-               for (someItem in inData) {
+               var inData = response['data'];
+               for (var someItem in inData) {
 
-                   // This is crucial. The object must remain the same.
-                   allData[someItem] = inData[someItem];
                    var code = inData[someItem]["Country.Code2"];
                    var cont  = inData[someItem]["Country.Name"];
                    if (!(cont in cToCode)) {
                        cToCode[cont] = code;
                        codeToC[code] = cont;
+                   }
+                   // This is crucial. The object must remain the same.
+                   // allData[someItem] = inData[someItem] - we must clean up the param names.
+                   allData[someItem] = {};
+                   for (var subItem in inData[someItem]) {
+                        allData[someItem][trim(subItem)] = inData[someItem][subItem];
                    }
                }
                console.log(allData);
@@ -98,6 +117,29 @@ recMap.factory("dataService", function($http) {
             curCountry = cToCode[inCountry];
         }
        console.log("Current Country Changed:", curCountry);
+   }
+
+    // Get minimum and maximum values of a property.
+    dataAsService.getMinMax = function(property) {
+        var myMin = Number.POSITIVE_INFINITY, myMax= Number.NEGATIVE_INFINITY, property = trim(property);
+        for (var item in allData) {
+            myMin = allData[item][property] < myMin ? allData[item][property] : myMin;
+            myMax = allData[item][property] > myMax ? allData[item][property] : myMax;
+        }
+        console.log("Computed new min and max:", myMin, myMax);
+        return { 'minVal': myMin , 'maxVal': myMax };
+    }
+
+    // Fetches a property value for given property, country, year.
+   dataAsService.getPropValFor = function(countryCode, property, year) {
+       var dataKey = year.toString() + "." + countryCode;
+       var dataRow = allData[dataKey];
+       if (dataRow != undefined) {
+//           console.log("Returning", dataRow[property]);
+           return dataRow[property];
+       } else {
+           return "NA";
+       }
    }
 
    return dataAsService;
@@ -141,7 +183,7 @@ recMap.factory('propService', function($http) {
                     }
                     eprops[key].EconClasses = myGroups;
                 }
-                console.log(egroups);
+//                console.log(egroups);
                 return eprops;
             })
     }
@@ -159,6 +201,7 @@ recMap.factory('propService', function($http) {
             retlist = retlist.slice(0,7);
         return retlist;
     }
+
     propAsService.getPropExpanded = function(aVar) {
         if (isEmptyObject(eprops)) {
             return { "Name":"Loading", "Meaning":"Loading.", "Source":"Loading.", "EconClasses":"GDP", "Impact on Susceptibility":"Increased", "Impact Rating":"HIGH", "LowCutoff":0, "HighCutoff":10, "Mean":5, "SD":2.5, "Comments":"Loading...", "Index Reg. (Unused)":3, "Impact Rank (Unused)":0.975, "Index Stats (Unused)":30};
