@@ -129,8 +129,8 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
                 width = document.getElementById('MapContainer').offsetWidth;
                 height = width / 2;
                 d3.select('svg').remove();
-                setup(width,height);
-                draw(topo);
+                setup(width, height);
+                draw(scope.topo);
             }
 
 
@@ -293,20 +293,19 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
 
             // Recolour if any property or year changes.
             //TODO: Breaks the JS. Fix.
-//            scope.$watch(
-//                function() {
-//                    var curYear = yearService.getCurYear();
-//                    var curProp = propService.getCurProp();
-//                    scope.curState = curYear.toString() + curProp;
-//                    return scope.curState;
-//                },
-//                function (newValue, oldValue) {
-//                    if (scope.colorScale) {
-//                    // Defined if drawn once.
-//                        redraw();
-//                    }
-//                }
-//            )
+            scope.$watch(
+                function() {
+                    scope.curState = scope.curYear().toString() + scope.curProp();
+                    return scope.curState;
+                },
+                function (newValue, oldValue) {
+
+                    if (scope.colorScale) {
+                    // Defined if drawn once.
+                        redraw();
+                    }
+                }
+            )
         }
     }
 });
