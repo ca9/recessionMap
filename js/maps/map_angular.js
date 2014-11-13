@@ -76,6 +76,7 @@ recMap.directive("myMap", function($window, mapService, dataService) {
                 // DATA JOIN: http://bost.ocks.org/mike/join/
                 scope.country = g.selectAll(".country").data(topo);
                 console.log(scope.country);
+                // angular.element("div#MapContainer").scope().country
 
                 scope.country.enter().insert("path")
                     .attr("class", "country")
@@ -198,41 +199,47 @@ recMap.directive("myMap", function($window, mapService, dataService) {
             scope.curCountry;
             scope.$watch(
                 function() {
-                    scope.curCountry =  dataService.getCurCountry();
+                    scope.curCountry = dataService.getCurCountry();
                     return scope.curCountry;
                 },
                 function (newValue, oldValue) {
-                    var myCode = dataService.getContToC()[scope.curCountry];
-                    console.log("Map detected that curCountry has changed to:", myCode);
-                    scope.country.filter(function (d, i) {
-                        if (d.properties.code == myCode) {
-                            // Recenter around the country chosen.
-                            recenterCountry(d, i);
-                        }
-                    })
+                    if (newValue !== "World") { // Else if fites a DBG error, can't find variable.
+                        var myCode = dataService.getContToC()[scope.curCountry];
+                        console.log("Map detected that curCountry has changed to:", myCode);
+                        scope.country.filter(function (d, i) {
+                            if (d.properties.code == myCode) {
+                                if (scope.centered != d.properties.code)
+                                    recenterCountry(d, i);
+                            }
+                        })
+                    }
                 }
             )
 
             // Changes view to the country provided only. Nothing more, nothing less.
             function recenterCountry(d, i) {
-                console.log(d, i);
+//                console.log("Recentering to...", d, i, scope.centered);
                 var x, y, k;
 
-                if (d && centered !== d) {
+                if (d && scope.centered != d.properties.code) {
                     var centroid = path.centroid(d);
                     x = centroid[0];
                     y = centroid[1];
                     k = 4;
-                    centered = d;
+                    scope.centered = d.properties.code;
                 } else {
+                    // Return to world view.
                     x = width / 2;
                     y = height / 2;
                     k = 1;
-                    centered = null;
+                    scope.centered = null;
                 }
+//                console.log("centered updated to ", scope.centered);
 
-                g.selectAll("path")
-                    .classed("active", centered && function(d) { return d === centered; });
+//                g.selectAll("path")
+//                    .classed("active", scope.centered && function(d) {
+//                        return d === scope.centered;
+//                    });
 
                 g.transition()
                     .duration(750)
