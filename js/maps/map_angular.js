@@ -2,10 +2,10 @@ recMap.directive("myMap", function($window, mapService, dataService) {
     return {
         restrict: "A",
         link: function (scope, elem, attrs) {
-//            Testing
-//            setInterval(function() { console.log(scope.mapData) }, 1000);
+            // Testing
+            // setInterval(function() { console.log(scope.mapData) }, 1000);
 
-//            Updates with a new redraw timer when window is resized.
+            // Updates with a new redraw timer when window is resized.
             d3.select(window).on("resize", throttle);
 
             var zoom = d3.behavior.zoom()
@@ -15,7 +15,7 @@ recMap.directive("myMap", function($window, mapService, dataService) {
             // This is allowed inside a directive.
             var width = document.getElementById('MapContainer').offsetWidth;
             var mapTooltip = d3.select("#MapContainer").append("div").attr("class", "tooltip hidden");
-//            var tooltip = $('#chosenCountry');
+            // var tooltip = $('#chosenCountry');
 
             var height = width / 2;
             var centered;
@@ -50,13 +50,13 @@ recMap.directive("myMap", function($window, mapService, dataService) {
                 function(newValue, oldValue, scope) {
                     if (newValue == false) {
                         console.log("Got map data within directive:", scope.mapJSON);
-                        var countries = topojson.feature(scope.mapJSON,
+                        scope.topo = topojson.feature(scope.mapJSON,
                             scope.mapJSON.objects.countries).features;
-                        topo = countries;
-                        draw(topo);
+                        // Access as follows:
+                        // angular.element("div#MapContainer").scope().topo
+                        draw(scope.topo);
                     }
                 });
-
 
             function draw(topo) {
 
@@ -65,38 +65,39 @@ recMap.directive("myMap", function($window, mapService, dataService) {
                     .attr("class", "graticule")
                     .attr("d", path);
 
-
                 g.append("path")
                     .datum({type: "LineString", coordinates: [[-180, 0], [-90, 0], [0, 0], [90, 0], [180, 0]]})
                     .attr("class", "equator")
                     .attr("d", path)
                     .style("fill", '#000000');
 
-                var country = g.selectAll(".country").data(topo);
-                console.log(country);
+                // console.log("Attaching data:", topo)
+                // What sorcery is this?
+                // DATA JOIN: http://bost.ocks.org/mike/join/
+                scope.country = g.selectAll(".country").data(topo);
+                console.log(scope.country);
 
-                country.enter().insert("path")
+                scope.country.enter().insert("path")
                     .attr("class", "country")
                     .attr("d", path)
-                    .attr("id", function(d,i) { return d.id; })
-                    .attr("title", function(d,i) { return d.properties.name; })
+                    .attr("id", function(d, i) { return d.id; })
+                    .attr("title", function(d, i) { return d.properties.name; })
                     .style("fill", function(d, i) {
                         return d.properties.color;
                     })
                     .style("stroke", '#000000')
                     .style("stroke-width", "1");
 
-
                 //offsets for tooltips
                 var offsetL = document.getElementById('MapContainer').offsetLeft + 20;
                 var offsetT = document.getElementById('MapContainer').offsetTop + 10;
 
                 //tooltips
-                country
+                scope.country
                     .on("mousemove", function(d, i) {
                         var mouse = d3.mouse(svg.node()).map( function(d) { return parseInt(d); } );
                         mapTooltip.classed("hidden", false)
-                            .attr("style", "left:"+(mouse[0]+offsetL)+"px;top:"+(mouse[1]+offsetT)+"px")
+                            .attr("style", "left:"+(mouse[0] + offsetL)+"px;top:"+(mouse[1] + offsetT)+"px")
                             .html("<b>" + d.properties.name + "</b>");
 
                         d3.select(this)
@@ -109,8 +110,10 @@ recMap.directive("myMap", function($window, mapService, dataService) {
                                 return d.properties.color;
                             })
                     })
-                    .on('click', clicked);
-
+                    // More D3 Beauty - multiple listeners for an event.
+                    .on('click.view', recenterCountry)
+                    .on('click.update', updateService);
+                    // console.log("Country Map objects:", scope.country);
             }
 
 
@@ -150,7 +153,7 @@ recMap.directive("myMap", function($window, mapService, dataService) {
 
 
             var throttleTimer;
-// Just invokes redraw 200ms after the window is resized.
+            // Just invokes redraw 200ms after the window is resized.
             function throttle() {
                 window.clearTimeout(throttleTimer);
                 throttleTimer = window.setTimeout(function() {
@@ -159,14 +162,14 @@ recMap.directive("myMap", function($window, mapService, dataService) {
             }
 
 
-//geo translation on mouse click in map
+            //geo translation on mouse click in map
             function click() {
                 var latlon = projection.invert(d3.mouse(this));
                 console.log(latlon);
             }
 
 
-//function to add points and text to the map (used in plotting capitals)
+            //function to add points and text to the map (used in plotting capitals)
             function addpoint(lat,lon,text) {
 
                 var gpoint = g.append("g").attr("class", "gpoint");
@@ -191,12 +194,28 @@ recMap.directive("myMap", function($window, mapService, dataService) {
 
             }
 
-            function clicked(d, i) {
-                console.log("Selected:", d.properties);
-                // Do the magic.
-                dataService.setCountry(d.properties.code);
-                scope.$apply()
+            // We need to listen to the global "curCountry" and update the map as it changes.
+            scope.curCountry;
+            scope.$watch(
+                function() {
+                    scope.curCountry =  dataService.getCurCountry();
+                    return scope.curCountry;
+                },
+                function (newValue, oldValue) {
+                    var myCode = dataService.getContToC()[scope.curCountry];
+                    console.log("Map detected that curCountry has changed to:", myCode);
+                    scope.country.filter(function (d, i) {
+                        if (d.properties.code == myCode) {
+                            // Recenter around the country chosen.
+                            recenterCountry(d, i);
+                        }
+                    })
+                }
+            )
 
+            // Changes view to the country provided only. Nothing more, nothing less.
+            function recenterCountry(d, i) {
+                console.log(d, i);
                 var x, y, k;
 
                 if (d && centered !== d) {
@@ -221,6 +240,13 @@ recMap.directive("myMap", function($window, mapService, dataService) {
                     .style("stroke-width", 1.5 / k + "px");
             }
 
+            // Informs the service about the new country in town.
+            function updateService(d, i) {
+                // Do the magic.
+                console.log("Selected:", d.properties);
+                dataService.setCountry(d.properties.code);
+                scope.$apply()
+            }
         }
     }
 });

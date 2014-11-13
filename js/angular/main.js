@@ -85,6 +85,7 @@ recMap.factory("dataService", function($http) {
        return curCountry;
    }
 
+    // Get the Country to Code mapping.
    dataAsService.getContToC = function () {
        return cToCode;
    }
