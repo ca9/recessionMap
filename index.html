@@ -1,460 +1,483 @@
 <!DOCTYPE html>
 <html ng-app="recMap">
-  <head>
+<head>
     <title>World Recession Susceptibility Map</title>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- css -->
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="css/style.css" rel="stylesheet" media="screen">
     <link href="css/map.css" rel="stylesheet" media="screen">
-	<link href="color/default.css" rel="stylesheet" media="screen">
-	<script src="js/ui/modernizr.custom.js"></script>
-  </head>
+    <link href="color/default.css" rel="stylesheet" media="screen">
+    <script src="js/ui/modernizr.custom.js"></script>
+</head>
 
-  <body ng-controller="dataController">
-	<div class="menu-area">
-			<div id="dl-menu" class="dl-menuwrapper">
-						<button class="dl-trigger">Open Menu</button>
-						<ul class="dl-menu">
-							<li>
-								<a href="#intro">Top</a>
-							</li>
-                            <li><a href="#map">Map</a></li>
-							<li><a href="#details">Details</a></li>
-							<li><a href="#services">Services</a></li>
-							<li><a href="#works">Works</a></li>
-							<li><a href="#contact">Contact</a></li>
-							<li ng-controller="timeController">
-								<a href="#">Year</a>
-								<ul class="dl-submenu">
-									<li ng-repeat="ayear in years">
-                                        <a ng-click="setYear(ayear)"
-                                           ng-class="{selected: checkYear(ayear)}">
-                                            {{ ayear }} {{ curYear }}
-                                        </a>
-                                    </li>
-								</ul>
-							</li>
-						</ul>
-					</div><!-- /dl-menuwrapper -->
-	</div>	
+<body ng-controller="dataController">
+<div class="menu-area">
+    <div id="dl-menu" class="dl-menuwrapper">
+        <button class="dl-trigger">Open Menu</button>
+        <ul class="dl-menu">
+            <li>
+                <a href="#intro">Top</a>
+            </li>
+            <li><a href="#map">Map</a></li>
+            <li><a href="#details">Details</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#works">Works</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li ng-controller="timeController">
+                <a href="#">Year</a>
+                <ul class="dl-submenu">
+                    <li ng-repeat="ayear in years">
+                        <a ng-click="setYear(ayear)"
+                           ng-class="{selected: checkYear(ayear)}">
+                            {{ ayear }} {{ curYear }}
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
 
-	  <!-- intro area -->	  
-	  <div id="intro">
-	  
-			<div class="intro-text">
-				<div class="container">
-					<div class="row">
-					<div class="col-md-12">
-						<div class="brand">
-							<h1><a href="index.html"> Susanne </a></h1>
-							<div class="line-spacer"></div>
-							<p><span>World Recession Susceptibility Analysis (Sus-An)</span></p>
-						</div>
-					</div>
-					</div>
-				</div>
-		 	</div>
-			
-	 </div>
-
-    <!-- Map -->
-    <section id="map" class="home-section bg-white">
+<!-- intro area -->
+<div id="intro">
+    <div class="intro-text">
         <div class="container">
             <div class="row">
-                <div class="col-md-offset-2 col-md-8">
-                    <div class="section-heading">
-                        <h2 id="chosenCountry">
-                            {{ curProp() }}, {{ getCurCountry() }}, {{ curYear() }}
-                        </h2>
-                        <div my-search id="typeahead-search">
-                            <input class="typeahead" type="text" placeholder="Country, Year, or Variable.">
-                        </div>
+                <div class="col-md-12">
+                    <div class="brand">
+                        <h1><a href="index.html"> Susanne </a></h1>
+
+                        <div class="line-spacer"></div>
+                        <p><span>World Recession Susceptibility Analysis (Sus-An)</span></p>
                     </div>
                 </div>
-                <div id="MapContainer"></div>
-                <div my-map></div>
             </div>
         </div>
-    </section>
+    </div>
+</div>
 
+<!-- Map -->
+<section id="map" class="home-section bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <div class="section-heading">
+                    <h2 id="chosenCountry">
+                        {{ curProp() }}, {{ getCurCountry() }}, {{ curYear() }}
+                    </h2>
 
-    <!-- Details -->
-	  <section id="details" class="home-section bg-white">
-		<div class="container">
-			  <div class="row">
-				  <div class="col-md-offset-2 col-md-8">
-					<div class="section-heading">
-                         <h2> Property: {{ curProp() }} </h2>
-                         <p> {{ getPropExpanded(curProp())["Name"] }} </p>
-					</div>
-				  </div>
-			  </div>
-			  <div class="row">
-                  <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                      <div class="box-team wow bounceInDown" data-wow-delay="0.5s">
-                          <img ng-src="images/details/{{ getPropExpanded(curProp())['EconClasses'][0] | lowercase }}.jpg" alt="" class="img-responsive" />
-                          <div class="text">
-                          </div>
-                      </div>
-                  </div>
-                  <p>
-                  <h5>Meaning:</h5>
-                  {{ getPropExpanded(curProp())["Meaning"] }}
-                  <h5>Source:</h5>
-                  {{ getPropExpanded(curProp())["Source"] }}
-                  <h5>Other Details:</h5>
-                  <b> Mean: </b> {{ getPropExpanded(curProp())["Mean"] }} |
-                  <b> Low Cutoff: </b> {{ getPropExpanded(curProp())["LowCutoff"] }} |
-                  <b> High Cutoff: </b> {{ getPropExpanded(curProp())["HighCutoff"] }}
-                  </p>
-
-
-                  <!--<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" ng-repeat="agroup in groupNames()">-->
-					<!--<div class="box-team wow bounceInDown" data-wow-delay="0.5s">-->
-                    <!--<img ng-src="images/details/{{ agroup | lowercase }}.jpg" alt="" class="img-responsive" />-->
-                    <!--<div class="text">-->
-                        <!--<h4> {{ agroup }} </h4>-->
-                        <!--<div ng-repeat="aprop in getPropsForGroup(agroup, true)"> {{ aprop }} </div>-->
-                    <!--</div>-->
-                    <!--<h4>Kurt coleman</h4>-->
-                    <!--<p>Art Director</p>-->
-					<!--</div>-->
-                <!--</div>-->
-			  </div>
-		  </div>	  
-	  </section>
-	  
-		<!-- spacer -->	  
-		<section id="spacer1" class="home-section spacer">	
-           <div class="container">
-				<div class="row">
-					<div class="col-md-12">
-						<div class="color-light">
-						<h2 class="wow bounceInDown" data-wow-delay="1s">Details are the key for perfection</h2>
-						<p class="lead wow bounceInUp" data-wow-delay="2s">We mix all detailed things together</p>	
-						</div>
-					</div>				
-				</div>
+                    <div my-search id="typeahead-search">
+                        <input class="typeahead" type="text" placeholder="Country, Year, or Variable.">
+                    </div>
+                </div>
             </div>
-		</section>	  
-	  
-	  <!-- Services -->
-	 <section id="services" class="home-section bg-white">
-		<div class="container">
-			  <div class="row">
-				  <div class="col-md-offset-2 col-md-8">
-					<div class="section-heading">
-					 <h2>Services</h2>
-					 <p>Est te congue scaevola comprehensam. No pri simul decore, in partem electram voluptatibus vel esse facer.</p>
-					</div>
-				  </div>
-			  </div>
-			  <div class="row">
-                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-					<div class="service-box wow bounceInDown" data-wow-delay="0.1s">
-						<i class="fa fa-code fa-4x"></i>
-						<h4>Valid HTML5</h4>
-						<p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
-						<a class="btn btn-primary">Learn more</a>
-					</div>
+            <div id="MapContainer"></div>
+            <div my-map></div>
+        </div>
+    </div>
+</section>
+
+<!-- Details -->
+<section id="details" class="home-section bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <div class="section-heading">
+                    <h2> Property: {{ curProp() }} </h2>
+
+                    <p> {{ getPropExpanded(curProp())["Name"] }} </p>
                 </div>
-                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" data-wow-delay="0.3s">
-					<div class="service-box wow bounceInDown" data-wow-delay="0.1s">
-						<i class="fa fa-cog fa-4x"></i>
-						<h4>Easy to Customize</h4>
-						<p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
-						<a class="btn btn-primary">Learn more</a>
-					</div>
-                </div>
-                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" data-wow-delay="0.5s">
-					<div class="service-box wow bounceInDown" data-wow-delay="0.1s">
-						<i class="fa fa-desktop fa-4x"></i>
-						<h4>Responsive Layout</h4>
-						<p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
-						<a class="btn btn-primary">Learn more</a>
-					</div>
-                </div>
-                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" data-wow-delay="0.7s">
-					<div class="service-box wow bounceInDown" data-wow-delay="0.1s">
-						<i class="fa fa-dropbox fa-4x"></i>
-						<h4>Ready to use</h4>
-						<p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
-						<a class="btn btn-primary">Learn more</a>
-					</div>
-                </div>
-			  </div>	
-		</div>
-	</section>
-	
-	 <!-- Works -->
-	<section id="works" class="home-section bg-gray">
-			<div class="container">
-			  <div class="row">
-				  <div class="col-md-offset-2 col-md-8">
-					<div class="section-heading">
-					 <h2>Works</h2>
-					 <p>Dicunt tamquam dissentiet vix ex, ne mei dico reformidans, accumsan gloriatur necessitatibus eu sit.</p>
-					</div>
-				  </div>
-			  </div>
-				<div class="row">
-					<div class="col-md-offset-2 col-md-8">
-					
-					<ul class="lb-album">
-						<li>
-							<a href="#image-1">
-								<img src="images/works/thumbs/1.jpg" alt="">
-								<span>+</span>
-							</a>
-							<div class="lb-overlay" id="image-1">
-								<a href="#page" class="lb-close">X</a>
-								<img src="images/works/1.jpg" alt="" />
-								<div>
-									<h3>Sleek <span>/Design/</h3>
-									<p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
-								</div>
-								
-							</div>
-						</li>
-						<li>
-							<a href="#image-2">
-								<img src="images/works/thumbs/2.jpg" alt="">
-								<span>+</span>
-							</a>
-							<div class="lb-overlay" id="image-2">
-								<a href="#page" class="lb-close">x Close</a>
-								<img src="images/works/2.jpg" alt="" />
-								<div>
-									<h3>Sleek <span>/Design/</h3>
-									<p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
-								</div>
-								
-							</div>
-						</li>
-						<li>
-							<a href="#image-3">
-								<img src="images/works/thumbs/3.jpg" alt="">
-								<span>+</span>
-							</a>
-							<div class="lb-overlay" id="image-3">
-								<a href="#page" class="lb-close">x Close</a>
-								<img src="images/works/3.jpg" alt="" />
-								<div>
-									<h3>Sleek <span>/Design/</h3>
-									<p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
-								</div>
-								
-							</div>
-						</li>
-						<li>
-							<a href="#image-4">
-								<img src="images/works/thumbs/4.jpg" alt="">
-								<span>+</span>
-							</a>
-							<div class="lb-overlay" id="image-4">
-								<a href="#page" class="lb-close">x Close</a>
-								<img src="images/works/4.jpg" alt="" />
-								<div>
-									<h3>Sleek <span>/Design/</h3>
-									<p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
-								</div>
-								
-							</div>
-						</li>
-						
-						<li>
-							<a href="#image-5">
-								<img src="images/works/thumbs/5.jpg" alt="">
-								<span>+</span>
-							</a>
-							<div class="lb-overlay" id="image-5">
-								<a href="#page" class="lb-close">X</a>
-								<img src="images/works/5.jpg" alt="" />
-								<div>
-									<h3>Sleek <span>/Design/</h3>
-									<p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
-								</div>
-								
-							</div>
-						</li>
-						<li>
-							<a href="#image-6">
-								<img src="images/works/thumbs/6.jpg" alt="">
-								<span>+</span>
-							</a>
-							<div class="lb-overlay" id="image-6">
-								<a href="#page" class="lb-close">x Close</a>
-								<img src="images/works/6.jpg" alt="" />
-								<div>
-									<h3>Sleek <span>/Design/</h3>
-									<p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
-								</div>
-								
-							</div>
-						</li>
-						<li>
-							<a href="#image-7">
-								<img src="images/works/thumbs/7.jpg" alt="">
-								<span>+</span>
-							</a>
-							<div class="lb-overlay" id="image-7">
-								<a href="#page" class="lb-close">x Close</a>
-								<img src="images/works/7.jpg" alt="" />
-								<div>
-									<h3>Sleek <span>/Design/</h3>
-									<p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
-								</div>
-								
-							</div>
-						</li>
-						<li>
-							<a href="#image-8">
-								<img src="images/works/thumbs/8.jpg" alt="">
-								<span>+</span>
-							</a>
-							<div class="lb-overlay" id="image-8">
-								<a href="#page" class="lb-close">x Close</a>
-								<img src="images/works/8.jpg" alt="" />
-								<div>
-									<h3>Sleek <span>/Design/</h3>
-									<p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
-								</div>
-								
-							</div>
-						</li>
-					</ul>
-					
-					</div>
-				</div>
-			</div>
-		</section>	  
-	
-		<!-- spacer 2 -->	  
-		<section id="spacer2" class="home-section spacer">	
-           <div class="container">
-				<div class="row">
-					<div class="col-md-12">
-						<div class="color-light">
-						<h2 class="wow bounceInDown" data-wow-delay="1s">Details are the key for perfection</h2>
-						<p class="lead wow bounceInUp" data-wow-delay="2s">We mix all detailed things together</p>	
-						</div>
-					</div>				
-				</div>
             </div>
-		</section>	
-	  
-	 <!-- Contact -->
-	  <section id="contact" class="home-section bg-white">
-	  	<div class="container">
-			  <div class="row">
-				  <div class="col-md-offset-2 col-md-8">
-					<div class="section-heading">
-					 <h2>Contact us</h2>
-					 <p>Contact via form below and we will be get in touch with you within 24 hours. </p>
-					</div>
-				  </div>
-			  </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                <div class="box-team wow bounceInDown" data-wow-delay="0.5s">
+                    <img ng-src="images/details/{{ getPropExpanded(curProp())['EconClasses'][0] | lowercase }}.jpg"
+                         alt="" class="img-responsive"/>
 
-	  		<div class="row">
-	  			<div class="col-md-offset-1 col-md-10">
+                    <div class="text"></div>
+                </div>
+            </div>
+            <h5>Meaning:</h5>
+            {{ getPropExpanded(curProp())["Meaning"] }}
+            <h5>Source:</h5>
+            {{ getPropExpanded(curProp())["Source"] }}
+            <h5>Other Details:</h5>
+            <b> Mean: </b> {{ getPropExpanded(curProp())["Mean"] }} |
+            <b> Low Cutoff: </b> {{ getPropExpanded(curProp())["LowCutoff"] }} |
+            <b> High Cutoff: </b> {{ getPropExpanded(curProp())["HighCutoff"] }}
+            <!--<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" ng-repeat="agroup in groupNames()">-->
+            <!--<div class="box-team wow bounceInDown" data-wow-delay="0.5s">-->
+            <!--<img ng-src="images/details/{{ agroup | lowercase }}.jpg" alt="" class="img-responsive" />-->
+            <!--<div class="text">-->
+            <!--<h4> {{ agroup }} </h4>-->
+            <!--<div ng-repeat="aprop in getPropsForGroup(agroup, true)"> {{ aprop }} </div>-->
+            <!--</div>-->
+            <!--<h4>Kurt coleman</h4>-->
+            <!--<p>Art Director</p>-->
+            <!--</div>-->
+            <!--</div>-->
+        </div>
+    </div>
+</section>
 
-				<form class="form-horizontal" role="form">
-				  <div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-					  <input type="text" class="form-control" id="inputName" placeholder="Name">
-					</div>
-				  </div>
-				  <div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-					  <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-					</div>
-				  </div>
-				  <div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-					  <input type="text" class="form-control" id="inputSubject" placeholder="Subject">
-					</div>
-				  </div>
-				  <div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-					  <textarea name="message" class="form-control" rows="3" placeholder="Message"></textarea>
-					</div>
-				  </div>
-				  <div class="form-group">
-					<div class="col-md-offset-2 col-md-8">
-					 <button type="button" class="btn btn-theme btn-lg btn-block">Send message</button>
-					</div>
-				  </div>
-				</form>
-	
-	  			</div>
-			
-				
-	  		</div>
-			<div class="row mar-top30 ">
-				<div class="col-md-offset-2 col-md-8">
-					<h5>We're on social networks</h5>
-					<ul class="social-network">
-						<li><a href="#">
+<!-- spacer -->
+<section id="spacer1" class="home-section spacer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="color-light">
+                    <h2 class="wow bounceInDown" data-wow-delay="1s">Details are the key for perfection</h2>
+
+                    <p class="lead wow bounceInUp" data-wow-delay="2s">We mix all detailed things together</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services -->
+<section id="services" class="home-section bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <div class="section-heading">
+                    <h2>Services</h2>
+
+                    <p>Est te congue scaevola comprehensam. No pri simul decore, in partem electram voluptatibus vel
+                        esse facer.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                <div class="service-box wow bounceInDown" data-wow-delay="0.1s">
+                    <i class="fa fa-code fa-4x"></i>
+                    <h4>Valid HTML5</h4>
+
+                    <p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
+                    <a class="btn btn-primary">Learn more</a>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" data-wow-delay="0.3s">
+                <div class="service-box wow bounceInDown" data-wow-delay="0.1s">
+                    <i class="fa fa-cog fa-4x"></i>
+                    <h4>Easy to Customize</h4>
+
+                    <p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
+                    <a class="btn btn-primary">Learn more</a>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" data-wow-delay="0.5s">
+                <div class="service-box wow bounceInDown" data-wow-delay="0.1s">
+                    <i class="fa fa-desktop fa-4x"></i>
+                    <h4>Responsive Layout</h4>
+
+                    <p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
+                    <a class="btn btn-primary">Learn more</a>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3" data-wow-delay="0.7s">
+                <div class="service-box wow bounceInDown" data-wow-delay="0.1s">
+                    <i class="fa fa-dropbox fa-4x"></i>
+                    <h4>Ready to use</h4>
+
+                    <p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
+                    <a class="btn btn-primary">Learn more</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Works -->
+<section id="works" class="home-section bg-gray">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <div class="section-heading">
+                    <h2>Works</h2>
+
+                    <p>Dicunt tamquam dissentiet vix ex, ne mei dico reformidans, accumsan gloriatur necessitatibus eu
+                        sit.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <ul class="lb-album">
+                    <li>
+                        <a href="#image-1">
+                            <img src="images/works/thumbs/1.jpg" alt="">
+                            <span>+</span>
+                        </a>
+
+                        <div class="lb-overlay" id="image-1">
+                            <a href="#page" class="lb-close">X</a>
+                            <img src="images/works/1.jpg" alt=""/>
+
+                            <div>
+                                <h3>Sleek <span>/Design/</span></h3>
+
+                                <p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
+                            </div>
+
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#image-2">
+                            <img src="images/works/thumbs/2.jpg" alt="">
+                            <span>+</span>
+                        </a>
+
+                        <div class="lb-overlay" id="image-2">
+                            <a href="#page" class="lb-close">x Close</a>
+                            <img src="images/works/2.jpg" alt=""/>
+
+                            <div>
+                                <h3>Sleek <span>/Design/</span></h3>
+
+                                <p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#image-3">
+                            <img src="images/works/thumbs/3.jpg" alt="">
+                            <span>+</span>
+                        </a>
+
+                        <div class="lb-overlay" id="image-3">
+                            <a href="#page" class="lb-close">x Close</a>
+                            <img src="images/works/3.jpg" alt=""/>
+
+                            <div>
+                                <h3>Sleek <span>/Design/</span></h3>
+
+                                <p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
+                            </div>
+
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#image-4">
+                            <img src="images/works/thumbs/4.jpg" alt="">
+                            <span>+</span>
+                        </a>
+
+                        <div class="lb-overlay" id="image-4">
+                            <a href="#page" class="lb-close">x Close</a>
+                            <img src="images/works/4.jpg" alt=""/>
+
+                            <div>
+                                <h3>Sleek <span>/Design/</span></h3>
+
+                                <p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a href="#image-5">
+                            <img src="images/works/thumbs/5.jpg" alt="">
+                            <span>+</span>
+                        </a>
+
+                        <div class="lb-overlay" id="image-5">
+                            <a href="#page" class="lb-close">X</a>
+                            <img src="images/works/5.jpg" alt=""/>
+
+                            <div>
+                                <h3>Sleek <span>/Design/</span></h3>
+
+                                <p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a href="#image-6">
+                            <img src="images/works/thumbs/6.jpg" alt="">
+                            <span>+</span>
+                        </a>
+
+                        <div class="lb-overlay" id="image-6">
+                            <a href="#page" class="lb-close">x Close</a>
+                            <img src="images/works/6.jpg" alt=""/>
+
+                            <div>
+                                <h3>Sleek <span>/Design/</span></h3>
+
+                                <p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a href="#image-7">
+                            <img src="images/works/thumbs/7.jpg" alt="">
+                            <span>+</span>
+                        </a>
+
+                        <div class="lb-overlay" id="image-7">
+                            <a href="#page" class="lb-close">x Close</a>
+                            <img src="images/works/7.jpg" alt=""/>
+
+                            <div>
+                                <h3>Sleek <span>/Design/</span></h3>
+
+                                <p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a href="#image-8">
+                            <img src="images/works/thumbs/8.jpg" alt="">
+                            <span>+</span>
+                        </a>
+
+                        <div class="lb-overlay" id="image-8">
+                            <a href="#page" class="lb-close">x Close</a>
+                            <img src="images/works/8.jpg" alt=""/>
+
+                            <div>
+                                <h3>Sleek <span>/Design/</span></h3>
+
+                                <p>Lorem ipsum dolor sit amet, ut decore iracundia urbanitas sit.</p>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- spacer 2 -->
+<section id="spacer2" class="home-section spacer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="color-light">
+                    <h2 class="wow bounceInDown" data-wow-delay="1s">Details are the key for perfection</h2>
+
+                    <p class="lead wow bounceInUp" data-wow-delay="2s">We mix all detailed things together</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="home-section bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <div class="section-heading">
+                    <h2>Contact us</h2>
+
+                    <p>Contact via form below and we will be get in touch with you within 24 hours. </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <input type="text" class="form-control" id="inputName" placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <input type="text" class="form-control" id="inputSubject" placeholder="Subject">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <textarea name="message" class="form-control" rows="3" placeholder="Message"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <button type="button" class="btn btn-theme btn-lg btn-block">Send message</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row mar-top30 ">
+            <div class="col-md-offset-2 col-md-8">
+                <h5>We're on social networks</h5>
+                <ul class="social-network">
+                    <li><a href="#">
 						<span class="fa-stack fa-2x">
 							<i class="fa fa-circle fa-stack-2x"></i>
 							<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
 						</span></a>
-						</li>
-						<li><a href="#">
+                    </li>
+                    <li><a href="#">
 						<span class="fa-stack fa-2x">
 							<i class="fa fa-circle fa-stack-2x"></i>
 							<i class="fa fa-dribbble fa-stack-1x fa-inverse"></i>
 						</span></a>
-						</li>
-						<li><a href="#">
+                    </li>
+                    <li><a href="#">
 						<span class="fa-stack fa-2x">
 							<i class="fa fa-circle fa-stack-2x"></i>
 							<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
 						</span></a>
-						</li>
-						<li><a href="#">
+                    </li>
+                    <li><a href="#">
 						<span class="fa-stack fa-2x">
 							<i class="fa fa-circle fa-stack-2x"></i>
 							<i class="fa fa-pinterest fa-stack-1x fa-inverse"></i>
 						</span></a>
-						</li>
-					</ul>
-				</div>				
-			</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
 
-	  	</div>
-	  </section>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <p> Made with love at <a href="www.iiitd.ac.in"> IIITD </a>.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
 
-	<footer>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					<p> Made with love at <a href = "www.iiitd.ac.in"> IIITD </a>.</p>
-				</div>
-			</div>		
-		</div>	
-	</footer>
-  </body>
-
-  <!-- js -->
-  <script src="js/jquery/jquery.js"></script>
-  <script src="js/ui/bootstrap.min.js"></script>
-  <script src="js/jquery/jquery.smooth-scroll.min.js"></script>
-  <script src="js/jquery/jquery.dlmenu.js"></script>
-  <script src="js/ui/wow.min.js"></script>
-  <script src="js/ui/custom.js"></script>
-  <script src="js/typeahead/typeahead.bundle.js"></script>
+<!-- js -->
+<script src="js/jquery/jquery.js"></script>
+<script src="js/ui/bootstrap.min.js"></script>
+<script src="js/jquery/jquery.smooth-scroll.min.js"></script>
+<script src="js/jquery/jquery.dlmenu.js"></script>
+<script src="js/ui/wow.min.js"></script>
+<script src="js/ui/custom.js"></script>
+<script src="js/typeahead/typeahead.bundle.js"></script>
 
 
-  <!--angular-->
-  <script src="js/angular/angular.min.js"></script>
-  <script src="js/angular/main.js"></script>
+<!--angular-->
+<script src="js/angular/angular.min.js"></script>
+<script src="js/angular/main.js"></script>
 
-  <!--maps-->
-  <script src="js/maps/d3.min.js"></script>
-  <script src="js/maps/topojson.v1.min.js"></script>
-  <script src="js/maps/map_angular.js"></script>
-  <script src="js/typeahead/typeahead.setup.js"></script>
+<!--maps-->
+<script src="js/maps/d3.min.js"></script>
+<script src="js/maps/topojson.v1.min.js"></script>
+<script src="js/maps/map_angular.js"></script>
+<script src="js/typeahead/typeahead.setup.js"></script>
 </html>
