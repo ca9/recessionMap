@@ -679,3 +679,23 @@ more media queries
 #year-slider-slider {
     width: 100%;
 }
+
+/*Legend*/
+.legend {
+    background-color: #fff;
+    width: 10.25%;
+    height: 15%;
+    border: 4px solid #555;
+    margin: 1% auto;
+    left: 16%;
+}
+
+#linearLegend .colorlegend-labels {
+    font-size: 1em;
+    fill: #3a3a3a;
+}
+
+#linearLegend .colorlegend-title {
+    font-size: 1.5em;
+    fill: #3a3a3a;
+}

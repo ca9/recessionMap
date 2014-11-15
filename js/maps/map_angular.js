@@ -20,6 +20,12 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
             var topo, projection, path, svg, g;
             var graticule = d3.geo.graticule();
 
+            var legend = d3.select("#MapContainer")
+                .append("div")
+                .style("position", "absolute")
+                .attr("id", "linearLegend")
+                .attr("class", "legend");
+
             setup(width,height);
 
             function setup(width, height){
@@ -277,6 +283,12 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
                 scope.colorScale = d3.scale.linear()
                     .domain(myDomain)
                     .range(["red", "yellow", "green"]);
+                colorlegend("#linearLegend", scope.colorScale, "linear",
+                    {
+                        title: selectedProp,
+                        linearBoxes: 5,
+                        boxWidth: 30
+                    });
             }
 
             // Get the right color based on curProp, if any.
@@ -293,7 +305,6 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
             }
 
             // Recolour if any property or year changes.
-            //TODO: Breaks the JS. Fix.
             scope.$watch(
                 function() {
                     scope.curState = scope.curYear().toString() + scope.curProp();

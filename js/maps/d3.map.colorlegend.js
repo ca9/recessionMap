@@ -29,7 +29,7 @@ var colorlegend = function (target, scale, type, options) {
     , colors = []
     , padding = [2, 4, 10, 4]               // top, right, bottom, left
     , boxSpacing = type === 'ordinal' ? 3 : 0 // spacing between boxes
-    , titlePadding = title ? 11 : 0
+    , titlePadding = title ? 15 : 0
     , domain = scale.domain()
     , range = scale.range()    
     , i = 0;
@@ -101,6 +101,7 @@ var colorlegend = function (target, scale, type, options) {
       })
       .style('pointer-events', 'none')
       .text(function (d, i) {
+//          console.log("Legend colors", d, i);
         // show label for all ordinal values
         if (type === 'ordinal') {
           return domain[i];
@@ -109,7 +110,9 @@ var colorlegend = function (target, scale, type, options) {
         else {
           if (i === 0)
             return domain[0];
-          if (i === colors.length - 1) 
+          if (i === colors.length/2)
+            return domain[1];
+          if (i === colors.length - 1)
             return domain[domain.length - 1];
         }
       });
