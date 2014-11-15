@@ -94,59 +94,77 @@ if __name__ == "__main__":
 		# json.dump(final_data, fp)
 
 
-	d3_data = {}
-	for country, data in final_data.iteritems():
-		continent = data["continent"]
-		if continent not in d3_data:
-			d3_data[continent] = {}
+	# d3_data = {}
+	# for country, data in final_data.iteritems():
+	# 	continent = data["continent"]
+	# 	if continent not in d3_data:
+	# 		d3_data[continent] = {}
 
-		# if len(d3_data[continent]) > 5:
-		# 	continue
+	# 	# if len(d3_data[continent]) > 5:
+	# 	# 	continue
 
-		d3_data[continent][country] = {}
+	# 	d3_data[continent][country] = {}
 		
-		economy = {}
-		num_year = 0
-		for year, vals in data["economy"].iteritems():
-			if num_year == 3:
-				break
-			economy[year] = {}
-			num = 0
-			for var, val in vals.iteritems():
-				if num == 3:
-					break
-				economy[year][var] = val
-			# 	num += 1
-			# num_year += 1
+	# 	economy = {}
+	# 	num_year = 0
+	# 	for year, vals in data["economy"].iteritems():
+	# 		if num_year == 3:
+	# 			break
+	# 		economy[year] = {}
+	# 		num = 0
+	# 		for var, val in vals.iteritems():
+	# 			if num == 3:
+	# 				break
+	# 			economy[year][var] = val
+	# 		# 	num += 1
+	# 		# num_year += 1
 
-		d3_data[continent][country] = economy
+	# 	d3_data[continent][country] = economy
 
 
-	d3 = {"name": "World", "children": []}
-	for continent, countries in d3_data.iteritems():
-		con_dict = {"name": continent, "children": []}
+	# d3 = {"name": "World", "children": []}
+	# for continent, countries in d3_data.iteritems():
+	# 	con_dict = {"name": continent, "children": []}
 
-		countries_list = []
-		for country, econs in countries.iteritems():
-			country_dict = {"name": country, "children": []}
+	# 	countries_list = []
+	# 	for country, econs in countries.iteritems():
+	# 		country_dict = {"name": country, "children": []}
 			
-			years = []
-			for year, vals in econs.iteritems():
-				year_dict = {"name": year, "children": []}
+	# 		years = []
+	# 		for year, vals in econs.iteritems():
+	# 			year_dict = {"name": year, "children": []}
 
-				props = []
-				for prop, val in vals.iteritems():
-					props.append({"name": prop, "children": [{"name": val, "children": []}]})
+	# 			props = []
+	# 			for prop, val in vals.iteritems():
+	# 				props.append({"name": prop, "children": [{"name": val, "children": []}]})
 
-				year_dict["children"] = props
-				years.append(year_dict)
+	# 			year_dict["children"] = props
+	# 			years.append(year_dict)
 
-			country_dict["children"] = years
-			countries_list.append(country_dict)
+	# 		country_dict["children"] = years
+	# 		countries_list.append(country_dict)
 
-		con_dict["children"] = countries_list
-		d3["children"].append(con_dict)
-	#pprint(d3)
+	# 	con_dict["children"] = countries_list
+	# 	d3["children"].append(con_dict)
+	# #pprint(d3)
 
-	with open('graph2.json', 'wb') as fp:
-		json.dump(d3, fp, indent=4, separators=(',', ':'))
+	# with open('graph2.json', 'wb') as fp:
+	# 	json.dump(d3, fp, indent=4, separators=(',', ':'))
+
+	groups = {"Europe": 0, "South America": 1, "Oceania": 2, "Africa": 3, "Asia": 4, "North America": 5}
+	nodes = []
+	edges = []
+	singular = {}
+	for country, data in final_data.iteritems():
+		nodes.append({'id': country, 'label': data['common_name'], 'group': groups[data['continent']]})
+		singular[country] = []
+
+		for neighbour in data['neighbours']:
+			singular[country].append(neighbour)
+
+			if neighbour in singular and country in singular[neighbour]:
+				continue
+			edges.append({'from': country, 'to': neighbour})
+
+	print json.dumps(nodes)
+	#print json.dumps(edges)
