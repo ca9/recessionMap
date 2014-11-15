@@ -119,7 +119,7 @@ recMap.factory("dataService", function($http) {
        console.log("Current Country Changed:", curCountry);
    }
 
-    // Get minimum and maximum values of a property.
+    // Get minimum and maximum values of a property. Now Unused.
     dataAsService.getMinMax = function(property) {
         var myMin = Number.POSITIVE_INFINITY, myMax= Number.NEGATIVE_INFINITY, property = trim(property);
         for (var item in allData) {
@@ -213,7 +213,7 @@ recMap.factory('propService', function($http) {
 });
 
 recMap.factory('mapService', function($http, propService, dataService) {
-    var mapJSON = {}, url = "data/world-topo-min2.json",
+    var mapJSON = {}, url = "data/world-topo-min.json",
         mapService = {}, called = false;
 
     mapService.getMapJSON = function() {

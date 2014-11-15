@@ -265,12 +265,13 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
                 var selectedPropExpanded = propService.getPropExpanded(selectedProp);
                 if ((selectedPropExpanded.Name == "Loading") || isEmptyObject(scope.mapJSON))
                     return;
-                // Higher values are worse.
-                var myDomain = dataService.getMinMax(selectedProp);
+
+                var myDomain;
                 if (selectedPropExpanded["Impact on Susceptibility"] == "Increased") {
-                    myDomain = [ myDomain.maxVal, selectedPropExpanded.Mean , myDomain.minVal ];
+                    // Higher values are worse.
+                    myDomain = [ selectedPropExpanded.myMax, selectedPropExpanded.Mean, selectedPropExpanded.myMin ]
                 } else {
-                    myDomain = [ myDomain.minVal, selectedPropExpanded.Mean , myDomain.maxVal ];
+                    myDomain = [ selectedPropExpanded.myMin, selectedPropExpanded.Mean, selectedPropExpanded.myMax ]
                 }
                 console.log("For: ", selectedProp, ", domain:", myDomain);
                 scope.colorScale = d3.scale.linear()
