@@ -671,6 +671,40 @@ more media queries
     color: white;
 }
 
+/* Slider for Year */
+.home-section {
+    padding: 0;
+}
+
+#year-slider-slider {
+    width: 100%;
+}
+
+/*Legend*/
+.legend {
+    background-color: #fff;
+    width: 14.5%;
+    height: 100%;
+    border: 4px solid #555;
+    margin: 1% auto;
+    left: 16%;
+}
+
+#linearLegend .colorlegend-labels {
+    font-size: 1em;
+    fill: #3a3a3a;
+}
+
+#linearLegend .colorlegend-title {
+    font-size: 1.5em;
+    fill: #3a3a3a;
+}
+
+#legendBox {
+    position: relative;
+    height: 70px;
+}
+
 #propTree {
 	border-style: solid;
 }

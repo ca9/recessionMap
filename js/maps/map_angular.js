@@ -20,6 +20,13 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
             var topo, projection, path, svg, g;
             var graticule = d3.geo.graticule();
 
+            var legend = d3.select("#legendBox")
+                .append("div")
+                .style("position", "absolute")
+                .style("top", "-150%")
+                .attr("id", "linearLegend")
+                .attr("class", "legend");
+
             setup(width,height);
 
             function setup(width, height){
@@ -28,7 +35,7 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
                     .scale( width / 2 / Math.PI);
 
                 path = d3.geo.path().projection(projection);
-
+                console.log("Selected", d3.select("#MapContainer"));
                 svg = d3.select("#MapContainer").append("svg")
                     .attr("width", width)
                     .attr("height", height)
@@ -74,7 +81,7 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
                 // What sorcery is this?
                 // DATA JOIN: http://bost.ocks.org/mike/join/
                 scope.country = g.selectAll(".country").data(topo);
-                console.log(scope.country);
+//                console.log(scope.country);
                 // angular.element("div#MapContainer").scope().country
 
                 updateColorScales(scope.curProp());
@@ -265,17 +272,25 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
                 var selectedPropExpanded = propService.getPropExpanded(selectedProp);
                 if ((selectedPropExpanded.Name == "Loading") || isEmptyObject(scope.mapJSON))
                     return;
-                // Higher values are worse.
-                var myDomain = dataService.getMinMax(selectedProp);
+
+                var myDomain;
                 if (selectedPropExpanded["Impact on Susceptibility"] == "Increased") {
-                    myDomain = [ myDomain.maxVal, selectedPropExpanded.Mean , myDomain.minVal ];
+                    // Higher values are worse.
+                    myDomain = [ selectedPropExpanded.myMax, selectedPropExpanded.Mean, selectedPropExpanded.myMin ]
                 } else {
-                    myDomain = [ myDomain.minVal, selectedPropExpanded.Mean , myDomain.maxVal ];
+                    myDomain = [ selectedPropExpanded.myMin, selectedPropExpanded.Mean, selectedPropExpanded.myMax ]
                 }
                 console.log("For: ", selectedProp, ", domain:", myDomain);
                 scope.colorScale = d3.scale.linear()
                     .domain(myDomain)
                     .range(["red", "yellow", "green"]);
+                d3.select("#linearLegend svg").remove();
+                colorlegend("#linearLegend", scope.colorScale, "linear",
+                    {
+                        title: selectedProp,
+                        linearBoxes: 5,
+                        boxWidth: 30
+                    });
             }
 
             // Get the right color based on curProp, if any.
@@ -292,7 +307,6 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
             }
 
             // Recolour if any property or year changes.
-            //TODO: Breaks the JS. Fix.
             scope.$watch(
                 function() {
                     scope.curState = scope.curYear().toString() + scope.curProp();
