@@ -20,9 +20,10 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
             var topo, projection, path, svg, g;
             var graticule = d3.geo.graticule();
 
-            var legend = d3.select("#MapContainer")
+            var legend = d3.select("#legendBox")
                 .append("div")
                 .style("position", "absolute")
+                .style("top", "-150%")
                 .attr("id", "linearLegend")
                 .attr("class", "legend");
 
@@ -34,7 +35,7 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
                     .scale( width / 2 / Math.PI);
 
                 path = d3.geo.path().projection(projection);
-
+                console.log("Selected", d3.select("#MapContainer"));
                 svg = d3.select("#MapContainer").append("svg")
                     .attr("width", width)
                     .attr("height", height)
@@ -80,7 +81,7 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
                 // What sorcery is this?
                 // DATA JOIN: http://bost.ocks.org/mike/join/
                 scope.country = g.selectAll(".country").data(topo);
-                console.log(scope.country);
+//                console.log(scope.country);
                 // angular.element("div#MapContainer").scope().country
 
                 updateColorScales(scope.curProp());
@@ -283,6 +284,7 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
                 scope.colorScale = d3.scale.linear()
                     .domain(myDomain)
                     .range(["red", "yellow", "green"]);
+                d3.select("#linearLegend svg").remove();
                 colorlegend("#linearLegend", scope.colorScale, "linear",
                     {
                         title: selectedProp,
