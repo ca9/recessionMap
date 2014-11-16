@@ -670,3 +670,24 @@ more media queries
     font-size: 2.5em;
     color: white;
 }
+
+#propTree {
+	border-style: solid;
+}
+
+#propTree .node circle {
+	cursor: pointer;
+	fill: #fff;
+	stroke: steelblue;
+	stroke-width: 2px;
+}
+
+#propTree .node text {
+	font-size: 11px;
+}
+
+#propTree path.link {
+	fill: none;
+	stroke: #ccc;
+	stroke-width: 2px;
+}

@@ -154,6 +154,11 @@ recMap.factory('propService', function($http) {
         "Manufacturing": [],
         "Net Exports": []
     }, curProp = "Drop.SD", url = 'data/propertiesFlourish.json', propAsService = {};
+    var egroupsReady = false;
+
+    propAsService.isEgroupsReady = function(){
+        return egroupsReady;
+    };
 
     propAsService.getPropData = function(override) {
         if (override) {
@@ -162,12 +167,21 @@ recMap.factory('propService', function($http) {
             this.queryData();
         }
         return eprops;
-    }
+    };
+
+    propAsService.getPropGroups = function (override) {
+        if (override) {
+            return egroups;
+        } else if (isEmptyObject(egroups)) {
+            //this.queryData();
+        }
+        return egroups;
+    };
 
     propAsService.setProperty = function(newProp) {
         curProp = newProp;
         console.log("Property Changed:", newProp);
-    }
+    };
 
     propAsService.queryData = function() {
         $http.get(url)
@@ -183,14 +197,15 @@ recMap.factory('propService', function($http) {
                     }
                     eprops[key].EconClasses = myGroups;
                 }
-//                console.log(egroups);
+                console.log("Egroups ready:". egroups);
+                egroupsReady = true;
                 return eprops;
-            })
-    }
+            });
+    };
 
 //  Important: This is how we access/bind a string on the frontend.
-    propAsService.getCurProp = function () { return curProp; }
-    propAsService.getGroups = function () { return Object.keys(egroups); }
+    propAsService.getCurProp = function () { return curProp; };
+    propAsService.getGroups = function () { return Object.keys(egroups); };
     propAsService.getPropsForGroup = function (agroup, max) {
         max = typeof max !== 'undefined' ? max :false;
         var retlist = [];
@@ -200,7 +215,7 @@ recMap.factory('propService', function($http) {
         if (max) //Opened in details, cant show more.
             retlist = retlist.slice(0,7);
         return retlist;
-    }
+    };
 
     propAsService.getPropExpanded = function(aVar) {
         if (isEmptyObject(eprops)) {
@@ -208,7 +223,7 @@ recMap.factory('propService', function($http) {
         } else {
             return eprops[aVar];
         }
-    }
+    };
     return propAsService;
 });
 
