@@ -63,7 +63,7 @@
         "myMin": -2.48, 
         "Impact Rating": "NA", 
         "Source": "Susanne", 
-        "Meaning": "This refers to the average drop in Growth Rate measured in Standard Deviations of Growth Rate for concerned country, over 2007 to 2010. We use this as a result variable to estimate ", 
+        "Meaning": "This refers to the average drop in Growth Rate measured in Standard Deviations of Growth Rate for concerned country, over 2007 to 2010. We use this as a result variable to estimate the impact of Recession on concerned Country.",
         "Impact on Susceptibility": "Increased", 
         "Index Stats (Unused)": 0, 
         "HighCutoff": 1.07, 

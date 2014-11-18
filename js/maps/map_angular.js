@@ -311,12 +311,12 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
                 })
                     .style("stroke", "red")
                     .style("stroke-dasharray", "3, 1")
-                    .style("stroke-width", 3 / s);
+                    .style("stroke-width", 1.5 / s);
 
                 // Make me blue.
                 g.selectAll(".country").filter( function (d, i ) { if (d.properties.code == scope.curCountryCode) return true; return false; })
                     .style("stroke", "blue")
-                    .style("stroke-width", 3 / s);
+                    .style("stroke-width", 1.5 / s);
 
             }
 

@@ -135,10 +135,12 @@ recMap.factory("dataService", function($http) {
 
     // Fetches a property value for given property, country, year.
    dataAsService.getPropValFor = function(countryCode, property, year) {
+       if (countryCode in cToCode) {
+            countryCode = cToCode[countryCode];
+       }
        var dataKey = year.toString() + "." + countryCode;
        var dataRow = allData[dataKey];
        if (dataRow != undefined) {
-//           console.log("Returning", dataRow[property]);
            return dataRow[property];
        } else {
            return "NA";
@@ -327,9 +329,41 @@ recMap.controller('dataController', function($scope, dataService, propService, y
     $scope.curYear = yearService.getCurYear;
     $scope.curProp = propService.getCurProp;
 
+    $scope.getPropValFor = dataService.getPropValFor;
+
+    $scope.checkImpact = function(checkif) {
+        if (checkif == 'high') {
+            if (propService.getPropExpanded($scope.curProp())["Impact Rating"] == "HIGH")
+                return true;
+        } else if (checkif == "med") {
+            if (propService.getPropExpanded($scope.curProp())["Impact Rating"] == "MED")
+                return true;
+        } else if (checkif == "low") {
+            if (propService.getPropExpanded($scope.curProp())["Impact Rating"] == "LOW")
+                return true;
+        } else {
+            return true;
+        }
+        return false;
+    }
+
+    $scope.checkDirection = function(checkif) {
+        if (checkif == "DEC") {
+            if (propService.getPropExpanded($scope.curProp())["Impact on Susceptibility"] == "Decreased")
+                return true;
+        } else if (checkif == "INC") {
+            if (propService.getPropExpanded($scope.curProp())["Impact on Susceptibility"] == "Increased")
+                return true;
+        } else { //NA
+            return true;
+        }
+        return false;
+    }
+
 //    For Testing:
     setInterval(function() { console.log($scope.getCurCountry(), $scope.curYear(), $scope.curProp())}, 5000 );
 //    setInterval(function() { console.log($scope.allData)}, 5000 );
+
 })
 
 

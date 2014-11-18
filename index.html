@@ -5,7 +5,7 @@
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- css -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/bootstrap.css" rel="stylesheet" media="screen">
     <link href="css/style.css" rel="stylesheet" media="screen">
     <link href="css/map.css" rel="stylesheet" media="screen">
     <link href="color/default.css" rel="stylesheet" media="screen">
@@ -25,13 +25,12 @@
             <li><a href="#details">Details</a></li>
             <li><a href="#services">Services</a></li>
             <li><a href="#works">Works</a></li>
-            <li><a href="#contact">Contact</a></li>
             <li ng-controller="timeController">
                 <a href="#">Year</a>
                 <ul class="dl-submenu">
                     <li ng-repeat="ayear in years">
                         <a ng-click="setYear(ayear)"
-                           ng-class="{selected: checkYear(ayear)}">
+                           ng-class="{ selected: checkYear(ayear) }">
                             {{ ayear }} {{ curYear }}
                         </a>
                     </li>
@@ -104,8 +103,116 @@
 </section>
 
 <!-- Details -->
+
 <section id="details" class="home-section bg-white">
     <div class="container">
+        <div class="jumbotron">
+            <h1>
+                {{ curProp() }}
+            </h1>
+            <h2>
+                <span ng-class="{ 'label label-danger': checkImpact('high'),
+                                  'label label-warning': checkImpact('med'),
+                                  'label label-success': checkImpact('low'),
+                                  'label label-info': checkImpact('NA')
+                 }"> Impact: {{ getPropExpanded(curProp())["Impact Rating"] }}
+                </span>
+                &nbsp; &nbsp;
+                <span ng-class="{ 'label label-danger': checkDirection('INC'),
+                                  'label label-success': checkDirection('DEC'),
+                                  'label label-warning': checkDirection('NA')
+
+                 }"> {{ getPropExpanded(curProp())["Impact on Susceptibility"] }} Susceptibility
+                </span>
+            </h2>
+            <blockquote>
+                <p>
+                    {{ getPropExpanded(curProp())["Name"] }}
+                </p> <small><cite>{{ getPropExpanded(curProp())["Source"] }}</cite></small>
+            </blockquote>
+            <p>
+                {{ getPropExpanded(curProp())["Meaning"] }}
+            </p>
+            <p>
+                <a class="btn btn-primary btn-large" href="#intro">Back to top</a>
+                <a class="btn btn-primary btn-large" href="#intro">Learn More</a>
+            </p>
+            <p>
+            <table id="propTable" class="table table-hover table-striped table-condensed">
+                <thead>
+                <tr>
+                    <th>
+                        Feature
+                    </th>
+                    <th>
+                        Value
+                    </th>
+                    <td></td>
+                    <th>
+                        Comment
+                    </th>
+                    <td></td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="success">
+                    <td>
+                        <b>High Value "Cutoff"</b>
+                    </td>
+                    <td>
+                        {{ getPropExpanded(curProp())["HighCutoff"] }}
+                    </td>
+                    <td></td>
+                    <td>
+                        <div class="span pull-left" >Maximum Value:  </div>
+                        <div class="span pull-right" >{{ getPropExpanded(curProp())["myMax"] }}</div>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr class="warning">
+                    <td>
+                        <b>Mean Value</b>
+                    </td>
+                    <td>
+                        {{ getPropExpanded(curProp())["Mean"] }}
+                    </td>
+                    <td></td>
+                    <td>
+                        <div class="span pull-left" >Standard Deviations: </div>
+                        <div class="span pull-right" >{{ getPropExpanded(curProp())["SD"] }}</div>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr class="danger">
+                    <td>
+                        <b>Low Value Cutoff</b>
+                    </td>
+                    <td>
+                        {{ getPropExpanded(curProp())["LowCutoff"] }}
+                    </td>
+                    <td></td>
+                    <td>
+                        <div class="span pull-left" >Minimum Value:</div>
+                        <div class="span pull-right" >{{ getPropExpanded(curProp())["myMin"] }} </div>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr class="info">
+                    <td>
+                        <b>Property Value for {{ getCurCountry() }} </b>
+                    </td>
+                    <td>
+                        {{ getPropValFor(getCurCountry(), curProp(), curYear()) }}
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            </p>
+        </div>
+
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 <div class="section-heading">
