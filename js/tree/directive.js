@@ -89,7 +89,7 @@ recMap.directive("myTree", function ($window, propService) {
                             propGroup = propStats.EconClasses;
                         console.log("New property!", propGroup, newValue);
                         if (root != undefined) {
-                            root.children.forEach(closeAll);
+                            //root.children.forEach(closeAll);
                             console.log(tree.nodes(root));
                         }
                     }
