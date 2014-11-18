@@ -19,6 +19,82 @@ recMap.directive("mySearch", function($window, dataService, propService, yearSer
             // here from the scope of the controlling Controller.
         },
         link: function (scope, elem, attrs) {
+
+            var withSearch = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                local: function() {
+                    var combos = [];
+                    var props = propService.getPropData(true);
+                    var conts = dataService.getContToC();
+                    var years = yearService.getYears();
+                    for (var cont in conts) {
+                        var ccode = conts[cont];
+                        for (var prop in props) {
+                            var propExpand = propService.getPropExpanded(prop);
+                            var upcut = propExpand["HighCutoff"];
+                            var locut = propExpand["LowCutoff"];
+                            var impact = propExpand["Impact on Susceptibility"];
+                            var propname = propExpand["Name"];
+                            var cat = [];
+                            for (var i = 0; i < years.length; i++) {
+                                var ayear = years[i];
+                                var val = dataService.getPropValFor(ccode, prop, ayear);
+                                var category;
+                                if (val >= upcut)  {
+                                    category = "HIGH";
+                                    cat.push(2);
+                                } else if (val >= locut) {
+                                    category = "MEDIUM"
+                                    cat.push(1);
+                                } else {
+                                    category = "LOW";
+                                    cat.push(0);
+                                }
+//                              Comment for major speed gains.
+                                combos.push({
+                                    value: "with: " + prop + ": "
+                                        + category + " in: "
+                                        + ayear + " "
+                                        + cont + " "
+                                        + ccode + " \t\t\t\t\t\t\t"
+                                        + propname,
+                                    contName: cont,
+                                    code: ccode,
+                                    cat: category,
+                                    syear: ayear,
+                                    inprop: prop,
+                                    type: 'complex-choose-year',
+                                    impact: impact
+                                })
+                            }
+                            var avg = average(cat);
+                            var incat = "LOW";
+                            if (avg > 1.33)
+                                 incat = "HIGH";
+                            else if (avg > 0.66)
+                                incat = "MEDIUM";
+                            combos.push({
+                                value: "with: " + prop + ": "
+                                    + incat
+                                    + " overall"
+                                    + " " + cont
+                                    + " " + ccode
+                                    + " \t\t\t\t\t\t\t" + propname,
+                                contName: cont,
+                                code: ccode,
+                                cat: incat,
+                                inprop: prop,
+                                impact: impact,
+                                type: 'complex-choose-noyear'
+                            })
+                        }
+                    }
+                    return combos;
+                },
+                limit: 30
+            });
+
             // constructs the suggestion engine for similar Economies
             var simSearch = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
@@ -70,6 +146,7 @@ recMap.directive("mySearch", function($window, dataService, propService, yearSer
                         console.log("allLoaded", scope.similar, scope.EconProps, scope.ContToC);
                         // Now do any complex search or similar search, as you please.
                         simSearch.initialize();
+                        withSearch.initialize();
                     }
                 }
             )
@@ -150,8 +227,8 @@ recMap.directive("mySearch", function($window, dataService, propService, yearSer
                 },
                 function(newValue, oldValue, scope) {
                     if (newValue == false) {
-                        console.log("Props for Search:", !newValue, scope.EconProps);
                         scope.EconProps = propService.getPropData(true);
+                        console.log("Props for Search:", !newValue, scope.EconProps);
                         EconPropsSearch.initialize(true);
                     }
                 });
@@ -166,7 +243,7 @@ recMap.directive("mySearch", function($window, dataService, propService, yearSer
                     displayKey: 'value',
                     source: CountriesSearch.ttAdapter(),
                     templates: {
-                        header: '<h5 class="type-name">Countries</h5>',
+                        header: '<h5 class="type-name">Countries(:)</h5>',
                         suggestion: function(country) {
                             return '<b><span>' + country.contName + '</span></b>' +
                                 '<span style="float: right">' + country.code + '</span>'
@@ -178,7 +255,7 @@ recMap.directive("mySearch", function($window, dataService, propService, yearSer
                     displayKey: 'value',
                     source: searchYears.ttAdapter(),
                     templates: {
-                        header: '<h5 class="type-name">Years</h5>',
+                        header: '<h5 class="type-name">Years(:)</h5>',
                         suggestion: function(year) {
                             return '<span><b>' + year.value + '</b></span>'
                         }
@@ -189,7 +266,7 @@ recMap.directive("mySearch", function($window, dataService, propService, yearSer
                     displayKey: 'value',
                     source: EconPropsSearch.ttAdapter(),
                     templates: {
-                        header: '<h5 class="type-name">Properties</h5>',
+                        header: '<h5 class="type-name">Properties(:)</h5>',
                         suggestion: function(prop) {
                             return  '<span>' + prop.Name + '</span>' +
                                 '<span style="float: right"><b>' + prop.code + '</b></span>'
@@ -201,10 +278,43 @@ recMap.directive("mySearch", function($window, dataService, propService, yearSer
                     displayKey: 'value',
                     source: simSearch.ttAdapter(),
                     templates: {
-                        header: '<h5 class="type-name">Similar Economies</h5>',
+                        header: '<h5 class="type-name">Similar Economies (similarTo[by])</h5>',
                         suggestion: function(country) {
                             return '<b><span>' + country.contName + ' (' + country.code + ')</span></b>' +
                                 '<span style="float: right">' + country.similarityFound + '</span>'
+                        }
+                    }
+                },
+                {
+                    name: 'search-complex',
+                    displayKey: 'value',
+                    source: withSearch.ttAdapter(),
+                    templates: {
+                        header: '<h5 class="type-name">Complex Query (with)</h5>',
+                        suggestion: function(item) {
+                            var labels = {
+                                "Increased" : {
+                                    'HIGH': 'label-danger',
+                                    'MEDIUM': 'label-warning',
+                                    "LOW": 'label-success'
+                                },
+                                "Decreased": {
+                                    'HIGH': 'label-success',
+                                    'MEDIUM': 'label-warning',
+                                    "LOW": 'label-danger'
+                                }
+                            };
+                            if (item.hasOwnProperty('syear')) {
+                                return '<b><span>' + item.contName + ' had '
+                                    + "<span class='label " + labels[item.impact][item.cat] + "'>" + item.cat +  '</span> ' +
+                                    item.inprop + ' in '
+                                    + item.syear + '</span></b>';
+                            } else {
+                                return '<b><span>' + item.contName + ' has '
+                                    + "<span class='label " + labels[item.impact][item.cat] + "'>" + item.cat +  '</span> ' +
+                                    item.inprop + " </span></b>" +
+                                    '<span style="float: right">overall</span>';
+                            }
                         }
                     }
                 }
@@ -219,6 +329,13 @@ recMap.directive("mySearch", function($window, dataService, propService, yearSer
                 } else if (datum.type == "Property") {
                     propService.setProperty(datum.code);
                 } else if (datum.type == "similarity") {
+                    dataService.setCountry(datum.code);
+                } else if (datum.type == "complex-choose-noyear") {
+                    propService.setProperty(datum.inprop);
+                    dataService.setCountry(datum.code);
+                } else if (datum.type == "complex-choose-year") {
+                    propService.setProperty(datum.inprop);
+                    yearService.setYear(parseInt(datum.syear));
                     dataService.setCountry(datum.code);
                 }
                 scope.$apply();

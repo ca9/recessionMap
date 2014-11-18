@@ -10,7 +10,7 @@ function isEmptyObject( obj ) {
     return true;
 }
 
-function trim(s){
+function trim(s) {
     return ( s || '' ).replace( /^\s+|\s+$/g, '' )
         .replace(/\.+$/, ''); //Also remove trailing full stops.
 }
@@ -26,6 +26,13 @@ String.prototype.hashCode = function() {
     return hash;
 };
 
+function average(anArray) {
+    var sum = 0, j = 0;
+    for (var i = 0; i < anArray.length, isFinite(anArray[i]); i++) {
+        sum += parseFloat(anArray[i]); ++j;
+    }
+    return j ? sum / j : 0;
+};
 
 // App
 var recMap = angular.module('recMap', []);
