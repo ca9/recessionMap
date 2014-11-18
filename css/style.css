@@ -702,7 +702,9 @@ more media queries
 
 #legendBox {
     position: relative;
-    height: 60px;
+    height: 100px;
+    width:100%;
+    margin-bottom: 20px;
 }
 
 #propTree {
@@ -724,6 +726,80 @@ more media queries
 	fill: none;
 	stroke: #ccc;
 	stroke-width: 2px;
+}
+
+/*
+Base styles (regardless of theme)
+Some bootstrappin.
+ */
+.bs-callout {
+    margin: 20px 0;
+    padding: 15px 30px 15px 15px;
+    border-left: 5px solid #eee;
+}
+
+.bs-callout h4 {
+    margin-top: 0;
+}
+
+.bs-callout p:last-child {
+    margin-bottom: 0;
+}
+
+.bs-callout code,
+.bs-callout .highlight {
+    background-color: #fff;
+}
+
+/* Themes for different contexts */
+.bs-callout-danger {
+    background-color: #fcf2f2;
+    border-color: #dFb5b4;
+}
+
+.bs-callout-warning {
+    background-color: #fefbed;
+    border-color: #f1e7bc;
+}
+
+.bs-callout-info {
+    background-color: #f0f7fd;
+    border-color: #d0e3f0;
+}
+
+.bs-callout-danger h4,
+.bs-callout-danger a.alert-link {
+    color: #B94A48;
+}
+
+.bs-callout-warning h4,
+.bs-callout-warning a.alert-link {
+    color: #C09853;
+}
+
+.bs-callout-info h4,
+.bs-callout-info a.alert-link {
+    color: #3A87AD;
+}
+
+.bs-callout a.alert-link {
+    font-weight: bold;
+}
+
+#inCallout1 {
+    outline: dotted red;
+    float: right;
+    margin-right: 10%;
+    /*margin-top: 10%;*/
+    padding: 1%;
+}
+
+#inCallout2 {
+    outline: solid blue;
+    float: right;
+    margin-right: 10%;
+    /*margin-top: 10%;*/
+    padding: 1%;
 }
 
 #tree {

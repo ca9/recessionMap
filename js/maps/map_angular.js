@@ -1,7 +1,10 @@
-recMap.directive("myMap", function($window, mapService, dataService, propService, yearService) {
+recMap.directive("myMap", function($window, mapService, dataService, propService, yearService, similarService) {
     return {
         restrict: "A",
         link: function (scope, elem, attrs) {
+
+            // Invoke this call.
+            scope.similarData = similarService.getSimilarData();
 
             // Updates with a new redraw timer when window is resized.
             d3.select(window).on("resize", throttle);
@@ -22,8 +25,11 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
 
             var legend = d3.select("#legendBox")
                 .append("div")
+                .style("float", "left")
+                .style("height", "70px")
+                .style("margin-left", "-12%")
                 .style("position", "absolute")
-                .style("top", "-150%")
+                .style("top", "-1%")
                 .attr("id", "linearLegend")
                 .attr("class", "legend");
 
@@ -97,6 +103,8 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
                     .style("stroke", '#000000')
                     .style("stroke-width", "1");
 
+                outlineMeAndSimilar(1);
+
                 //offsets for tooltips
                 var offsetL = document.getElementById('MapContainer').offsetLeft + 20;
                 var offsetT = document.getElementById('MapContainer').offsetTop + 10;
@@ -114,7 +122,16 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
                                     scope.curYear()) + "");
 
                         d3.select(this)
-                            .style("fill", "#FF0");
+                            .style("fill", "blue");
+
+                        var mouseSimilarConts = similarService.getSimilarCountryType(d.properties.code, "all");
+                        d3.selectAll(".country").filter( function (d, i) {
+                                if (d.properties.code in mouseSimilarConts) {
+                                    return true;
+                                }
+                                return false;
+                            }
+                        ).style("fill", "red");
                     })
                     .on("mouseout",  function(d, i) {
                         mapTooltip.classed("hidden", true)
@@ -123,6 +140,16 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
                                 return getColor(d, propService.getCurProp(), yearService.getCurYear());
 //                                return d.properties.color;
                             })
+                        var mouseSimilarConts = similarService.getSimilarCountryType(d.properties.code, "all");
+                        d3.selectAll(".country").filter( function (d, i) {
+                                if (d.properties.code in mouseSimilarConts) {
+                                    return true;
+                                }
+                                return false;
+                            }
+                        ).style("fill", function(d, i) {
+                                return getColor(d, propService.getCurProp(), yearService.getCurYear());
+                            });
                     })
                     // More D3 Beauty - multiple listeners for an event.
                     .on('click.view', recenterCountry)
@@ -163,6 +190,8 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
                 //adjust the country hover stroke width based on zoom level
                 d3.selectAll(".country").style("stroke", "#000000");
                 d3.selectAll(".country").style("stroke-width", 1 / s);
+
+                outlineMeAndSimilar(s);
             }
 
 
@@ -225,6 +254,7 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
                                     recenterCountry(d, i);
                             }
                         })
+                        outlineMeAndSimilar(1);
                     }
                 }
             )
@@ -247,11 +277,6 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
                     k = 1;
                     scope.centered = null;
                 }
-//                console.log("centered updated to ", scope.centered);
-//                g.selectAll("path")
-//                    .classed("active", scope.centered && function(d) {
-//                        return d === scope.centered;
-//                    });
 
                 g.transition()
                     .duration(750)
@@ -264,7 +289,35 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
                 // Do the magic.
                 console.log("Selected:", d.properties);
                 dataService.setCountry(d.properties.code);
+                outlineMeAndSimilar(1);
                 scope.$apply()
+            }
+
+            // Updates outline ass specified.
+            function outlineMeAndSimilar(s) {
+                s = s ? s : 1;
+
+                scope.curCountryCode = '' || dataService.getContToC()[scope.getCurCountry()];
+                var similarConts = similarService.getSimilarCountryType(scope.curCountryCode, "all")
+
+                scope.country.style("stroke", "black").style("stroke-width", "1").style("stroke-dasharray", "0");
+
+                // Update the similarEconomies.
+                g.selectAll(".country").filter( function(d, i) {
+                    if (similarConts.hasOwnProperty(d.properties.code)) {
+                        return true;
+                    }
+                    return false;
+                })
+                    .style("stroke", "red")
+                    .style("stroke-dasharray", "3, 1")
+                    .style("stroke-width", 3 / s);
+
+                // Make me blue.
+                g.selectAll(".country").filter( function (d, i ) { if (d.properties.code == scope.curCountryCode) return true; return false; })
+                    .style("stroke", "blue")
+                    .style("stroke-width", 3 / s);
+
             }
 
             // Get the right color scales based on curProp.
@@ -313,7 +366,6 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
                     return scope.curState;
                 },
                 function (newValue, oldValue) {
-
                     if (scope.colorScale) {
                     // Defined if drawn once.
                         redraw();
