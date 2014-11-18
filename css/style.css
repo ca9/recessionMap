@@ -702,7 +702,9 @@ more media queries
 
 #legendBox {
     position: relative;
-    height: 70px;
+    height: 100px;
+    width:100%;
+    margin-bottom: 20px;
 }
 
 #propTree {
@@ -782,4 +784,20 @@ Some bootstrappin.
 
 .bs-callout a.alert-link {
     font-weight: bold;
+}
+
+#inCallout1 {
+    outline: dotted red;
+    float: right;
+    margin-right: 10%;
+    /*margin-top: 10%;*/
+    padding: 1%;
+}
+
+#inCallout2 {
+    outline: solid blue;
+    float: right;
+    margin-right: 10%;
+    /*margin-top: 10%;*/
+    padding: 1%;
 }

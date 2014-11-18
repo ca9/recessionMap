@@ -25,8 +25,11 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
 
             var legend = d3.select("#legendBox")
                 .append("div")
+                .style("float", "left")
+                .style("height", "70px")
+                .style("margin-left", "-12%")
                 .style("position", "absolute")
-                .style("top", "-150%")
+                .style("top", "-1%")
                 .attr("id", "linearLegend")
                 .attr("class", "legend");
 
