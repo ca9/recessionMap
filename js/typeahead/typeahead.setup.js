@@ -10,7 +10,7 @@
  * EDIT: http://thecodebarbarian.wordpress.com/2013/09/23/the-8020-guide-to-writing-angularjs-directives/
  * No, a directive is appropriate for this purpose.
  */
-recMap.directive("mySearch", function($window, dataService, propService, yearService) {
+recMap.directive("mySearch", function($window, dataService, propService, yearService, similarService) {
     return {
         restrict: "A",
         scope: {
@@ -19,12 +19,67 @@ recMap.directive("mySearch", function($window, dataService, propService, yearSer
             // here from the scope of the controlling Controller.
         },
         link: function (scope, elem, attrs) {
+            // constructs the suggestion engine for similar Economies
+            var simSearch = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                local: function() {
+                    var sims = [];
+                    for (var head in scope.similar) {
+                        for (var simCode1 in scope.similar[head]) {
+                            var cname1 = dataService.getCodeToCont()[simCode1];
+                            // This country's similarities - simCode1, cname1
+                            for (var i = 0; i < scope.similar[head][simCode1].length; i++) {
+                                var simCode2 = scope.similar[head][simCode1][i];
+                                if (simCode2 == simCode1)
+                                    continue;
+                                var cname2 = dataService.getCodeToCont()[simCode2];
+                                var match1, match2;
+                                if (head != 'all') {
+                                    match1 = "similarToby:" + " " + head + ": " + cname1 + " " + simCode1;
+                                } else {
+                                    match1 = "similarTo:" + " " + head + ": " + cname1 + " " + simCode1;
+                                }
+                                // If the above matches, we map this to cont2
+                                // console.log(cname1, cname2, "similar over ", head);
+                                var over = head == "all" ? "all variables" : head;
+                                sims.push({
+                                    value: match1,
+                                    similarityFound: "similar over " + over,
+                                    contName: cname2,
+                                    code: simCode2,
+                                    type: "similarity"
+                                });
+                            }
+                        }
+                    }
+                    return sims;
+                },
+                limit: 30
+            });
+
+            scope.$watch(
+                function() {
+                    return similarService.isLoaded() &&
+                        dataService.isLoaded() &&
+                        propService.isEgroupsReady();
+                },
+                function(newVal, oldVal, scope) {
+                    if (newVal == true) {
+                        scope.similar = similarService.getSimilarData();
+                        console.log("allLoaded", scope.similar, scope.EconProps, scope.ContToC);
+                        // Now do any complex search or similar search, as you please.
+                        simSearch.initialize();
+                    }
+                }
+            )
+
             var CountriesSearch = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
                 local: function() {
                     var conts = [];
-                    for (cont in scope.ContToC) {
+                    for (var cont in scope.ContToC) {
                         conts.push({
                             value: "Country: " + cont + " " + scope.ContToC[cont],
                             code: scope.ContToC[cont],
@@ -43,7 +98,7 @@ recMap.directive("mySearch", function($window, dataService, propService, yearSer
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
                 local: function() {
                     var props = [];
-                    for (econVar in scope.EconProps) {
+                    for (var econVar in scope.EconProps) {
                         props.push({
                             value: "Property: " + econVar +
                                 " " + scope.EconProps[econVar].Name +
@@ -140,6 +195,18 @@ recMap.directive("mySearch", function($window, dataService, propService, yearSer
                                 '<span style="float: right"><b>' + prop.code + '</b></span>'
                         }
                     }
+                },
+                {
+                    name: 'search-similar',
+                    displayKey: 'value',
+                    source: simSearch.ttAdapter(),
+                    templates: {
+                        header: '<h5 class="type-name">Similar Economies</h5>',
+                        suggestion: function(country) {
+                            return '<b><span>' + country.contName + ' (' + country.code + ')</span></b>' +
+                                '<span style="float: right">' + country.similarityFound + '</span>'
+                        }
+                    }
                 }
             );
 
@@ -151,6 +218,8 @@ recMap.directive("mySearch", function($window, dataService, propService, yearSer
                     yearService.setYear(parseInt(datum.value));
                 } else if (datum.type == "Property") {
                     propService.setProperty(datum.code);
+                } else if (datum.type == "similarity") {
+                    dataService.setCountry(datum.code);
                 }
                 scope.$apply();
             });

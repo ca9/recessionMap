@@ -66,7 +66,7 @@ recMap.service("yearService", function() {
 recMap.factory("dataService", function($http) {
    var allData = {}, dataAsService = {}, url = "data/final_data.json";
    var cToCode = {}, codeToC = {};
-   var curCountry = "World";
+   var curCountry = "World", loaded = false;
 
    dataAsService.queryData = function() {
        $http.get(url)
@@ -89,9 +89,12 @@ recMap.factory("dataService", function($http) {
                }
                console.log(allData);
                console.log("CtoCode:", cToCode);
+               loaded = true;
                return allData;
            })
    }
+
+   dataAsService.isLoaded = function () { return loaded; };
 
    dataAsService.getAllData = function() {
        if (isEmptyObject(allData))
@@ -274,6 +277,7 @@ recMap.factory('similarService', function($http, propService, dataService) {
         return simConts;
     }
 
+    similarService.isLoaded = function () { return loaded };
     return similarService;
 })
 
