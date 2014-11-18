@@ -226,26 +226,24 @@
         <div class="col-md-12">
             <h2>Prop Tree</h2>
 
-            <div my-tree class="row" id="propTree"></div>
+            <h5>{{ curProp() }}</h5>
+            <h6>Click a leaf to select it globally.</h6>
+
+            <div my-tree class="row"id="propTree"></div>
         </div>
     </div>
 </section>
 
-<!--<div class="col-md-offset-1 col-md-4 details" style="border-style: solid">-->
-<!--<h2>Details</h2>-->
-<!--<h4>Name</h4><p>{{ getPropExpanded(curProp())["Name"] }}</p>-->
-<!--<h4>Info</h4><p>{{ getPropExpanded(curProp())["Meaning"] }}</p>-->
-<!--<div class="row">-->
-<!--<div class="col-md-4 stats"><h4>Low</h4></div>-->
-<!--<div class="col-md-4 stats"><h4>Mean</h4></div>-->
-<!--<div class="col-md-4 stats"><h4>High</h4></div>-->
-<!--</div>-->
-<!--<div class="row">-->
-<!--<div class="col-md-4 stats"><p>{{ getPropExpanded(curProp())["Mean"] }}</p></div>-->
-<!--<div class="col-md-4 stats"><p>{{ getPropExpanded(curProp())["LowCutoff"] }}</p></div>-->
-<!--<div class="col-md-4 stats"><p>{{ getPropExpanded(curProp())["HighCutoff"] }}</p></div>-->
-<!--</div>-->
-<!--</div>-->
+<section id="graph" class="home-section bg-white">
+    <div class="container">
+        <div class="col-md-12">
+            <h2>Similar To</h2>
+            <h5>{{ getCurCountry() }} and {{ curProp() }}</h5>
+
+            <div my-graph class="row"id="countryGraph"></div>
+        </div>
+    </div>
+</section>
 
 <footer>
     <div class="container">

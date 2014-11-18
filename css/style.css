@@ -476,7 +476,7 @@ body {
 #propTree .node circle {
     cursor: pointer;
     fill: #fff;
-    stroke: steelblue;
+    /*stroke: steelblue;*/
     stroke-width: 2px;
 }
 
@@ -486,7 +486,7 @@ body {
 
 #propTree path.link {
     fill: none;
-    stroke: #ccc;
+    stroke: #eeeeee;
     stroke-width: 2px;
 }
 
@@ -582,6 +582,35 @@ Some bootstrappin.
 #tree {
     margin-top: 0;
     padding-bottom: 50px;
+}
+
+#tree h2 {
+    margin-bottom: 0;
+}
+
+#tree h5 {
+    font-weight: 100;
+    margin-bottom: 0;
+}
+
+#tree h6 {
+    font-weight: 100;
+    font-size: 15px;
+    font-style: italic;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#graph {
+    margin-top: 0;
+    padding-bottom: 50px;
+}
+
+#graph h2 {
+    margin-bottom: 0;
+}
+
+#graph h5 {
+    font-weight: 100;
 }
 
 .details h4 {
