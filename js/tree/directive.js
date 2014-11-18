@@ -89,8 +89,9 @@ recMap.directive("myTree", function ($window, propService) {
                             propGroup = propStats.EconClasses;
                         console.log("New property!", propGroup, newValue);
                         if (root != undefined) {
-                            //root.children.forEach(closeAll);
-                            console.log(tree.nodes(root));
+                            root.children.forEach(closeAll);
+                            update(root);
+                            console.log(root.children);
                         }
                     }
                 }
@@ -273,9 +274,6 @@ recMap.directive("myTree", function ($window, propService) {
                     console.log("toggling...");
                     d._children = d.children;
                     d.children = null;
-                } else {
-                    d.children = d._children;
-                    d._children = null;
                 }
             }
         }
