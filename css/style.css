@@ -879,3 +879,11 @@ Some bootstrappin.
     margin-top: 0;
     font-weight: 100;
 }
+
+.stats h4 {
+    text-align: center;
+}
+
+.stats p {
+    text-align: center;
+}
