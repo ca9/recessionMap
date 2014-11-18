@@ -122,7 +122,16 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
                                     scope.curYear()) + "");
 
                         d3.select(this)
-                            .style("fill", "#FF0");
+                            .style("fill", "blue");
+
+                        var mouseSimilarConts = similarService.getSimilarCountryType(d.properties.code, "all");
+                        d3.selectAll(".country").filter( function (d, i) {
+                                if (d.properties.code in mouseSimilarConts) {
+                                    return true;
+                                }
+                                return false;
+                            }
+                        ).style("fill", "red");
                     })
                     .on("mouseout",  function(d, i) {
                         mapTooltip.classed("hidden", true)
@@ -131,6 +140,16 @@ recMap.directive("myMap", function($window, mapService, dataService, propService
                                 return getColor(d, propService.getCurProp(), yearService.getCurYear());
 //                                return d.properties.color;
                             })
+                        var mouseSimilarConts = similarService.getSimilarCountryType(d.properties.code, "all");
+                        d3.selectAll(".country").filter( function (d, i) {
+                                if (d.properties.code in mouseSimilarConts) {
+                                    return true;
+                                }
+                                return false;
+                            }
+                        ).style("fill", function(d, i) {
+                                return getColor(d, propService.getCurProp(), yearService.getCurYear());
+                            });
                     })
                     // More D3 Beauty - multiple listeners for an event.
                     .on('click.view', recenterCountry)
