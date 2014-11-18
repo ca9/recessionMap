@@ -3,11 +3,30 @@ recMap.directive("myTree", function ($window, propService) {
         restrict: "A",
         scope: {},
         link: function (scope) {
-            var m = [20, 120, 20, 120],
-                w = 1280 - m[1] - m[3],
-                h = 800 - m[0] - m[2],
+            var m = [0, 90, 0, 90],
+                w = 1024 - m[1] - m[3],
+                h = 300 - m[0] - m[2],
                 i = 0,
                 root;
+
+            var propColours = {
+                HIGH: {
+                    border: "#e51c23",
+                    fill: "#ff2129"
+                },
+                MED: {
+                    border: "#ff5722",
+                    fill: "#ff9800"
+                },
+                LOW: {
+                    border: "#259b24",
+                    fill: "#5af158"
+                },
+                OTHER: {
+                    border: "#3f51b5",
+                    fill: "#6889ff"
+                }
+            };
 
             var tree = d3.layout.tree()
                 .size([h, w]);
@@ -18,27 +37,19 @@ recMap.directive("myTree", function ($window, propService) {
                 });
 
             var vis = d3.select("#propTree").append("svg:svg")
-                .attr("width", w + m[1] + m[3])
-                .attr("height", h + m[0] + m[2])
+                .attr("width", w)//+ m[1] + m[3])
+                .attr("height", h)// + m[0] + m[2])
                 .append("svg:g")
                 .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
-
-            function isEmptyGroup(propGroups) {
-                for (var group in propGroups) {
-                    if (propGroups.hasOwnProperty(group)) {
-                        if (propGroups[group].length == 0)
-                            return true;
-                    }
-                }
-                return false;
-            }
 
             // Watch the var propGroups. When available, generate the tree json and draw it..
             scope.$watch(
                 function () {
-                    if(propService.isEgroupsReady())
+                    if (propService.isEgroupsReady()) {
                         scope.propGroups = propService.getPropGroups();
-                    return propService.isEgroupsReady();
+                        return true;
+                    }
+                    return false;
                 },
                 function (newValue, oldValue, scope) {
                     if (newValue == true) {
@@ -49,20 +60,41 @@ recMap.directive("myTree", function ($window, propService) {
                                 var children = [];
                                 for (var child in group) {
                                     if (group.hasOwnProperty(child) && copyProps[group][child] != undefined) {
+                                        var propStats = propService.getPropExpanded(copyProps[group][child]);
                                         children.push({
-                                            "name": propService.getPropExpanded(copyProps[group][child]).Name,
-                                            //copyProps[group][child],
-                                            "children": []});
+                                            "name": copyProps[group][child],
+                                            "fullName": propStats["Name"],
+                                            "rating": propStats["Impact Rating"],
+                                            "children": []
+                                        });
                                     }
                                 }
                                 treeDict.children.push({"name": group, children: children});
                             }
                         }
-                        console.log(copyProps);
-                        console.log(treeDict);
                         draw(treeDict);
                     }
                 });
+
+            scope.$watch(
+                function () {
+                    return propService.getCurProp();
+                }, function (newValue) {
+                    if (newValue != undefined) {
+                        var propStats = propService.getPropExpanded(newValue);
+                        var propGroup;
+                        if (propStats.EconClasses.constructor === Array)
+                            propGroup = propStats.EconClasses[0];
+                        else
+                            propGroup = propStats.EconClasses;
+                        console.log("New property!", propGroup, newValue);
+                        if (root != undefined) {
+                            //root.children.forEach(closeAll);
+                            console.log(tree.nodes(root));
+                        }
+                    }
+                }
+            );
 
             function draw(json) {
                 root = json;
@@ -78,12 +110,8 @@ recMap.directive("myTree", function ($window, propService) {
 
                 // Initialize the display to show a few nodes.
                 root.children.forEach(toggleAll);
-                // toggle(root.children[1]);
-                // toggle(root.children[1].children[2]);
-                // toggle(root.children[9]);
-                // toggle(root.children[9].children[0]);
-
                 update(root);
+                //toggle(root._children[3]);
             }
 
             function update(source) {
@@ -106,18 +134,33 @@ recMap.directive("myTree", function ($window, propService) {
                 // Enter any new nodes at the parent's previous position.
                 var nodeEnter = node.enter().append("svg:g")
                     .attr("class", "node")
-                    .attr("transform", function (d) {
+                    .attr("transform", function () {
                         return "translate(" + source.y0 + "," + source.x0 + ")";
                     })
                     .on("click", function (d) {
                         toggle(d);
                         update(d);
+                    }).on("mouseover", function (d) {
+                        var g = d3.select(this); // The node
+                        // The class is used to remove the additional text later
+                        var info = g.append('text')
+                            .classed('info', true)
+                            .attr('x', 20)
+                            .attr('y', 10)
+                            .text(d.fullName);
+                    })
+                    .on("mouseout", function () {
+                        // Remove the info text on mouse out.
+                        d3.select(this).select('text.info').remove();
                     });
 
                 nodeEnter.append("svg:circle")
                     .attr("r", 1e-6)
                     .style("fill", function (d) {
-                        return d._children ? "lightsteelblue" : "#fff";
+                        if (d._children && d.rating != undefined) {
+                            return propColours[d.rating] ? propColours[d.rating].fill : propColours.OTHER.fill;
+                        }
+                        return d._children ? propColours.OTHER.border : propColours.OTHER.fill;
                     });
 
                 nodeEnter.append("svg:text")
@@ -125,6 +168,7 @@ recMap.directive("myTree", function ($window, propService) {
                         return d.children || d._children ? -10 : 10;
                     })
                     .attr("dy", ".35em")
+                    .attr("dx", "-.60em")
                     .attr("text-anchor", function (d) {
                         return d.children || d._children ? "end" : "start";
                     })
@@ -141,9 +185,12 @@ recMap.directive("myTree", function ($window, propService) {
                     });
 
                 nodeUpdate.select("circle")
-                    .attr("r", 4.5)
+                    .attr("r", 9)
                     .style("fill", function (d) {
-                        return d._children ? "lightsteelblue" : "#fff";
+                        if (d._children && d.rating != undefined) {
+                            return propColours[d.rating] ? propColours[d.rating].fill : propColours.OTHER.fill;
+                        }
+                        return d._children ? propColours.OTHER.border : propColours.OTHER.fill;
                     });
 
                 nodeUpdate.select("text")
@@ -152,7 +199,7 @@ recMap.directive("myTree", function ($window, propService) {
                 // Transition exiting nodes to the parent's new position.
                 var nodeExit = node.exit().transition()
                     .duration(duration)
-                    .attr("transform", function (d) {
+                    .attr("transform", function () {
                         return "translate(" + source.y + "," + source.x + ")";
                     })
                     .remove();
@@ -172,7 +219,7 @@ recMap.directive("myTree", function ($window, propService) {
                 // Enter any new links at the parent's previous position.
                 link.enter().insert("svg:path", "g")
                     .attr("class", "link")
-                    .attr("d", function (d) {
+                    .attr("d", function () {
                         var o = {x: source.x0, y: source.y0};
                         return diagonal({source: o, target: o});
                     })
@@ -188,7 +235,7 @@ recMap.directive("myTree", function ($window, propService) {
                 // Transition exiting nodes to the parent's new position.
                 link.exit().transition()
                     .duration(duration)
-                    .attr("d", function (d) {
+                    .attr("d", function () {
                         var o = {x: source.x, y: source.y};
                         return diagonal({source: o, target: o});
                     })
@@ -204,6 +251,26 @@ recMap.directive("myTree", function ($window, propService) {
             // Toggle children.
             function toggle(d) {
                 if (d.children) {
+                    d._children = d.children;
+                    d.children = null;
+                } else {
+                    d.children = d._children;
+                    d._children = null;
+                }
+            }
+
+            // close all children
+            function closeAll(d) {
+                if (d.children) {
+                    console.log("has children");
+                    d.children.forEach(closeAll);
+                    close(d);
+                }
+            }
+
+            function close(d) {
+                if (d.children) {
+                    console.log("toggling...");
                     d._children = d.children;
                     d.children = null;
                 } else {
