@@ -23,8 +23,6 @@
             </li>
             <li><a href="#map">Map</a></li>
             <li><a href="#details">Details</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#works">Works</a></li>
             <li ng-controller="timeController">
                 <a href="#">Year</a>
                 <ul class="dl-submenu">
@@ -89,9 +87,20 @@
         <div id="MapContainer"></div>
         <div my-map></div>
         <div id="legendBox" class="bs-callout-info">
-            <h4> Legend </h4>
-            <p id="inCallout1"> &nbsp; Similar Economies highlighted in red. &nbsp; </p>
-            <p id="inCallout2"> &nbsp; Chosen country highlighted in blue. &nbsp; </p>
+            <!--<h4> Legend </h4>-->
+            <div class="row">
+                <div class="col-md-offset-4 col-md-8" style="margin-left: 29%">
+                    <div class="row">
+                        <div>
+                            <p id="inCallout1" class="col-md-6"> &nbsp; Similar Economies highlighted in red.
+                                &nbsp; </p>
+                        </div>
+                        <div class="col-md-6">
+                            <p id="inCallout2"> &nbsp; Chosen country highlighted in blue. &nbsp; </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -101,9 +110,10 @@
 <section id="details" class="home-section bg-white">
     <div class="container">
         <div class="jumbotron">
-            <h1>
+            <h2>
                 {{ curProp() }}
-            </h1>
+            </h2>
+
             <h2>
                 <span ng-class="{ 'label label-danger': checkImpact('high'),
                                   'label label-warning': checkImpact('med'),
@@ -122,15 +132,18 @@
             <blockquote>
                 <p>
                     {{ getPropExpanded(curProp())["Name"] }}
-                </p> <small><cite>{{ getPropExpanded(curProp())["Source"] }}</cite></small>
+                </p>
+                <small><cite>{{ getPropExpanded(curProp())["Source"] }}</cite></small>
             </blockquote>
             <p>
                 {{ getPropExpanded(curProp())["Meaning"] }}
             </p>
+
             <p>
                 <a class="btn btn-primary btn-large" href="#intro">Back to top</a>
                 <a class="btn btn-primary btn-large" href="#intro">Learn More</a>
             </p>
+
             <p>
             <table id="propTable" class="table table-hover table-striped table-condensed">
                 <thead>
@@ -158,8 +171,8 @@
                     </td>
                     <td></td>
                     <td>
-                        <div class="span pull-left" >Maximum Value:  </div>
-                        <div class="span pull-right" >{{ getPropExpanded(curProp())["myMax"] }}</div>
+                        <div class="span pull-left">Maximum Value:</div>
+                        <div class="span pull-right">{{ getPropExpanded(curProp())["myMax"] }}</div>
                     </td>
                     <td></td>
                 </tr>
@@ -172,8 +185,8 @@
                     </td>
                     <td></td>
                     <td>
-                        <div class="span pull-left" >Standard Deviations: </div>
-                        <div class="span pull-right" >{{ getPropExpanded(curProp())["SD"] }}</div>
+                        <div class="span pull-left">Standard Deviations:</div>
+                        <div class="span pull-right">{{ getPropExpanded(curProp())["SD"] }}</div>
                     </td>
                     <td></td>
                 </tr>
@@ -186,8 +199,8 @@
                     </td>
                     <td></td>
                     <td>
-                        <div class="span pull-left" >Minimum Value:</div>
-                        <div class="span pull-right" >{{ getPropExpanded(curProp())["myMin"] }} </div>
+                        <div class="span pull-left">Minimum Value:</div>
+                        <div class="span pull-right">{{ getPropExpanded(curProp())["myMin"] }}</div>
                     </td>
                     <td></td>
                 </tr>
@@ -204,30 +217,34 @@
                 </tr>
                 </tbody>
             </table>
-            </p>
         </div>
     </div>
 </section>
 
 <section id="tree" class="home-section bg-white">
-    <h2>Prop Tree</h2>
-    <div my-tree class="row" id="propTree"></div>
+    <div class="container">
+        <div class="col-md-12">
+            <h2>Prop Tree</h2>
+
+            <div my-tree class="row" id="propTree"></div>
+        </div>
+    </div>
 </section>
 
 <!--<div class="col-md-offset-1 col-md-4 details" style="border-style: solid">-->
-    <!--<h2>Details</h2>-->
-    <!--<h4>Name</h4><p>{{ getPropExpanded(curProp())["Name"] }}</p>-->
-    <!--<h4>Info</h4><p>{{ getPropExpanded(curProp())["Meaning"] }}</p>-->
-    <!--<div class="row">-->
-        <!--<div class="col-md-4 stats"><h4>Low</h4></div>-->
-        <!--<div class="col-md-4 stats"><h4>Mean</h4></div>-->
-        <!--<div class="col-md-4 stats"><h4>High</h4></div>-->
-    <!--</div>-->
-    <!--<div class="row">-->
-        <!--<div class="col-md-4 stats"><p>{{ getPropExpanded(curProp())["Mean"] }}</p></div>-->
-        <!--<div class="col-md-4 stats"><p>{{ getPropExpanded(curProp())["LowCutoff"] }}</p></div>-->
-        <!--<div class="col-md-4 stats"><p>{{ getPropExpanded(curProp())["HighCutoff"] }}</p></div>-->
-    <!--</div>-->
+<!--<h2>Details</h2>-->
+<!--<h4>Name</h4><p>{{ getPropExpanded(curProp())["Name"] }}</p>-->
+<!--<h4>Info</h4><p>{{ getPropExpanded(curProp())["Meaning"] }}</p>-->
+<!--<div class="row">-->
+<!--<div class="col-md-4 stats"><h4>Low</h4></div>-->
+<!--<div class="col-md-4 stats"><h4>Mean</h4></div>-->
+<!--<div class="col-md-4 stats"><h4>High</h4></div>-->
+<!--</div>-->
+<!--<div class="row">-->
+<!--<div class="col-md-4 stats"><p>{{ getPropExpanded(curProp())["Mean"] }}</p></div>-->
+<!--<div class="col-md-4 stats"><p>{{ getPropExpanded(curProp())["LowCutoff"] }}</p></div>-->
+<!--<div class="col-md-4 stats"><p>{{ getPropExpanded(curProp())["HighCutoff"] }}</p></div>-->
+<!--</div>-->
 <!--</div>-->
 
 <footer>
@@ -245,7 +262,7 @@
 <script src="js/jquery/jquery.js"></script>
 <script src="js/ui/bootstrap.min.js"></script>
 <script src="js/jquery/jquery.smooth-scroll.min.js"></script>
-<script src="js/ui/modernizr.custom.js" rel="stylesheet" media="screen"></script>
+<script src="js/ui/modernizr.custom.js" rel="stylesheet"></script>
 <script src="js/jquery/jquery.dlmenu.js"></script>
 <script src="js/ui/wow.min.js"></script>
 <script src="js/ui/custom.js"></script>
