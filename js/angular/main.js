@@ -27,7 +27,6 @@ String.prototype.hashCode = function() {
 };
 
 
-
 // App
 var recMap = angular.module('recMap', []);
 
@@ -107,6 +106,10 @@ recMap.factory("dataService", function($http) {
     // Get the Country to Code mapping.
    dataAsService.getContToC = function () {
        return cToCode;
+   }
+
+   dataAsService.getCodeToCont = function () {
+       return codeToC;
    }
 
    dataAsService.setCountry = function(inCountry) {
@@ -227,6 +230,51 @@ recMap.factory('propService', function($http) {
     return propAsService;
 });
 
+recMap.factory('similarService', function($http, propService, dataService) {
+    var similarService = {}, similarJSON = {}, called = false, loaded = false, url = 'data/similarEcons.json';
+
+    /* Pulls the data if not found. Returns the object that will contain the data. May be empty. */
+    similarService.getSimilarData = function () {
+        if (!loaded) {
+            if (!called) {
+                called = true;
+                $http.get(url)
+                    .then(function(response) {
+                        var inData = response['data'];
+                        for (var x in inData) {
+                            similarJSON[x] = inData[x];
+                        }
+                        loaded = true;
+                    }
+                )
+            }
+        }
+        return similarJSON;
+    }
+
+    // Get similar Countries by code and expanded name, for given Econ Class.
+    // Returns empty object if nothing is found.
+    similarService.getSimilarCountryType = function(contCode, EconClass) {
+        var simConts = {};
+        if (propService.isEgroupsReady() && !isEmptyObject(similarJSON)) {
+            var eGroups = propService.getGroups();
+            EconClass = eGroups.hasOwnProperty(EconClass) ?  EconClass : "all";
+            var contMap = dataService.getCodeToCont();
+            if (contMap.hasOwnProperty(contCode)) {
+                var simList = similarJSON[EconClass][contCode];
+                for (var i = 0; i < simList.length; i++) {
+                    if (contMap.hasOwnProperty(simList[i])) {
+                        simConts[simList[i]] = contMap[simList[i]];
+                    }
+                }
+            }
+        }
+        return simConts;
+    }
+
+    return similarService;
+})
+
 recMap.factory('mapService', function($http, propService, dataService) {
     var mapJSON = {}, url = "data/world-topo-min.json",
         mapService = {}, called = false;
@@ -260,11 +308,12 @@ recMap.controller('timeController', function($scope, yearService) {
     }
 );
 
-recMap.controller('dataController', function($scope, dataService, propService, yearService) {
+recMap.controller('dataController', function($scope, dataService, propService, yearService, similarService) {
     // Expose Services to Directives
     $scope.propService = propService;
     $scope.dataService = dataService;
     $scope.yearService = yearService;
+    $scope.similarService = similarService;
 
     $scope.allData = dataService.getAllData();
 
