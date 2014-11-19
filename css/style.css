@@ -634,3 +634,19 @@ Some bootstrappin.
 .stats p {
     text-align: center;
 }
+
+#country .jumbotron .btn-group-justified a {
+    font-size: 12px;
+}
+
+.btn-toolbar .btn:hover, .btn:focus {
+    -webkit-box-shadow: 0 0 15px #a1a1a1;
+}
+
+.btn-toolbar .active {
+    -webkit-box-shadow: 0 0 15px #a1a1a1;
+}
+
+#country-tables {
+    padding-top: 2%;
+}

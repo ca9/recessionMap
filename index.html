@@ -68,7 +68,8 @@
                     </h2>
 
                     <div my-search id="typeahead-search">
-                        <input class="typeahead" type="text" placeholder="Country, Year, or Property. Try similarTo if adventurous. ">
+                        <input class="typeahead" type="text"
+                               placeholder="Country, Year, or Property. Try similarTo if adventurous. ">
                     </div>
                 </div>
             </div>
@@ -225,26 +226,125 @@
 <section id="tree" class="home-section bg-white">
     <div class="container">
         <div class="col-md-12">
-            <h2>Prop Tree</h2>
+            <h2>Property Tree</h2>
 
             <h5>{{ curProp() }}</h5>
             <h6>Click a leaf to select it globally.</h6>
 
-            <div my-tree class="row"id="propTree"></div>
+            <div my-tree class="row" id="propTree"></div>
         </div>
     </div>
 </section>
 
-<section id="graph" class="home-section bg-white">
+<section id="country" class="home-section bg-white">
     <div class="container">
-        <div class="col-md-12">
-            <h2>Similar To</h2>
-            <h5>{{ getCurCountry() }} and {{ curProp() }}</h5>
+        <div class="jumbotron">
+            <h2>
+                {{ getCurCountry() }}
+            </h2>
 
-            <div my-graph class="row"id="countryGraph"></div>
+            <div class="row">
+                <div class="btn btn-toolbar" role="group">
+                    <a href="" class="btn btn-danger active" role="button">Banking</a>
+                    <a href="" class="btn btn-success" role="button">Central Government</a>
+                    <a href="" class="btn btn-success" role="button">Economic Structure</a>
+                    <a href="" class="btn btn-warning" role="button">GDP</a>
+                    <a href="" class="btn btn-danger" role="button">Manufacturing</a>
+                    <a href="" class="btn btn-success" role="button">Net Exports</a>
+                </div>
+            </div>
+
+            <div class="row" id="country-tables">
+                <div class="col-md-6">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>
+                                Property
+                            </th>
+                            <th>
+                                Value
+                            </th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr>
+                            <td>FS.AST.DOMS.GD.ZS</td>
+                            <td class="danger">-1.06</td>
+                        </tr>
+                        <tr>
+                            <td>GC.BAL.CASH.GD.ZS</td>
+                            <td class="danger">-1.06</td>
+                        </tr>
+                        <tr>
+                            <td>GC.BAL.CASH.GD.ZS</td>
+                            <td class="warning">-1.06</td>
+                        </tr>
+                        <tr>
+                            <td>GC.BAL.CASH.GD.ZS</td>
+                            <td class="success">-1.06</td>
+                        </tr>
+                        <tr>
+                            <td>GC.BAL.CASH.GD.ZS</td>
+                            <td class="danger">-1.06</td>
+                        </tr>
+                        <tr>
+                            <td>GC.BAL.CASH.GD.ZS</td>
+                            <td class="danger">-1.06</td>
+                        </tr>
+                        <tr>
+                            <td>GC.BAL.CASH.GD.ZS</td>
+                            <td class="success">-1.06</td>
+                        </tr>
+                        <tr>
+                            <td>GC.BAL.CASH.GD.ZS</td>
+                            <td class="warning">-1.06</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-offset-1 col-md-5">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>
+                                Similar Countries
+                            </th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr>
+                            <td>India</td>
+                        </tr>
+                        <tr>
+                            <td>Bangladesh</td>
+                        </tr>
+                        <tr>
+                            <td>South Africa</td>
+                        </tr>
+                        <tr>
+                            <td>United States of America</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </section>
+
+<!--<section id="graph" class="home-section bg-white">-->
+<!--<div class="container">-->
+<!--<div class="col-md-12">-->
+<!--<h2>Similar To</h2>-->
+<!--<h5>{{ getCurCountry() }} and {{ curProp() }}</h5>-->
+
+<!--<div my-graph class="row"id="countryGraph"></div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</section>-->
 
 <footer>
     <div class="container">
