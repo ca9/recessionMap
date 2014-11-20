@@ -21,33 +21,33 @@ body {
 }
 
 h1 {
-    font-size: 36px;
-}
-
-h2 {
-    font-size: 32px;
-}
-
-h3 {
     font-size: 28px;
 }
 
-h4 {
+h2 {
     font-size: 24px;
 }
 
-h5 {
+h3 {
     font-size: 20px;
 }
 
+h4 {
+    font-size: 16px;
+}
+
+h5 {
+    font-size: 12px;
+}
+
 h6 {
-    font-size: 18px;
+    font-size: 8px;
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     color: #3a3a3a;
-    font-weight: 700;
-    margin-bottom: 20px;
+    font-weight: 500;
+    margin-bottom: 5px;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -128,7 +128,7 @@ Home sections
 }
 
 .section-heading h2 {
-    font-size: 38px;
+    font-size: 24px;
     text-transform: uppercase;
 }
 
@@ -173,7 +173,7 @@ Home sections
 }
 
 #intro {
-    height: 160px;
+    height: 100%;
     width: 100%;
     background: #529abb no-repeat center;
     overflow-y: hidden;
@@ -188,14 +188,14 @@ Home sections
 }
 
 #intro .brand {
-    margin-top: 0;
+    margin-top: -1%;
 }
 
 .intro-text h1 a {
     color: #fff;
     text-align: center;
     font-weight: 700;
-    font-size: 40px;
+    font-size: 24px;
     line-height: 1.1em;
     text-transform: uppercase;
 }
@@ -206,13 +206,13 @@ Home sections
 
 .line-spacer {
     width: 20%;
-    margin: 0 auto 25px;
+    margin: 0 auto 5px;
     border-bottom: 1px solid #fff;
 }
 
 .intro-text p span {
     color: #fff;
-    font-size: 24px;
+    font-size: 20px;
     text-align: center;
     font-weight: 300;
 }
@@ -358,12 +358,11 @@ more media queries
 .typeahead, .tt-query, .tt-hint {
     border: 2px solid #ccc;
     border-radius: 8px;
-    font-size: 24px;
+    font-size: 20px;
     height: 50px;
     line-height: 30px;
     outline: medium none;
     padding: 8px 12px;
-    /*width: 100%;*/
     width: 100%;
 }
 
@@ -649,4 +648,8 @@ Some bootstrappin.
 
 #country-tables {
     padding-top: 2%;
+}
+
+#MapContainer {
+    margin-top: 5px;
 }

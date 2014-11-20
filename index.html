@@ -8,7 +8,7 @@
     <link href="css/bootstrap.css" rel="stylesheet" media="screen">
     <link href="css/style.css" rel="stylesheet" media="screen">
     <link href="css/map.css" rel="stylesheet" media="screen">
-    <link href="color/default.css" rel="stylesheet" media="screen">
+    <!--<link href="color/default.css" rel="stylesheet" media="screen">-->
     <link href="css/simple-slider.css" rel="stylesheet" type="text/css">
     <link href="css/simple-slider-volume.css" rel="stylesheet" type="text/css">
 </head>
@@ -18,13 +18,13 @@
     <div id="dl-menu" class="dl-menuwrapper">
         <button class="dl-trigger">Open Menu</button>
         <ul class="dl-menu">
-            <li>
-                <a href="#intro">Top</a>
-            </li>
+            <li><a href="#intro">Top</a></li>
             <li><a href="#map">Map</a></li>
-            <li><a href="#details">Details</a></li>
+            <li><a href="#details">Property Details</a></li>
+            <li><a href="#tree">Property Tree</a></li>
+            <li><a href="#country">Country Details</a></li>
             <li ng-controller="timeController">
-                <a href="#">Year</a>
+                <a href="#">Change Year</a>
                 <ul class="dl-submenu">
                     <li ng-repeat="ayear in years">
                         <a ng-click="setYear(ayear)"
@@ -34,7 +34,6 @@
                     </li>
                 </ul>
             </li>
-            <li><a href="#tree"> Property Tree </a></li>
         </ul>
     </div>
 </div>
@@ -62,7 +61,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
-                <div class="section-heading" style="margin-bottom: 5%">
+                <div class="section-heading" style="margin-bottom: 15px">
                     <h2 id="chosenCountry">
                         {{ curProp() }}, {{ getCurCountry() }}, {{ curYear() }}
                     </h2>
@@ -77,13 +76,13 @@
 
         <div class="row">
             <div class="col-md-2" style="padding-right: 1%; text-align: right">
-                <h2 style="margin-top: -5%">2000</h2>
+                <h2 style="margin-top: -3%">2000</h2>
             </div>
             <div my-slider class="col-md-8" style="padding-left: 0">
                 <input type="text" id="year-slider" style="display:none">
             </div>
             <div class="col-md-2" style="text-align: left;">
-                <h2 style="margin-top: -5%">2013</h2>
+                <h2 style="margin-top: -3%">2013</h2>
             </div>
         </div>
         <div id="MapContainer"></div>
@@ -166,7 +165,7 @@
                 <tbody>
                 <tr class="success">
                     <td>
-                        <b>High Value "Cutoff"</b>
+                        <b>High Value Cutoff</b>
                     </td>
                     <td>
                         {{ getPropExpanded(curProp())["HighCutoff"] }}
@@ -331,6 +330,11 @@
                     </table>
                 </div>
             </div>
+
+            <div class="embed-responsive embed-responsive-4by3">
+                <iframe class="embed-responsive-item" width="800" height="600"
+                        src="http://www.youtube.com/embed/4sMoSPYnE8w" allowfullscreen></iframe>
+            </div>
         </div>
     </div>
 </section>
@@ -340,11 +344,6 @@
 <!--<div class="col-md-12">-->
 <!--<h2>Similar To</h2>-->
 <!--<h5>{{ getCurCountry() }} and {{ curProp() }}</h5>-->
-
-<!--<div my-graph class="row"id="countryGraph"></div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</section>-->
 
 <footer>
     <div class="container">
