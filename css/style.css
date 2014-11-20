@@ -37,11 +37,11 @@ h4 {
 }
 
 h5 {
-    font-size: 12px;
+    font-size: 14px;
 }
 
 h6 {
-    font-size: 8px;
+    font-size: 12px;
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
@@ -450,7 +450,6 @@ more media queries
     position: relative;
     height: 100px;
     width: 100%;
-    margin-bottom: 20px;
 }
 
 body {
@@ -469,7 +468,7 @@ body {
 
 #tree .container .col-md-12 {
     background: #ffffff;
-    border: 2px solid #eeeeee;
+    /*border: 2px solid #eeeeee;*/
 }
 
 #propTree .node circle {
@@ -571,7 +570,11 @@ Some bootstrappin.
 }
 
 #legendBox .row .col-md-6 {
-    margin-top: 5%;
+    margin-top: 3.5%;
+}
+
+#propTable {
+    margin-bottom: 0;
 }
 
 #propTable .th {
@@ -580,7 +583,7 @@ Some bootstrappin.
 
 #tree {
     margin-top: 0;
-    padding-bottom: 50px;
+    /*padding-bottom: 50px;*/
 }
 
 #tree h2 {
@@ -594,7 +597,6 @@ Some bootstrappin.
 
 #tree h6 {
     font-weight: 100;
-    font-size: 15px;
     font-style: italic;
     font-family: 'Open Sans', sans-serif;
 }
@@ -652,4 +654,20 @@ Some bootstrappin.
 
 #MapContainer {
     margin-top: 5px;
+}
+
+#map {
+    padding-top: 15px;
+}
+
+.container .jumbotron {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 30px;
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
 }
