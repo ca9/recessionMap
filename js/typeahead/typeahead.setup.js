@@ -322,6 +322,8 @@ recMap.directive("mySearch", function($window, dataService, propService, yearSer
 
             $('#typeahead-search').on('typeahead:selected', function (e, datum) {
                 console.log(datum);
+                // Reset the Search
+                $('.typeahead.tt-input')[0].value = "";
                 if (datum.type == "Country") {
                     dataService.setCountry(datum.code);
                 } else if (datum.type == "year") {
