@@ -434,6 +434,7 @@ more media queries
     border: 4px solid #555;
     margin: 1% auto;
     left: 16%;
+    width: 16%;
 }
 
 #linearLegend .colorlegend-labels {
@@ -549,11 +550,13 @@ Some bootstrappin.
 #inCallout1 {
     outline: dotted red;
     height: 100%;
+    font-size: 1.3em;
 }
 
 #inCallout2 {
     outline: solid blue;
     height: 100%;
+    font-size: 1.3em;
 }
 
 #MapContainer svg {

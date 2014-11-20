@@ -92,7 +92,7 @@ recMap.directive("mySearch", function($window, dataService, propService, yearSer
                     }
                     return combos;
                 },
-                limit: 30
+                limit: 10
             });
 
             // constructs the suggestion engine for similar Economies
