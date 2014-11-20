@@ -8,7 +8,7 @@
     <link href="css/bootstrap.css" rel="stylesheet" media="screen">
     <link href="css/style.css" rel="stylesheet" media="screen">
     <link href="css/map.css" rel="stylesheet" media="screen">
-    <link href="color/default.css" rel="stylesheet" media="screen">
+    <!--<link href="color/default.css" rel="stylesheet" media="screen">-->
     <link href="css/simple-slider.css" rel="stylesheet" type="text/css">
     <link href="css/simple-slider-volume.css" rel="stylesheet" type="text/css">
 </head>
@@ -18,13 +18,13 @@
     <div id="dl-menu" class="dl-menuwrapper">
         <button class="dl-trigger">Open Menu</button>
         <ul class="dl-menu">
-            <li>
-                <a href="#intro">Top</a>
-            </li>
+            <li><a href="#intro">Top</a></li>
             <li><a href="#map">Map</a></li>
-            <li><a href="#details">Details</a></li>
+            <li><a href="#details">Property Details</a></li>
+            <li><a href="#tree">Property Tree</a></li>
+            <li><a href="#country">Country Details</a></li>
             <li ng-controller="timeController">
-                <a href="#">Year</a>
+                <a href="#">Change Year</a>
                 <ul class="dl-submenu">
                     <li ng-repeat="ayear in years">
                         <a ng-click="setYear(ayear)"
@@ -34,7 +34,6 @@
                     </li>
                 </ul>
             </li>
-            <li><a href="#tree"> Property Tree </a></li>
         </ul>
     </div>
 </div>
@@ -60,44 +59,47 @@
 <!-- Map -->
 <section id="map" class="home-section bg-white">
     <div class="container">
-        <div class="row">
-            <div class="col-md-offset-2 col-md-8">
-                <div class="section-heading" style="margin-bottom: 5%">
-                    <h2 id="chosenCountry">
-                        {{ curProp() }}, {{ getCurCountry() }}, {{ curYear() }}
-                    </h2>
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-md-offset-2 col-md-8">
+                    <div class="section-heading" style="margin-bottom: 15px">
+                        <h2 id="chosenCountry">
+                            {{ curProp() }}, {{ getCurCountry() }}, {{ curYear() }}
+                        </h2>
 
-                    <div my-search id="typeahead-search">
-                        <input class="typeahead" type="text" placeholder="Country, Year, or Property. Try similarTo if adventurous. ">
+                        <div my-search id="typeahead-search">
+                            <input class="typeahead" type="text"
+                                   placeholder="Country, Year, or Property. Try similarTo if adventurous. ">
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-2" style="padding-right: 1%; text-align: right">
-                <h2 style="margin-top: -5%">2000</h2>
-            </div>
-            <div my-slider class="col-md-8" style="padding-left: 0">
-                <input type="text" id="year-slider" style="display:none">
-            </div>
-            <div class="col-md-2" style="text-align: left;">
-                <h2 style="margin-top: -5%">2013</h2>
-            </div>
-        </div>
-        <div id="MapContainer"></div>
-        <div my-map></div>
-        <div id="legendBox" class="bs-callout-info">
-            <!--<h4> Legend </h4>-->
             <div class="row">
-                <div class="col-md-offset-4 col-md-8" style="margin-left: 29%">
-                    <div class="row">
-                        <div>
-                            <p id="inCallout1" class="col-md-6"> &nbsp; Similar Economies highlighted in red.
-                                &nbsp; </p>
-                        </div>
-                        <div class="col-md-6">
-                            <p id="inCallout2"> &nbsp; Chosen country highlighted in blue. &nbsp; </p>
+                <div class="col-md-2" style="padding-right: 1%; text-align: right">
+                    <h2 style="margin-top: -3%">2000</h2>
+                </div>
+                <div my-slider class="col-md-8" style="padding-left: 0">
+                    <input type="text" id="year-slider" style="display:none">
+                </div>
+                <div class="col-md-2" style="text-align: left;">
+                    <h2 style="margin-top: -3%">2013</h2>
+                </div>
+            </div>
+            <div id="MapContainer"></div>
+            <div my-map></div>
+            <div id="legendBox" class="bs-callout-info">
+                <!--<h4> Legend </h4>-->
+                <div class="row">
+                    <div class="col-md-offset-4 col-md-8" style="margin-left: 29%">
+                        <div class="row">
+                            <div>
+                                <p id="inCallout1" class="col-md-6"> &nbsp; Similar Economies highlighted in red.
+                                    &nbsp; </p>
+                            </div>
+                            <div class="col-md-6">
+                                <p id="inCallout2"> &nbsp; Chosen country highlighted in blue. &nbsp; </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -165,7 +167,7 @@
                 <tbody>
                 <tr class="success">
                     <td>
-                        <b>High Value "Cutoff"</b>
+                        <b>High Value Cutoff</b>
                     </td>
                     <td>
                         {{ getPropExpanded(curProp())["HighCutoff"] }}
@@ -224,10 +226,131 @@
 
 <section id="tree" class="home-section bg-white">
     <div class="container">
-        <div class="col-md-12">
-            <h2>Prop Tree</h2>
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Property Tree</h2>
 
-            <div my-tree class="row" id="propTree"></div>
+                    <h4>{{ curProp() }}</h4>
+                    <h6>Click a leaf to select it globally.</h6>
+
+                    <div my-tree class="row" id="propTree"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="country" class="home-section bg-white">
+    <div class="container">
+        <div class="jumbotron">
+            <h2>
+                {{ getCurCountry() }}
+            </h2>
+
+            <div class="row">
+                <div class="btn btn-toolbar" role="group">
+                    <a href="" class="btn btn-danger active" role="button">Banking</a>
+                    <a href="" class="btn btn-success" role="button">Central Government</a>
+                    <a href="" class="btn btn-success" role="button">Economic Structure</a>
+                    <a href="" class="btn btn-warning" role="button">GDP</a>
+                    <a href="" class="btn btn-danger" role="button">Manufacturing</a>
+                    <a href="" class="btn btn-success" role="button">Net Exports</a>
+                </div>
+            </div>
+
+            <div class="row" id="country-tables">
+                <div class="col-md-6 vcenter">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>
+                                Property
+                            </th>
+                            <th>
+                                Value
+                            </th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr>
+                            <td>FS.AST.DOMS.GD.ZS</td>
+                            <td class="danger">-1.06</td>
+                        </tr>
+                        <tr>
+                            <td>GC.BAL.CASH.GD.ZS</td>
+                            <td class="danger">-1.06</td>
+                        </tr>
+                        <tr>
+                            <td>GC.BAL.CASH.GD.ZS</td>
+                            <td class="warning">-1.06</td>
+                        </tr>
+                        <tr>
+                            <td>GC.BAL.CASH.GD.ZS</td>
+                            <td class="success">-1.06</td>
+                        </tr>
+                        <tr>
+                            <td>GC.BAL.CASH.GD.ZS</td>
+                            <td class="danger">-1.06</td>
+                        </tr>
+                        <tr>
+                            <td>GC.BAL.CASH.GD.ZS</td>
+                            <td class="danger">-1.06</td>
+                        </tr>
+                        <tr>
+                            <td>GC.BAL.CASH.GD.ZS</td>
+                            <td class="success">-1.06</td>
+                        </tr>
+                        <tr>
+                            <td>GC.BAL.CASH.GD.ZS</td>
+                            <td class="warning">-1.06</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div><!--
+                --><div class="col-md-6 vcenter">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>
+                                Similar Countries
+                            </th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr>
+                            <td>India</td>
+                        </tr>
+                        <tr>
+                            <td>Bangladesh</td>
+                        </tr>
+                        <tr>
+                            <td>South Africa</td>
+                        </tr>
+                        <tr>
+                            <td>United States of America</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="embed-responsive embed-responsive-4by3">
+                        <iframe class="embed-responsive-item" src="http://www.youtube.com/embed/4sMoSPYnE8w"
+                                allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="embed-responsive embed-responsive-4by3">
+                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/h5XcR7AfCuU"
+                                allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>

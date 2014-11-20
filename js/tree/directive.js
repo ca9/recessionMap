@@ -76,26 +76,48 @@ recMap.directive("myTree", function ($window, propService) {
                     }
                 });
 
+            var propGroup;
             scope.$watch(
                 function () {
                     return propService.getCurProp();
                 }, function (newValue) {
                     if (newValue != undefined) {
                         var propStats = propService.getPropExpanded(newValue);
-                        var propGroup;
                         if (propStats.EconClasses.constructor === Array)
                             propGroup = propStats.EconClasses[0];
                         else
                             propGroup = propStats.EconClasses;
-                        console.log("New property!", propGroup, newValue);
                         if (root != undefined) {
                             root.children.forEach(closeAll);
+                            root.children.forEach(function (d) {
+                                if (d.name == propGroup) {
+                                    toggle(d);
+                                    d.children.forEach(function (c) {
+                                        if (c.name == newValue) {
+                                            //console.log(c);
+                                        }
+                                    })
+                                }
+                            });
                             update(root);
-                            console.log(root.children);
                         }
                     }
                 }
             );
+
+            function getMethods(obj) {
+                var result = [];
+                for (var id in obj) {
+                    try {
+                        if (obj.hasOwnProperty(id) && typeof(obj[id]) == "function") {
+                            result.push(id + ": " + obj[id].toString());
+                        }
+                    } catch (err) {
+                        result.push(id + ": inaccessible");
+                    }
+                }
+                return result;
+            }
 
             function draw(json) {
                 root = json;
@@ -111,6 +133,11 @@ recMap.directive("myTree", function ($window, propService) {
 
                 // Initialize the display to show a few nodes.
                 root.children.forEach(toggleAll);
+                root.children.forEach(function (d) {
+                    if (d.name == propService.getPropExpanded(propService.getCurProp()).EconClasses[0])
+                        toggle(d);
+                });
+
                 update(root);
                 //toggle(root._children[3]);
             }
@@ -140,6 +167,10 @@ recMap.directive("myTree", function ($window, propService) {
                     })
                     .on("click", function (d) {
                         toggle(d);
+                        if (d.hasOwnProperty("fullName")) {
+                            propService.setProperty(d.name);
+                            scope.$apply();
+                        }
                         update(d);
                     }).on("mouseover", function (d) {
                         var g = d3.select(this); // The node
@@ -147,7 +178,7 @@ recMap.directive("myTree", function ($window, propService) {
                         var info = g.append('text')
                             .classed('info', true)
                             .attr('x', 20)
-                            .attr('y', 10)
+                            .attr('y', 5)
                             .text(d.fullName);
                     })
                     .on("mouseout", function () {
@@ -158,7 +189,7 @@ recMap.directive("myTree", function ($window, propService) {
                 nodeEnter.append("svg:circle")
                     .attr("r", 1e-6)
                     .style("fill", function (d) {
-                        if (d._children && d.rating != undefined) {
+                        if (d.rating != undefined) {
                             return propColours[d.rating] ? propColours[d.rating].fill : propColours.OTHER.fill;
                         }
                         return d._children ? propColours.OTHER.border : propColours.OTHER.fill;
@@ -188,7 +219,7 @@ recMap.directive("myTree", function ($window, propService) {
                 nodeUpdate.select("circle")
                     .attr("r", 9)
                     .style("fill", function (d) {
-                        if (d._children && d.rating != undefined) {
+                        if (d.rating != undefined) {
                             return propColours[d.rating] ? propColours[d.rating].fill : propColours.OTHER.fill;
                         }
                         return d._children ? propColours.OTHER.border : propColours.OTHER.fill;
@@ -263,7 +294,6 @@ recMap.directive("myTree", function ($window, propService) {
             // close all children
             function closeAll(d) {
                 if (d.children) {
-                    console.log("has children");
                     d.children.forEach(closeAll);
                     close(d);
                 }
@@ -271,7 +301,6 @@ recMap.directive("myTree", function ($window, propService) {
 
             function close(d) {
                 if (d.children) {
-                    console.log("toggling...");
                     d._children = d.children;
                     d.children = null;
                 }

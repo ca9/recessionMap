@@ -21,33 +21,33 @@ body {
 }
 
 h1 {
-    font-size: 36px;
-}
-
-h2 {
-    font-size: 32px;
-}
-
-h3 {
     font-size: 28px;
 }
 
-h4 {
+h2 {
     font-size: 24px;
 }
 
-h5 {
+h3 {
     font-size: 20px;
 }
 
+h4 {
+    font-size: 16px;
+}
+
+h5 {
+    font-size: 14px;
+}
+
 h6 {
-    font-size: 18px;
+    font-size: 12px;
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     color: #3a3a3a;
-    font-weight: 700;
-    margin-bottom: 20px;
+    font-weight: 500;
+    margin-bottom: 5px;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -128,7 +128,7 @@ Home sections
 }
 
 .section-heading h2 {
-    font-size: 38px;
+    font-size: 24px;
     text-transform: uppercase;
 }
 
@@ -173,7 +173,7 @@ Home sections
 }
 
 #intro {
-    height: 160px;
+    height: 100%;
     width: 100%;
     background: #529abb no-repeat center;
     overflow-y: hidden;
@@ -188,14 +188,14 @@ Home sections
 }
 
 #intro .brand {
-    margin-top: 0;
+    margin-top: -1%;
 }
 
 .intro-text h1 a {
     color: #fff;
     text-align: center;
     font-weight: 700;
-    font-size: 40px;
+    font-size: 24px;
     line-height: 1.1em;
     text-transform: uppercase;
 }
@@ -206,13 +206,13 @@ Home sections
 
 .line-spacer {
     width: 20%;
-    margin: 0 auto 25px;
+    margin: 0 auto 5px;
     border-bottom: 1px solid #fff;
 }
 
 .intro-text p span {
     color: #fff;
-    font-size: 24px;
+    font-size: 20px;
     text-align: center;
     font-weight: 300;
 }
@@ -358,12 +358,11 @@ more media queries
 .typeahead, .tt-query, .tt-hint {
     border: 2px solid #ccc;
     border-radius: 8px;
-    font-size: 24px;
+    font-size: 20px;
     height: 50px;
     line-height: 30px;
     outline: medium none;
     padding: 8px 12px;
-    /*width: 100%;*/
     width: 100%;
 }
 
@@ -451,7 +450,6 @@ more media queries
     position: relative;
     height: 100px;
     width: 100%;
-    margin-bottom: 20px;
 }
 
 body {
@@ -470,13 +468,13 @@ body {
 
 #tree .container .col-md-12 {
     background: #ffffff;
-    border: 2px solid #eeeeee;
+    /*border: 2px solid #eeeeee;*/
 }
 
 #propTree .node circle {
     cursor: pointer;
     fill: #fff;
-    stroke: steelblue;
+    /*stroke: steelblue;*/
     stroke-width: 2px;
 }
 
@@ -486,7 +484,7 @@ body {
 
 #propTree path.link {
     fill: none;
-    stroke: #ccc;
+    stroke: #eeeeee;
     stroke-width: 2px;
 }
 
@@ -572,7 +570,11 @@ Some bootstrappin.
 }
 
 #legendBox .row .col-md-6 {
-    margin-top: 5%;
+    margin-top: 3.5%;
+}
+
+#propTable {
+    margin-bottom: 0;
 }
 
 #propTable .th {
@@ -581,7 +583,35 @@ Some bootstrappin.
 
 #tree {
     margin-top: 0;
+    /*padding-bottom: 50px;*/
+}
+
+#tree h2 {
+    margin-bottom: 0;
+}
+
+#tree h5 {
+    font-weight: 100;
+    margin-bottom: 0;
+}
+
+#tree h6 {
+    font-weight: 100;
+    font-style: italic;
+    font-family: 'Open Sans', sans-serif;
+}
+
+#graph {
+    margin-top: 0;
     padding-bottom: 50px;
+}
+
+#graph h2 {
+    margin-bottom: 0;
+}
+
+#graph h5 {
+    font-weight: 100;
 }
 
 .details h4 {
@@ -604,4 +634,40 @@ Some bootstrappin.
 
 .stats p {
     text-align: center;
+}
+
+#country .jumbotron .btn-group-justified a {
+    font-size: 12px;
+}
+
+.btn-toolbar .btn:hover, .btn:focus {
+    -webkit-box-shadow: 0 0 15px #a1a1a1;
+}
+
+.btn-toolbar .active {
+    -webkit-box-shadow: 0 0 15px #a1a1a1;
+}
+
+#country-tables {
+    padding-top: 2%;
+}
+
+#MapContainer {
+    margin-top: 5px;
+}
+
+#map {
+    padding-top: 15px;
+}
+
+.container .jumbotron {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 30px;
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
 }

@@ -7,3 +7,8 @@
 	new WOW().init();
 
 })(jQuery);
+
+
+$(".btn-toolbar > .btn").click(function(){
+	$(this).addClass("active").siblings().removeClass("active");
+});
