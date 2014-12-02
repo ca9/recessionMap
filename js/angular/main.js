@@ -113,6 +113,10 @@ recMap.factory("dataService", function($http) {
        return curCountry;
    }
 
+    dataAsService.getCurCountryCode = function () {
+        return cToCode[curCountry];
+    }
+
     // Get the Country to Code mapping.
    dataAsService.getContToC = function () {
        return cToCode;
@@ -123,11 +127,12 @@ recMap.factory("dataService", function($http) {
    }
 
    dataAsService.setCountry = function(inCountry) {
+       console.log("logging request for ", inCountry);
         if (inCountry in codeToC) {
             // Check the Code and set the "Country Name"
             curCountry = codeToC[inCountry];
         } else if (inCountry in cToCode) {
-            curCountry = cToCode[inCountry];
+            curCountry = inCountry;
         }
        console.log("Current Country Changed:", curCountry);
    }
@@ -375,8 +380,59 @@ recMap.controller('dataController', function($scope, dataService, propService, y
     setInterval(function() { console.log($scope.getCurCountry(), $scope.curYear(), $scope.curProp())}, 5000 );
 //    setInterval(function() { console.log($scope.allData)}, 5000 );
 
-})
+});
 
+recMap.controller("countryController", function($scope, propService, dataService, yearService, similarService) {
+    $scope.propService = propService;
+    $scope.dataService = dataService;
+    $scope.yearService = yearService;
+    $scope.similarService = similarService;
+
+
+    $scope.curGroup = "Banking";
+    $scope.worldOff = function() {
+        if (dataService.getCurCountry() == "World")
+            return false;
+        return true;
+    };
+
+    $scope.groupBox = propService.getPropGroups();
+    $scope.getCurCountryCode = dataService.getCurCountryCode;
+
+    $scope.setCountry = dataService.setCountry;
+    $scope.setProperty = propService.setProperty;
+
+    $scope.setGroup = function(group) {
+        $scope.curGroup = group;
+    }
+
+    $scope.getPropBandFor = function(ccode, prop, ayear, check) {
+        var propExpand = propService.getPropExpanded(prop);
+        var upcut = propExpand["HighCutoff"];
+        var locut = propExpand["LowCutoff"];
+        var impact = propExpand["Impact on Susceptibility"];
+        var val = dataService.getPropValFor(ccode, prop, ayear);
+
+        if (check == "good" && ((val >= upcut && impact == "Decreased") || (val <= locut && impact == "Increased"))) {
+            // Good if high decrease or low increase
+            return true;
+        } else if (check == "okay" && (val >= locut && val <= upcut)) {
+            return true;
+        } else if (check == "bad" && ((val >= upcut && impact == "Increased") || (val <= locut && impact == "Decreased"))) {
+            // Bad if low decrease or high increase
+            return true;
+        }
+        return false;
+    }
+
+    $scope.checkDirection = function(aProp, direction) {
+        return propService.getPropExpanded(aProp)["Impact on Susceptibility"] == direction;
+    }
+
+    $scope.checkGroup = function(aGroup) {
+        return aGroup == $scope.curGroup;
+    }
+});
 
 //Important Resources
 //http://stackoverflow.com/questions/15800454/angularjs-the-correct-way-of-binding-to-a-service-properties

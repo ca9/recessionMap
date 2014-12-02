@@ -144,7 +144,6 @@
 
             <p>
                 <a class="btn btn-primary btn-large" href="#intro">Back to top</a>
-                <a class="btn btn-primary btn-large" href="#intro">Learn More</a>
             </p>
 
             <p>
@@ -241,26 +240,28 @@
     </div>
 </section>
 
-<section id="country" class="home-section bg-white">
+<section id="country" class="home-section bg-white" ng-controller="countryController">
     <div class="container">
-        <div class="jumbotron">
+        <div class="jumbotron" ng-if="worldOff()">
             <h2>
                 {{ getCurCountry() }}
             </h2>
 
             <div class="row">
                 <div class="btn btn-toolbar" role="group">
-                    <a href="" class="btn btn-danger active" role="button">Banking</a>
-                    <a href="" class="btn btn-success" role="button">Central Government</a>
-                    <a href="" class="btn btn-success" role="button">Economic Structure</a>
-                    <a href="" class="btn btn-warning" role="button">GDP</a>
-                    <a href="" class="btn btn-danger" role="button">Manufacturing</a>
-                    <a href="" class="btn btn-success" role="button">Net Exports</a>
+                    <a ng-repeat="(aGroup, gProps) in groupBox"
+                       ng-attr-id = "{{ 'box-' + aGroup }}"
+                       class="btn btn-info"
+                       ng-class = "{ active: checkGroup(aGroup) }"
+                       role="button"
+                       ng-click="setGroup(aGroup)">{{ aGroup }}</a>
+
+                    <a class="btn btn-primary btn-large" href="#intro">Back to top</a>
                 </div>
             </div>
 
             <div class="row" id="country-tables">
-                <div class="col-md-6 vcenter">
+                <div class="col-md-10 vcenter">
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
@@ -268,69 +269,55 @@
                                 Property
                             </th>
                             <th>
-                                Value
+                                Name
+                            </th>
+                            <th>
+                                Value for {{ curYear() }}
                             </th>
                         </tr>
                         </thead>
 
                         <tbody>
-                        <tr>
-                            <td>FS.AST.DOMS.GD.ZS</td>
-                            <td class="danger">-1.06</td>
+                        <tr ng-repeat="aProp in groupBox[curGroup]" ng-click="setProperty(aProp)">
+                            <td ng-class="{ danger: checkDirection(aProp, 'Increased'),
+                                            success: checkDirection(aProp, 'Decreased') }">
+                                {{ aProp }} </td>
+                            <td> {{ getPropExpanded(aProp).Name }}</td>
+                            <td ng-class="{ danger: getPropBandFor(getCurCountry(), aProp, curYear(), 'bad'),
+                                            success: getPropBandFor(getCurCountry(), aProp, curYear(), 'good'),
+                                            warning: getPropBandFor(getCurCountry(), aProp, curYear(), 'okay')
+                                            }" >
+                                {{ getPropValFor(getCurCountry(), aProp, curYear()) }} </td>
                         </tr>
-                        <tr>
-                            <td>GC.BAL.CASH.GD.ZS</td>
-                            <td class="danger">-1.06</td>
-                        </tr>
-                        <tr>
-                            <td>GC.BAL.CASH.GD.ZS</td>
-                            <td class="warning">-1.06</td>
-                        </tr>
-                        <tr>
-                            <td>GC.BAL.CASH.GD.ZS</td>
-                            <td class="success">-1.06</td>
-                        </tr>
-                        <tr>
-                            <td>GC.BAL.CASH.GD.ZS</td>
-                            <td class="danger">-1.06</td>
-                        </tr>
-                        <tr>
-                            <td>GC.BAL.CASH.GD.ZS</td>
-                            <td class="danger">-1.06</td>
-                        </tr>
-                        <tr>
-                            <td>GC.BAL.CASH.GD.ZS</td>
-                            <td class="success">-1.06</td>
-                        </tr>
-                        <tr>
-                            <td>GC.BAL.CASH.GD.ZS</td>
-                            <td class="warning">-1.06</td>
-                        </tr>
+                        <!--<tr>-->
+                            <!--<td>GC.BAL.CASH.GD.ZS</td>-->
+                            <!--<td class="success">-1.06</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td>GC.BAL.CASH.GD.ZS</td>-->
+                            <!--<td class="warning">-1.06</td>-->
+                        <!--</tr>-->
                         </tbody>
+                        Note that colour under value indicates major increase
+                        (red), minor increase (yellow), or minimal impact (green)
+                        on Recession Susceptibility (or Drop.SD). Colour on property
+                        shows whether it typically increases (Red) susceptibility or mitigates it (Green).
                     </table>
                 </div><!--
-                --><div class="col-md-6 vcenter">
+                --><div class="col-md-2 vcenter">
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
                             <th>
-                                Similar Countries
+                                Similar to {{ getCurCountry() }} by {{ curGroup }}
                             </th>
                         </tr>
                         </thead>
 
                         <tbody>
-                        <tr>
-                            <td>India</td>
-                        </tr>
-                        <tr>
-                            <td>Bangladesh</td>
-                        </tr>
-                        <tr>
-                            <td>South Africa</td>
-                        </tr>
-                        <tr>
-                            <td>United States of America</td>
+                        <tr ng-repeat="similarCountry in similarService.getSimilarCountryType(
+                                        getCurCountryCode(), curGroup)">
+                            <td ng-click="setCountry(similarCountry)">{{ similarCountry }}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -376,6 +363,17 @@
 <script src="js/ui/custom.js"></script>
 <script src="js/slider/simple-slider.min.js"></script>
 
+<!--Analytics-->
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-56955722-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
 
 <!--angular-->
 <script src="js/angular/angular.min.js"></script>
@@ -393,16 +391,5 @@
 <script src="js/typeahead/typeahead.bundle.js"></script>
 <script src="js/typeahead/typeahead.setup.js"></script>
 
-<!--Analytics-->
-<script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-56955722-1', 'auto');
-    ga('send', 'pageview');
-
-</script>
 
 </html>
