@@ -242,12 +242,15 @@
 
 <section id="country" class="home-section bg-white" ng-controller="countryController">
     <div class="container">
-        <div class="jumbotron" ng-if="worldOff()">
-            <h2>
+        <div class="jumbotron">
+
+            <h2 ng-if="!worldOff()"> Please pick a country to initiate country view. </h2>
+
+            <h2 ng-if="worldOff()">
                 {{ getCurCountry() }}
             </h2>
 
-            <div class="row">
+            <div class="row" ng-if="worldOff()">
                 <div class="btn btn-toolbar" role="group">
                     <a ng-repeat="(aGroup, gProps) in groupBox"
                        ng-attr-id = "{{ 'box-' + aGroup }}"
@@ -260,8 +263,8 @@
                 </div>
             </div>
 
-            <div class="row" id="country-tables">
-                <div class="col-md-10 vcenter">
+            <div class="row" id="country-tables" ng-if="worldOff()">
+                <div class="col-md-8 vcenter">
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
@@ -289,22 +292,14 @@
                                             }" >
                                 {{ getPropValFor(getCurCountry(), aProp, curYear()) }} </td>
                         </tr>
-                        <!--<tr>-->
-                            <!--<td>GC.BAL.CASH.GD.ZS</td>-->
-                            <!--<td class="success">-1.06</td>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<td>GC.BAL.CASH.GD.ZS</td>-->
-                            <!--<td class="warning">-1.06</td>-->
-                        <!--</tr>-->
                         </tbody>
                         Note that colour under value indicates major increase
                         (red), minor increase (yellow), or minimal impact (green)
                         on Recession Susceptibility (or Drop.SD). Colour on property
                         shows whether it typically increases (Red) susceptibility or mitigates it (Green).
                     </table>
-                </div><!--
-                --><div class="col-md-2 vcenter">
+                </div>
+                <div class="col-md-2 vcenter">
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
@@ -324,7 +319,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row" ng-if="worldOff()">
                 <div class="col-md-6">
                     <div class="embed-responsive embed-responsive-4by3">
                         <iframe class="embed-responsive-item" src="http://www.youtube.com/embed/4sMoSPYnE8w"
