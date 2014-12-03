@@ -131,7 +131,7 @@ recMap.directive("mySearch", function($window, dataService, propService, yearSer
                     }
                     return sims;
                 },
-                limit: 30
+                limit: 10
             });
 
             scope.$watch(
@@ -190,7 +190,7 @@ recMap.directive("mySearch", function($window, dataService, propService, yearSer
                     }
                     return props;
                 },
-                limit: 30
+                limit: 15
             });
 
             // Years

@@ -217,7 +217,7 @@ recMap.factory('propService', function($http) {
                     }
                     eprops[key].EconClasses = myGroups;
                 }
-                console.log("Egroups ready:". egroups);
+                console.log("Egroups ready:", egroups);
                 egroupsReady = true;
                 return eprops;
             });
@@ -334,8 +334,9 @@ recMap.controller('dataController', function($scope, dataService, propService, y
     $scope.similarService = similarService;
 
     $scope.allData = dataService.getAllData();
-
     $scope.eprops = propService.getPropData(false);
+    similarService.getSimilarData();
+
     $scope.getPropExpanded = propService.getPropExpanded;
 //    Not needed, pulled directly from the service # Yolo.
 //    $scope.groupNames = propService.getGroups;
@@ -374,6 +375,16 @@ recMap.controller('dataController', function($scope, dataService, propService, y
             return true;
         }
         return false;
+    }
+
+    $scope.range = function(n) {
+        return new Array(n);
+    };
+
+    $scope.allLoaded = function() {
+        return $scope.dataService.isLoaded() &&
+            $scope.propService.isEgroupsReady()
+            && $scope.similarService.isLoaded();
     }
 
 //    For Testing:

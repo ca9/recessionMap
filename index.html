@@ -11,6 +11,7 @@
     <!--<link href="color/default.css" rel="stylesheet" media="screen">-->
     <link href="css/simple-slider.css" rel="stylesheet" type="text/css">
     <link href="css/simple-slider-volume.css" rel="stylesheet" type="text/css">
+    <link href="css/spinner.css" rel="stylesheet" type="text/css">
 </head>
 
 <body ng-controller="dataController">
@@ -56,8 +57,18 @@
     </div>
 </div>
 
+
+<section id="loader" ng-if="!allLoaded()">
+    <h2> Please give us a moment... </h2>
+    <div class="spinner">
+        <div class="dot1"></div>
+        <div class="dot2"></div>
+    </div>
+</section>
+
+
 <!-- Map -->
-<section id="map" class="home-section bg-white">
+<section id="map" class="home-section bg-white" ng-if="allLoaded()">
     <div class="container">
         <div class="jumbotron">
             <div class="row">
@@ -110,7 +121,7 @@
 
 <!-- Details -->
 
-<section id="details" class="home-section bg-white">
+<section id="details" class="home-section bg-white" ng-if="allLoaded()">
     <div class="container">
         <div class="jumbotron">
             <h2>
@@ -223,7 +234,7 @@
     </div>
 </section>
 
-<section id="tree" class="home-section bg-white">
+<section id="tree" class="home-section bg-white" ng-if="allLoaded()">
     <div class="container">
         <div class="jumbotron">
             <div class="row">
@@ -240,7 +251,7 @@
     </div>
 </section>
 
-<section id="country" class="home-section bg-white" ng-controller="countryController">
+<section id="country" class="home-section bg-white" ng-controller="countryController" ng-if="allLoaded()">
     <div class="container">
         <div class="jumbotron">
 
