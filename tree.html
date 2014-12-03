@@ -1,177 +1,174 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-    <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script type="text/javascript" src="js/tree/d3.layout.js"></script>
+    <title>Network | Basic usage</title>
+
+    <script type="text/javascript" src="js/vis/vis.min.js"></script>
+    <link href="css/vis.min.css" rel="stylesheet" type="text/css"/>
+
     <style type="text/css">
-
-        .node circle {
-            cursor: pointer;
-            fill: #fff;
-            stroke: steelblue;
-            stroke-width: 2px;
+        #mynetwork {
+            width: 100%;
+            height: 700px;
+            border: 1px solid lightgray;
         }
-
-        .node text {
-            font-size: 11px;
-        }
-
-        path.link {
-            fill: none;
-            stroke: #ccc;
-            stroke-width: 2px;
-        }
-
     </style>
 </head>
+
 <body>
-<div id="body">
-</div>
+
+<div id="mynetwork"></div>
+
 <script type="text/javascript">
+    // create an array with nodes
 
-    var m = [20, 120, 20, 120],
-            w = 1280 - m[1] - m[3],
-            h = 800 - m[0] - m[2],
-            i = 0,
-            root;
+    var nodes = new vis.DataSet();
+    //    nodes.add([{"group": 3, "id": "DZA", "label": "Algeria"}, {"group": 3, "id": "AGO", "label": "Angola"}, {"group": 3, "id": "EGY", "label": "Egypt"}, {"group": 4, "id": "BGD", "label": "Bangladesh"}, {"group": 4, "id": "QAT", "label": "Qatar"}, {"group": 3, "id": "NAM", "label": "Namibia"}, {"group": 0, "id": "BGR", "label": "Bulgaria"}, {"group": 3, "id": "GHA", "label": "Ghana"}, {"group": 4, "id": "PAK", "label": "Pakistan"}, {"group": 5, "id": "PAN", "label": "Panama"}, {"group": 4, "id": "JOR", "label": "Jordan"}, {"group": 3, "id": "LBR", "label": "Liberia"}, {"group": 3, "id": "LBY", "label": "Libya"}, {"group": 4, "id": "VNM", "label": "Vietnam"}, {"group": 5, "id": "PRI", "label": "Puerto Rico"}, {"group": 4, "id": "PRK", "label": "North Korea"}, {"group": 3, "id": "TZA", "label": "Tanzania"}, {"group": 3, "id": "BWA", "label": "Botswana"}, {"group": 4, "id": "KHM", "label": "Cambodia"}, {"group": 1, "id": "PRY", "label": "Paraguay"}, {"group": 4, "id": "HKG", "label": "Hong Kong"}, {"group": 4, "id": "SAU", "label": "Saudi Arabia"}, {"group": 4, "id": "LBN", "label": "Lebanon"}, {"group": 0, "id": "SVN", "label": "Slovenia"}, {"group": 3, "id": "BFA", "label": "Burkina Faso"}, {"group": 0, "id": "SVK", "label": "Slovakia"}, {"group": 3, "id": "MRT", "label": "Mauritania"}, {"group": 0, "id": "HRV", "label": "Croatia"}, {"group": 1, "id": "CHL", "label": "Chile"}, {"group": 4, "id": "CHN", "label": "China"}, {"group": 5, "id": "JAM", "label": "Jamaica"}, {"group": 3, "id": "DJI", "label": "Djibouti"}, {"group": 3, "id": "GIN", "label": "Guinea"}, {"group": 0, "id": "FIN", "label": "Finland"}, {"group": 1, "id": "URY", "label": "Uruguay"}, {"group": 4, "id": "THA", "label": "Thailand"}, {"group": 3, "id": "SYC", "label": "Seychelles"}, {"group": 4, "id": "NPL", "label": "Nepal"}, {"group": 4, "id": "LAO", "label": "Laos"}, {"group": 4, "id": "YEM", "label": "Yemen"}, {"group": 4, "id": "PHL", "label": "Philippines"}, {"group": 3, "id": "ZAF", "label": "South Africa"}, {"group": 5, "id": "NIC", "label": "Nicaragua"}, {"group": 3, "id": "GAB", "label": "Gabon"}, {"group": 4, "id": "SYR", "label": "Syria"}, {"group": 4, "id": "MAC", "label": "Macau"}, {"group": 0, "id": "MLT", "label": "Malta"}, {"group": 4, "id": "KAZ", "label": "Kazakhstan"}, {"group": 5, "id": "DMA", "label": "Dominica"}, {"group": 3, "id": "BEN", "label": "Benin"}, {"group": 3, "id": "NGA", "label": "Nigeria"}, {"group": 0, "id": "BEL", "label": "Belgium"}, {"group": 0, "id": "DEU", "label": "Germany"}, {"group": 4, "id": "LKA", "label": "Sri Lanka"}, {"group": 0, "id": "GBR", "label": "United Kingdom"}, {"group": 3, "id": "MWI", "label": "Malawi"}, {"group": 5, "id": "CRI", "label": "Costa Rica"}, {"group": 3, "id": "CMR", "label": "Cameroon"}, {"group": 3, "id": "MAR", "label": "Morocco"}, {"group": 3, "id": "UGA", "label": "Uganda"}, {"group": 4, "id": "TKM", "label": "Turkmenistan"}, {"group": 5, "id": "TTO", "label": "Trinidad and Tobago"}, {"group": 0, "id": "NLD", "label": "Netherlands"}, {"group": 3, "id": "TCD", "label": "Chad"}, {"group": 4, "id": "GEO", "label": "Georgia"}, {"group": 4, "id": "MNG", "label": "Mongolia"}, {"group": 5, "id": "BLZ", "label": "Belize"}, {"group": 4, "id": "MMR", "label": "Myanmar"}, {"group": 4, "id": "AFG", "label": "Afghanistan"}, {"group": 3, "id": "BDI", "label": "Burundi"}, {"group": 0, "id": "BLR", "label": "Belarus"}, {"group": 0, "id": "LVA", "label": "Latvia"}, {"group": 0, "id": "GRC", "label": "Greece"}, {"group": 3, "id": "ZWE", "label": "Zimbabwe"}, {"group": 3, "id": "RWA", "label": "Rwanda"}, {"group": 4, "id": "TJK", "label": "Tajikistan"}, {"group": 5, "id": "GRD", "label": "Grenada"}, {"group": 5, "id": "HTI", "label": "Haiti"}, {"group": 5, "id": "MEX", "label": "Mexico"}, {"group": 5, "id": "LCA", "label": "Saint Lucia"}, {"group": 4, "id": "IND", "label": "India"}, {"group": 3, "id": "STP", "label": "S\u00e3o Tom\u00e9 and Pr\u00edncipe"}, {"group": 4, "id": "BTN", "label": "Bhutan"}, {"group": 5, "id": "VCT", "label": "Saint Vincent and the Grenadines"}, {"group": 4, "id": "MYS", "label": "Malaysia"}, {"group": 0, "id": "NOR", "label": "Norway"}, {"group": 0, "id": "CZE", "label": "Czech Republic"}, {"group": 2, "id": "FJI", "label": "Fiji"}, {"group": 5, "id": "HND", "label": "Honduras"}, {"group": 3, "id": "MUS", "label": "Mauritius"}, {"group": 5, "id": "DOM", "label": "Dominican Republic"}, {"group": 0, "id": "LUX", "label": "Luxembourg"}, {"group": 4, "id": "ISR", "label": "Israel"}, {"group": 1, "id": "PER", "label": "Peru"}, {"group": 4, "id": "IDN", "label": "Indonesia"}, {"group": 0, "id": "MKD", "label": "Macedonia"}, {"group": 1, "id": "SUR", "label": "Suriname"}, {"group": 3, "id": "COG", "label": "Republic of the Congo"}, {"group": 0, "id": "ISL", "label": "Iceland"}, {"group": 3, "id": "ETH", "label": "Ethiopia"}, {"group": 3, "id": "NER", "label": "Niger"}, {"group": 1, "id": "COL", "label": "Colombia"}, {"group": 0, "id": "PRT", "label": "Portugal"}, {"group": 0, "id": "MDA", "label": "Moldova"}, {"group": 3, "id": "MDG", "label": "Madagascar"}, {"group": 1, "id": "ECU", "label": "Ecuador"}, {"group": 3, "id": "SEN", "label": "Senegal"}, {"group": 4, "id": "MDV", "label": "Maldives"}, {"group": 0, "id": "SRB", "label": "Serbia"}, {"group": 0, "id": "FRA", "label": "France"}, {"group": 0, "id": "LTU", "label": "Lithuania"}, {"group": 3, "id": "MOZ", "label": "Mozambique"}, {"group": 3, "id": "ZMB", "label": "Zambia"}, {"group": 2, "id": "WSM", "label": "Samoa"}, {"group": 5, "id": "GTM", "label": "Guatemala"}, {"group": 0, "id": "DNK", "label": "Denmark"}, {"group": 0, "id": "UKR", "label": "Ukraine"}, {"group": 2, "id": "AUS", "label": "Australia"}, {"group": 0, "id": "AUT", "label": "Austria"}, {"group": 1, "id": "VEN", "label": "Venezuela"}, {"group": 3, "id": "KEN", "label": "Kenya"}, {"group": 4, "id": "TUR", "label": "Turkey"}, {"group": 0, "id": "ALB", "label": "Albania"}, {"group": 4, "id": "OMN", "label": "Oman"}, {"group": 0, "id": "ITA", "label": "Italy"}, {"group": 4, "id": "BRN", "label": "Brunei"}, {"group": 3, "id": "TUN", "label": "Tunisia"}, {"group": 0, "id": "HUN", "label": "Hungary"}, {"group": 0, "id": "RUS", "label": "Russia"}, {"group": 5, "id": "BRB", "label": "Barbados"}, {"group": 1, "id": "BRA", "label": "Brazil"}, {"group": 5, "id": "CAN", "label": "Canada"}, {"group": 3, "id": "GNQ", "label": "Equatorial Guinea"}, {"group": 5, "id": "USA", "label": "United States"}, {"group": 0, "id": "SWE", "label": "Sweden"}, {"group": 4, "id": "AZE", "label": "Azerbaijan"}, {"group": 3, "id": "GNB", "label": "Guinea-Bissau"}, {"group": 2, "id": "TON", "label": "Tonga"}, {"group": 3, "id": "CIV", "label": "Ivory Coast"}, {"group": 1, "id": "GUY", "label": "Guyana"}, {"group": 4, "id": "KOR", "label": "South Korea"}, {"group": 3, "id": "CAF", "label": "Central African Republic"}, {"group": 0, "id": "CHE", "label": "Switzerland"}, {"group": 4, "id": "CYP", "label": "Cyprus"}, {"group": 0, "id": "BIH", "label": "Bosnia and Herzegovina"}, {"group": 4, "id": "SGP", "label": "Singapore"}, {"group": 3, "id": "SOM", "label": "Somalia"}, {"group": 0, "id": "POL", "label": "Poland"}, {"group": 4, "id": "KWT", "label": "Kuwait"}, {"group": 3, "id": "GMB", "label": "Gambia"}, {"group": 3, "id": "TGO", "label": "Togo"}, {"group": 0, "id": "EST", "label": "Estonia"}, {"group": 0, "id": "ESP", "label": "Spain"}, {"group": 4, "id": "IRQ", "label": "Iraq"}, {"group": 5, "id": "SLV", "label": "El Salvador"}, {"group": 3, "id": "MLI", "label": "Mali"}, {"group": 0, "id": "IRL", "label": "Ireland"}, {"group": 4, "id": "IRN", "label": "Iran"}, {"group": 3, "id": "SLE", "label": "Sierra Leone"}, {"group": 5, "id": "BHS", "label": "Bahamas"}, {"group": 2, "id": "NZL", "label": "New Zealand"}, {"group": 4, "id": "JPN", "label": "Japan"}, {"group": 4, "id": "KGZ", "label": "Kyrgyzstan"}, {"group": 2, "id": "NCL", "label": "New Caledonia"}, {"group": 4, "id": "ARE", "label": "United Arab Emirates"}, {"group": 1, "id": "ARG", "label": "Argentina"}, {"group": 3, "id": "SDN", "label": "Sudan"}, {"group": 4, "id": "BHR", "label": "Bahrain"}, {"group": 4, "id": "ARM", "label": "Armenia"}, {"group": 2, "id": "PNG", "label": "Papua New Guinea"}, {"group": 5, "id": "CUB", "label": "Cuba"}]);
+    $http.get("data/onto/nodes.json")
+            .then(function(response) {
+                var inData = response['data'];
+                console.log("Got mapData:", inData);
+            });
 
-    var tree = d3.layout.tree()
-            .size([h, w]);
+    nodes.add([{
+        "color": "#F44336",
+        "label": "DZA",
+        "group": 0,
+        "id": "DZ",
+        "title": "People's Democratic Republic of Algeria"
+    }, {"color": "#FFC107", "label": "AGO", "group": 0, "id": "AO", "title": "Republic of Angola"}, {
+        "color": "#FFC107",
+        "label": "EGY",
+        "group": 0,
+        "id": "EG",
+        "title": "Arab Republic of Egypt"
+    }, {
+        "color": "#FFC107",
+        "label": "BGD",
+        "group": 0,
+        "id": "BD",
+        "title": "People's Republic of Bangladesh"
+    }, {"color": "#FFC107", "label": "QAT", "group": 0, "id": "QA", "title": "State of Qatar"}, {
+        "color": "#FFC107",
+        "label": "SOM",
+        "group": 0,
+        "id": "SO",
+        "title": "Federal Republic of Somalia"
+    }, {
+        "color": "#FFC107",
+        "label": "NAM",
+        "group": 0,
+        "id": "NA",
+        "title": "Republic of Namibia"
+    }, {
+        "color": "#F44336",
+        "label": "BGR",
+        "group": 0,
+        "id": "BG",
+        "title": "Republic of Bulgaria"
+    }, {"color": "#FFC107", "label": "GHA", "group": 0, "id": "GH", "title": "Republic of Ghana"}, {
+        "color": "#F44336",
+        "label": "PAK",
+        "group": 0,
+        "id": "PK",
+        "title": "Islamic Republic of Pakistan"
+    }]);
 
-    var diagonal = d3.svg.diagonal()
-            .projection(function(d) { return [d.y, d.x]; });
+    // create an array with edges
+    var edges = new vis.DataSet();
+    //edges.add([{"to": "TUN", "from": "DZA"}, {"to": "LBY", "from": "DZA"}, {"to": "NER", "from": "DZA"}, {"to": "ESH", "from": "DZA"}, {"to": "MRT", "from": "DZA"}, {"to": "MLI", "from": "DZA"}, {"to": "MAR", "from": "DZA"}, {"to": "COG", "from": "AGO"}, {"to": "COD", "from": "AGO"}, {"to": "ZMB", "from": "AGO"}, {"to": "NAM", "from": "AGO"}, {"to": "ISR", "from": "EGY"}, {"to": "LBY", "from": "EGY"}, {"to": "SDN", "from": "EGY"}, {"to": "MMR", "from": "BGD"}, {"to": "IND", "from": "BGD"}, {"to": "SAU", "from": "QAT"}, {"to": "BWA", "from": "NAM"}, {"to": "ZAF", "from": "NAM"}, {"to": "ZMB", "from": "NAM"}, {"to": "GRC", "from": "BGR"}, {"to": "MKD", "from": "BGR"}, {"to": "ROU", "from": "BGR"}, {"to": "SRB", "from": "BGR"}, {"to": "TUR", "from": "BGR"}, {"to": "BFA", "from": "GHA"}, {"to": "CIV", "from": "GHA"}, {"to": "TGO", "from": "GHA"}, {"to": "AFG", "from": "PAK"}, {"to": "CHN", "from": "PAK"}, {"to": "IND", "from": "PAK"}, {"to": "IRN", "from": "PAK"}, {"to": "COL", "from": "PAN"}, {"to": "CRI", "from": "PAN"}, {"to": "IRQ", "from": "JOR"}, {"to": "ISR", "from": "JOR"}, {"to": "SAU", "from": "JOR"}, {"to": "SYR", "from": "JOR"}, {"to": "GIN", "from": "LBR"}, {"to": "CIV", "from": "LBR"}, {"to": "SLE", "from": "LBR"}, {"to": "TCD", "from": "LBY"}, {"to": "NER", "from": "LBY"}, {"to": "SDN", "from": "LBY"}, {"to": "TUN", "from": "LBY"}, {"to": "KHM", "from": "VNM"}, {"to": "CHN", "from": "VNM"}, {"to": "LAO", "from": "VNM"}, {"to": "CHN", "from": "PRK"}, {"to": "KOR", "from": "PRK"}, {"to": "RUS", "from": "PRK"}, {"to": "BDI", "from": "TZA"}, {"to": "COD", "from": "TZA"}, {"to": "KEN", "from": "TZA"}, {"to": "MWI", "from": "TZA"}, {"to": "MOZ", "from": "TZA"}, {"to": "RWA", "from": "TZA"}, {"to": "UGA", "from": "TZA"}, {"to": "ZMB", "from": "TZA"}, {"to": "ZAF", "from": "BWA"}, {"to": "ZMB", "from": "BWA"}, {"to": "ZWE", "from": "BWA"}, {"to": "LAO", "from": "KHM"}, {"to": "THA", "from": "KHM"}, {"to": "ARG", "from": "PRY"}, {"to": "BOL", "from": "PRY"}, {"to": "BRA", "from": "PRY"}, {"to": "CHN", "from": "HKG"}, {"to": "IRQ", "from": "SAU"}, {"to": "KWT", "from": "SAU"}, {"to": "OMN", "from": "SAU"}, {"to": "ARE", "from": "SAU"}, {"to": "YEM", "from": "SAU"}, {"to": "ISR", "from": "LBN"}, {"to": "SYR", "from": "LBN"}, {"to": "AUT", "from": "SVN"}, {"to": "HRV", "from": "SVN"}, {"to": "ITA", "from": "SVN"}, {"to": "HUN", "from": "SVN"}, {"to": "BEN", "from": "BFA"}, {"to": "CIV", "from": "BFA"}, {"to": "MLI", "from": "BFA"}, {"to": "NER", "from": "BFA"}, {"to": "TGO", "from": "BFA"}, {"to": "AUT", "from": "SVK"}, {"to": "CZE", "from": "SVK"}, {"to": "HUN", "from": "SVK"}, {"to": "POL", "from": "SVK"}, {"to": "UKR", "from": "SVK"}, {"to": "MLI", "from": "MRT"}, {"to": "SEN", "from": "MRT"}, {"to": "ESH", "from": "MRT"}, {"to": "BIH", "from": "HRV"}, {"to": "HUN", "from": "HRV"}, {"to": "MNE", "from": "HRV"}, {"to": "SRB", "from": "HRV"}, {"to": "ARG", "from": "CHL"}, {"to": "BOL", "from": "CHL"}, {"to": "PER", "from": "CHL"}, {"to": "AFG", "from": "CHN"}, {"to": "BTN", "from": "CHN"}, {"to": "MMR", "from": "CHN"}, {"to": "IND", "from": "CHN"}, {"to": "KAZ", "from": "CHN"}, {"to": "KGZ", "from": "CHN"}, {"to": "LAO", "from": "CHN"}, {"to": "MAC", "from": "CHN"}, {"to": "MNG", "from": "CHN"}, {"to": "RUS", "from": "CHN"}, {"to": "TJK", "from": "CHN"}, {"to": "ERI", "from": "DJI"}, {"to": "ETH", "from": "DJI"}, {"to": "SOM", "from": "DJI"}, {"to": "CIV", "from": "GIN"}, {"to": "GNB", "from": "GIN"}, {"to": "MLI", "from": "GIN"}, {"to": "SEN", "from": "GIN"}, {"to": "SLE", "from": "GIN"}, {"to": "NOR", "from": "FIN"}, {"to": "SWE", "from": "FIN"}, {"to": "RUS", "from": "FIN"}, {"to": "ARG", "from": "URY"}, {"to": "BRA", "from": "URY"}, {"to": "MMR", "from": "THA"}, {"to": "LAO", "from": "THA"}, {"to": "MYS", "from": "THA"}, {"to": "CHN", "from": "NPL"}, {"to": "IND", "from": "NPL"}, {"to": "MMR", "from": "LAO"}, {"to": "OMN", "from": "YEM"}, {"to": "LSO", "from": "ZAF"}, {"to": "MOZ", "from": "ZAF"}, {"to": "SWZ", "from": "ZAF"}, {"to": "ZWE", "from": "ZAF"}, {"to": "CRI", "from": "NIC"}, {"to": "HND", "from": "NIC"}, {"to": "CMR", "from": "GAB"}, {"to": "COG", "from": "GAB"}, {"to": "GNQ", "from": "GAB"}, {"to": "IRQ", "from": "SYR"}, {"to": "ISR", "from": "SYR"}, {"to": "TUR", "from": "SYR"}, {"to": "KGZ", "from": "KAZ"}, {"to": "RUS", "from": "KAZ"}, {"to": "TKM", "from": "KAZ"}, {"to": "UZB", "from": "KAZ"}, {"to": "NER", "from": "BEN"}, {"to": "NGA", "from": "BEN"}, {"to": "TGO", "from": "BEN"}, {"to": "CMR", "from": "NGA"}, {"to": "TCD", "from": "NGA"}, {"to": "NER", "from": "NGA"}, {"to": "FRA", "from": "BEL"}, {"to": "DEU", "from": "BEL"}, {"to": "LUX", "from": "BEL"}, {"to": "NLD", "from": "BEL"}, {"to": "AUT", "from": "DEU"}, {"to": "CZE", "from": "DEU"}, {"to": "DNK", "from": "DEU"}, {"to": "FRA", "from": "DEU"}, {"to": "LUX", "from": "DEU"}, {"to": "NLD", "from": "DEU"}, {"to": "POL", "from": "DEU"}, {"to": "CHE", "from": "DEU"}, {"to": "IND", "from": "LKA"}, {"to": "IRL", "from": "GBR"}, {"to": "MOZ", "from": "MWI"}, {"to": "ZMB", "from": "MWI"}, {"to": "CAF", "from": "CMR"}, {"to": "TCD", "from": "CMR"}, {"to": "COG", "from": "CMR"}, {"to": "GNQ", "from": "CMR"}, {"to": "ESH", "from": "MAR"}, {"to": "ESP", "from": "MAR"}, {"to": "COD", "from": "UGA"}, {"to": "KEN", "from": "UGA"}, {"to": "RWA", "from": "UGA"}, {"to": "SSD", "from": "UGA"}, {"to": "AFG", "from": "TKM"}, {"to": "IRN", "from": "TKM"}, {"to": "UZB", "from": "TKM"}, {"to": "CAF", "from": "TCD"}, {"to": "NER", "from": "TCD"}, {"to": "SSD", "from": "TCD"}, {"to": "ARM", "from": "GEO"}, {"to": "AZE", "from": "GEO"}, {"to": "RUS", "from": "GEO"}, {"to": "TUR", "from": "GEO"}, {"to": "RUS", "from": "MNG"}, {"to": "GTM", "from": "BLZ"}, {"to": "MEX", "from": "BLZ"}, {"to": "IND", "from": "MMR"}, {"to": "IRN", "from": "AFG"}, {"to": "UZB", "from": "AFG"}, {"to": "TJK", "from": "AFG"}, {"to": "COD", "from": "BDI"}, {"to": "RWA", "from": "BDI"}, {"to": "LVA", "from": "BLR"}, {"to": "LTU", "from": "BLR"}, {"to": "POL", "from": "BLR"}, {"to": "RUS", "from": "BLR"}, {"to": "UKR", "from": "BLR"}, {"to": "EST", "from": "LVA"}, {"to": "LTU", "from": "LVA"}, {"to": "RUS", "from": "LVA"}, {"to": "ALB", "from": "GRC"}, {"to": "TUR", "from": "GRC"}, {"to": "MKD", "from": "GRC"}, {"to": "MOZ", "from": "ZWE"}, {"to": "ZMB", "from": "ZWE"}, {"to": "COD", "from": "RWA"}, {"to": "KGZ", "from": "TJK"}, {"to": "UZB", "from": "TJK"}, {"to": "DOM", "from": "HTI"}, {"to": "GTM", "from": "MEX"}, {"to": "USA", "from": "MEX"}, {"to": "AFG", "from": "IND"}, {"to": "BTN", "from": "IND"}, {"to": "BRN", "from": "MYS"}, {"to": "IDN", "from": "MYS"}, {"to": "SWE", "from": "NOR"}, {"to": "RUS", "from": "NOR"}, {"to": "AUT", "from": "CZE"}, {"to": "POL", "from": "CZE"}, {"to": "GTM", "from": "HND"}, {"to": "SLV", "from": "HND"}, {"to": "FRA", "from": "LUX"}, {"to": "BOL", "from": "PER"}, {"to": "BRA", "from": "PER"}, {"to": "COL", "from": "PER"}, {"to": "ECU", "from": "PER"}, {"to": "TLS", "from": "IDN"}, {"to": "PNG", "from": "IDN"}, {"to": "ALB", "from": "MKD"}, {"to": "KOS", "from": "MKD"}, {"to": "SRB", "from": "MKD"}, {"to": "BRA", "from": "SUR"}, {"to": "GUF", "from": "SUR"}, {"to": "GUY", "from": "SUR"}, {"to": "CAF", "from": "COG"}, {"to": "COD", "from": "COG"}, {"to": "ERI", "from": "ETH"}, {"to": "KEN", "from": "ETH"}, {"to": "SOM", "from": "ETH"}, {"to": "SSD", "from": "ETH"}, {"to": "SDN", "from": "ETH"}, {"to": "MLI", "from": "NER"}, {"to": "BRA", "from": "COL"}, {"to": "ECU", "from": "COL"}, {"to": "VEN", "from": "COL"}, {"to": "ESP", "from": "PRT"}, {"to": "ROU", "from": "MDA"}, {"to": "UKR", "from": "MDA"}, {"to": "GMB", "from": "SEN"}, {"to": "GNB", "from": "SEN"}, {"to": "MLI", "from": "SEN"}, {"to": "BIH", "from": "SRB"}, {"to": "HUN", "from": "SRB"}, {"to": "KOS", "from": "SRB"}, {"to": "MNE", "from": "SRB"}, {"to": "ROU", "from": "SRB"}, {"to": "AND", "from": "FRA"}, {"to": "ITA", "from": "FRA"}, {"to": "MCO", "from": "FRA"}, {"to": "ESP", "from": "FRA"}, {"to": "CHE", "from": "FRA"}, {"to": "POL", "from": "LTU"}, {"to": "RUS", "from": "LTU"}, {"to": "SWZ", "from": "MOZ"}, {"to": "ZMB", "from": "MOZ"}, {"to": "COD", "from": "ZMB"}, {"to": "SLV", "from": "GTM"}, {"to": "HUN", "from": "UKR"}, {"to": "POL", "from": "UKR"}, {"to": "ROU", "from": "UKR"}, {"to": "RUS", "from": "UKR"}, {"to": "HUN", "from": "AUT"}, {"to": "ITA", "from": "AUT"}, {"to": "LIE", "from": "AUT"}, {"to": "CHE", "from": "AUT"}, {"to": "BRA", "from": "VEN"}, {"to": "GUY", "from": "VEN"}, {"to": "SOM", "from": "KEN"}, {"to": "SSD", "from": "KEN"}, {"to": "ARM", "from": "TUR"}, {"to": "AZE", "from": "TUR"}, {"to": "IRN", "from": "TUR"}, {"to": "IRQ", "from": "TUR"}, {"to": "MNE", "from": "ALB"}, {"to": "KOS", "from": "ALB"}, {"to": "ARE", "from": "OMN"}, {"to": "SMR", "from": "ITA"}, {"to": "CHE", "from": "ITA"}, {"to": "VAT", "from": "ITA"}, {"to": "ROU", "from": "HUN"}, {"to": "AZE", "from": "RUS"}, {"to": "EST", "from": "RUS"}, {"to": "POL", "from": "RUS"}, {"to": "ARG", "from": "BRA"}, {"to": "BOL", "from": "BRA"}, {"to": "GUF", "from": "BRA"}, {"to": "GUY", "from": "BRA"}, {"to": "USA", "from": "CAN"}, {"to": "ARM", "from": "AZE"}, {"to": "IRN", "from": "AZE"}, {"to": "MLI", "from": "CIV"}, {"to": "COD", "from": "CAF"}, {"to": "SSD", "from": "CAF"}, {"to": "SDN", "from": "CAF"}, {"to": "LIE", "from": "CHE"}, {"to": "GBR", "from": "CYP"}, {"to": "MNE", "from": "BIH"}, {"to": "IRN", "from": "KWT"}, {"to": "AND", "from": "ESP"}, {"to": "GIB", "from": "ESP"}, {"to": "IRN", "from": "IRQ"}, {"to": "KWT", "from": "IRQ"}, {"to": "ARM", "from": "IRN"}, {"to": "UZB", "from": "KGZ"}, {"to": "BOL", "from": "ARG"}, {"to": "TCD", "from": "SDN"}, {"to": "ERI", "from": "SDN"}, {"to": "SSD", "from": "SDN"}]);
+    edges.add([{"to": "QA", "fontSize": 6, "from": "DZ", "label": "isSimilarOverAll"}, {
+        "to": "DZ",
+        "fontSize": 6,
+        "from": "QA",
+        "label": "isSimilarOverAll"
+    }, {"to": "DZ", "fontSize": 6, "from": "SO", "label": "isSimilarOverGDP"}, {
+        "to": "SO",
+        "fontSize": 6,
+        "from": "DZ",
+        "label": "isSimilarOverGDP"
+    }, {"to": "QA", "fontSize": 6, "from": "DZ", "label": "isSimilarOverCentralGov"}, {
+        "to": "DZ",
+        "fontSize": 6,
+        "from": "QA",
+        "label": "isSimilarOverCentralGov"
+    }, {"to": "SO", "fontSize": 6, "from": "PK", "label": "isSimilarOverBanking"}, {
+        "to": "PK",
+        "fontSize": 6,
+        "from": "SO",
+        "label": "isSimilarOverBanking"
+    }, {"to": "QA", "fontSize": 6, "from": "DZ", "label": "isSimilarOverEconStructure"}, {
+        "to": "SO",
+        "fontSize": 6,
+        "from": "DZ",
+        "label": "isSimilarOverEconStructure"
+    }, {"to": "QA", "fontSize": 6, "from": "SO", "label": "isSimilarOverEconStructure"}, {
+        "to": "DZ",
+        "fontSize": 6,
+        "from": "SO",
+        "label": "isSimilarOverEconStructure"
+    }, {"to": "SO", "fontSize": 6, "from": "QA", "label": "isSimilarOverEconStructure"}, {
+        "to": "DZ",
+        "fontSize": 6,
+        "from": "QA",
+        "label": "isSimilarOverEconStructure"
+    }]);
 
-    var vis = d3.select("#body").append("svg:svg")
-            .attr("width", w + m[1] + m[3])
-            .attr("height", h + m[0] + m[2])
-            .append("svg:g")
-            .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
+    // create a network
+    var container = document.getElementById('mynetwork');
+    var data = {
+        nodes: nodes,
+        edges: edges
+    };
+    var clustering = {
+        initialMaxNodes: 70,
+        clusterThreshold: 500,
+        reduceToNodes: 300,
+        chainThreshold: 0.4,
+        clusterEdgeThreshold: 20,
+        sectorThreshold: 100,
+        screenSizeThreshold: 0.2,
+        fontSizeMultiplier: 4.0,
+        maxFontSize: 1000,
+        forceAmplification: 0.1,
+        distanceAmplification: 0.1,
+        edgeGrowth: 20,
+        nodeScaling: {
+            width: 1,
+            height: 1,
+            radius: 1
+        },
+        maxNodeSizeIncrements: 600,
+        activeAreaBoxSize: 100,
+        clusterLevelDifference: 2
+    };
 
-    d3.json("data/propTree.json", function(json) {
-        console.log(json);
-        root = json;
-        root.x0 = h / 2;
-        root.y0 = 0;
-
-        function toggleAll(d) {
-            if (d.children) {
-                d.children.forEach(toggleAll);
-                toggle(d);
-            }
+    var physics = {
+        barnesHut: {
+            enabled: true,
+            gravitationalConstant: -5000,
+            centralGravity: 1.5,
+            springLength: 150,
+            springConstant: 0.004,
+            damping: 0.1
+        },
+        repulsion: {
+            centralGravity: 0.1,
+            springLength: 50,
+            springConstant: 0.05,
+            nodeDistance: 200,
+            damping: 0.09
         }
+    };
 
-        // Initialize the display to show a few nodes.
-        root.children.forEach(toggleAll);
-        // toggle(root.children[1]);
-        // toggle(root.children[1].children[2]);
-        // toggle(root.children[9]);
-        // toggle(root.children[9].children[0]);
 
-        update(root);
-    });
+    var options = {clustering: true};
 
-    function update(source) {
-        var duration = d3.event && d3.event.altKey ? 5000 : 500;
 
-        // Compute the new tree layout.
-        var nodes = tree.nodes(root).reverse();
-
-        // Normalize for fixed-depth.
-        nodes.forEach(function(d) { d.y = d.depth * 180; });
-
-        // Update the nodes…
-        var node = vis.selectAll("g.node")
-                .data(nodes, function(d) { return d.id || (d.id = ++i); });
-
-        // Enter any new nodes at the parent's previous position.
-        var nodeEnter = node.enter().append("svg:g")
-                .attr("class", "node")
-                .attr("transform", function (d) {
-                    return "translate(" + source.y0 + "," + source.x0 + ")";
-                })
-                .on("click", function(d) { toggle(d); update(d); });
-
-        nodeEnter.append("svg:circle")
-                .attr("r", 1e-6)
-                .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
-
-        nodeEnter.append("svg:text")
-                .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
-                .attr("dy", ".35em")
-                .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
-                .text(function(d) { return d.name; })
-                .style("fill-opacity", 1e-6);
-
-        // Transition nodes to their new position.
-        var nodeUpdate = node.transition()
-                .duration(duration)
-                .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
-
-        nodeUpdate.select("circle")
-                .attr("r", 4.5)
-                .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
-
-        nodeUpdate.select("text")
-                .style("fill-opacity", 1);
-
-        // Transition exiting nodes to the parent's new position.
-        var nodeExit = node.exit().transition()
-                .duration(duration)
-                .attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
-                .remove();
-
-        nodeExit.select("circle")
-                .attr("r", 1e-6);
-
-        nodeExit.select("text")
-                .style("fill-opacity", 1e-6);
-
-        // Update the links…
-        var link = vis.selectAll("path.link")
-                .data(tree.links(nodes), function(d) { return d.target.id; });
-
-        // Enter any new links at the parent's previous position.
-        link.enter().insert("svg:path", "g")
-                .attr("class", "link")
-                .attr("d", function(d) {
-                    var o = {x: source.x0, y: source.y0};
-                    return diagonal({source: o, target: o});
-                })
-                .transition()
-                .duration(duration)
-                .attr("d", diagonal);
-
-        // Transition links to their new position.
-        link.transition()
-                .duration(duration)
-                .attr("d", diagonal);
-
-        // Transition exiting nodes to the parent's new position.
-        link.exit().transition()
-                .duration(duration)
-                .attr("d", function(d) {
-                    var o = {x: source.x, y: source.y};
-                    return diagonal({source: o, target: o});
-                })
-                .remove();
-
-        // Stash the old positions for transition.
-        nodes.forEach(function(d) {
-            d.x0 = d.x;
-            d.y0 = d.y;
-        });
-    }
-
-    // Toggle children.
-    function toggle(d) {
-        if (d.children) {
-            d._children = d.children;
-            d.children = null;
-        } else {
-            d.children = d._children;
-            d._children = null;
-        }
-    }
+    var network = new vis.Network(container, data, {edges: {length: 100}, physics: physics});
 </script>
+
 </body>
+<script src="js/jquery/jquery.js"></script>
+<script src="js/angular/angular.min.js"></script>
 </html>
