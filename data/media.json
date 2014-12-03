@@ -1,0 +1,46 @@
+{
+  "IN": {
+    "videos": [
+      {
+        "title": "NDTV: 360-Degree Forecast",
+        "url": "https://www.youtube.com/embed/4sMoSPYnE8w",
+        "year": 2014
+      },
+      {
+        "title": "Growth in India and China",
+        "url": "https://www.youtube.com/embed/h5XcR7AfCuU",
+        "year": 2011
+      }
+    ],
+    "text": [
+      {
+        "title": "Sources of Growth in Indian Economy (2007)",
+        "url": "http://www.nber.org/papers/w12901.pdf",
+        "year": 2007
+      },
+      {
+        "title":"Economic Policy Reforms and the Indian Economy",
+        "url": "http://books.google.co.in/books?hl=en&lr=&id=S6LZBiwmF-wC&oi=fnd&pg=PR5&dq=+Indian+Economy&ots=bwbwIZZodl&sig=JqC7z47TBImbPuInfd2LXmjKMxE",
+        "year": 2002
+      }
+    ],
+    "images": []
+  },
+  "US": {
+    "videos": [
+      {
+        "title": "$100 Trillion American Economic Collapse",
+        "url": "https://www.youtube.com/embed/OUpnY1pgxAs",
+        "year": 2014
+      }
+    ],
+    "text": [
+      {
+        "title": "Statistical Report Lehman Brothers",
+        "url": "http://www.math.chalmers.se/~rootzen/finrisk/Statistical%20Report%20Lehman%20Brothers%20Group%208.pdf",
+        "year": 2012
+      }
+    ],
+    "images": []
+  }
+}

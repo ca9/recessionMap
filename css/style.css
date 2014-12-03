@@ -674,3 +674,11 @@ Some bootstrappin.
     vertical-align: middle;
     float: none;
 }
+
+.clickable tbody tr {
+    cursor: pointer;
+}
+
+.modal.in .modal-dialog {
+    transform: none;
+}
