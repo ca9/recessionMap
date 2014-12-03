@@ -267,7 +267,7 @@ recMap.factory('similarService', function($http, propService, dataService) {
             }
         }
         return similarJSON;
-    }
+    };
 
     // Get similar Countries by code and expanded name, for given Econ Class.
     // Returns empty object if nothing is found.
@@ -287,11 +287,11 @@ recMap.factory('similarService', function($http, propService, dataService) {
             }
         }
         return simConts;
-    }
+    };
 
     similarService.isLoaded = function () { return loaded };
     return similarService;
-})
+});
 
 recMap.factory('mapService', function($http, propService, dataService) {
     var mapJSON = {}, url = "data/world-topo-min.json",
